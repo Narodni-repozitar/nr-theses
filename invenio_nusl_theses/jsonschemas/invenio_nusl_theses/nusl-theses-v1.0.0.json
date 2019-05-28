@@ -63,7 +63,7 @@
     "abstract": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/multilanguage"
+        "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
       }
     },
     "rights": {
@@ -97,7 +97,7 @@
         "copyright": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/multilanguage"
+            "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
           }
         }
       }
@@ -152,7 +152,7 @@
             "type": "string"
           },
           "id": {
-            "$ref": "#/definitions/valueType"
+            "$ref": "../nusl-common-v1.0.0.json#/definitions/valueType"
           }
         }
       }
@@ -167,7 +167,7 @@
             "type": "string"
           },
           "id": {
-            "$ref": "#/definitions/valueType"
+            "$ref": "../nusl-common-v1.0.0.json#/definitions/valueType"
           },
           "role": {
             "type": "string"
@@ -191,7 +191,7 @@
     "subtitle": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/multilanguage"
+        "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
       }
     },
     "note": {
@@ -203,7 +203,7 @@
     "accessibility": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/multilanguage"
+        "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
       }
     },
     "accessRights": {
@@ -254,19 +254,19 @@
           "university": {
             "type": "array",
             "items": {
-              "$ref": "#/definitions/multilanguage"
+              "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
             }
           },
           "faculty": {
             "type": "array",
             "items": {
-              "$ref": "#/definitions/multilanguage"
+              "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
             }
           },
           "department": {
             "type": "array",
             "items": {
-              "$ref": "#/definitions/multilanguage"
+              "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
             }
           }
         }
