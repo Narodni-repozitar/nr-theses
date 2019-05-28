@@ -6,65 +6,255 @@
             "dynamic": false,
             "properties": {
                 "$schema": {
+                    "type": "keyword",
+                    "index": false
+                },
+                "language": {
                     "type": "keyword"
                 },
-                "title": {
-                    "type": "text",
-                    "copy_to": "suggest_title",
-                    "fields": {
-                        "keyword": {
+                "identifier": {
+                    "type": "nested",
+                    "properties": {
+                        "value": {
+                            "type": "keyword"
+                        },
+                        "type": {
                             "type": "keyword"
                         }
                     }
                 },
-                "suggest_title": {
-                    "type": "completion"
-                },
-                "id": {
-                    "type": "keyword"
-                },
-                "keywords": {
-                    "type": "keyword"
-                },
-                "publication_date": {
+                "dateAccepted": {
                     "type": "date",
                     "format": "date"
                 },
-                "contributors": {
-                    "type": "object",
+                "modified": {
+                    "type": "date",
+                    "format": "date"
+                },
+                "title": {
+                    "type": "nested",
                     "properties": {
-                        "ids": {
-                            "type": "object",
-                            "properties": {
-                                "source": {
-                                    "type": "text"
-                                },
-                                "value": {
-                                    "type": "keyword"
-                                }
-                            }
-                        },
-                        "affiliations": {
-                            "type": "text"
-                        },
-                        "role": {
+                        "value": {
                             "type": "keyword"
                         },
-                        "email": {
-                            "type": "text"
+                        "type": {
+                            "type": "keyword"
+                        }
+                    }
+                },
+                "extent": {
+                    "type": "text"
+                },
+                "abstract": {
+                    "type": "nested",
+                    "properties": {
+                        "lang": {
+                            "type": "keyword"
                         },
                         "name": {
                             "type": "text"
                         }
                     }
                 },
-                "_created": {
-                    "type": "date"
+                "rights": {
+                    "type": "object",
+                    "properties": {
+                        "CC": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "keyword"
+                                },
+                                "version": {
+                                    "type": "keyword"
+                                },
+                                "country": {
+                                    "type": "keyword"
+                                }
+                            }
+                        },
+                        "copyright": {
+                            "type": "nested",
+                            "properties": {
+                                "lang": {
+                                    "type": "keyword"
+                                },
+                                "name": {
+                                    "type": "text"
+                                }
+                            }
+                        }
+                    }
                 },
-                "_updated": {
-                    "type": "date"
+                "subject": {
+                    "type": "nested",
+                    "properties": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "keyword"
+                            },
+                            "taxonomy": {
+                                "type": "keyword"
+                            },
+                            "lang": {
+                                "type": "keyword"
+                            },
+                            "id": {
+                                "type": "keyword"
+                            }
+                        }
+                    }
+                },
+                "creator": {
+                    "type": "nested",
+                    "properties": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "text"
+                            },
+                            "id": {
+                                "value": {
+                                    "type": "keyword"
+                                },
+                                "type": {
+                                    "type": "keyword"
+                                }
+                            }
+                        }
+                    }
+                },
+                "contributor": {
+                    "type": "nested",
+                    "properties": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "text"
+                            },
+                            "id": {
+                                "value": {
+                                    "type": "keyword"
+                                },
+                                "type": {
+                                    "type": "keyword"
+                                }
+                            },
+                            "role": {
+                                "type": "text"
+                            }
+                        }
+                    }
+                },
+                "doctype": {
+                    "type": "keyword"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "subtitle": {
+                    "type": "nested",
+                    "properties": {
+                        "lang": {
+                            "type": "keyword"
+                        },
+                        "name": {
+                            "type": "text"
+                        }
+                    }
+                },
+                "note": {
+                    "type": "nested",
+                    "properties": {
+                        "type": "text"
+                    }
+                },
+                "accessibility": {
+                    "type": "nested",
+                    "properties": {
+                        "lang": {
+                            "type": "keyword"
+                        },
+                        "name": {
+                            "type": "text"
+                        }
+                    }
+                },
+                "accessRights": {
+                    "type": "keyword"
+                },
+                "provider": {
+                    "type": "text"
+                },
+                "defended": {
+                    "type": "boolean"
+                },
+                "studyProgramme": {
+                    "type": "object",
+                    "properties": {
+                        "code": {
+                            "type": "keyword"
+                        },
+                        "name": {
+                            "type": "text"
+                        }
+                    }
+                },
+                "studyField": {
+                    "type": "object",
+                    "properties": {
+                        "code": {
+                            "type": "keyword"
+                        },
+                        "name": {
+                            "type": "text"
+                        }
+                    }
+                },
+                "degreeGrantor": {
+                    "type": "nested",
+                    "properties": {
+                        "type": "nested",
+                        "properties": {
+                            "university": {
+                                "type": "nested",
+                                "items": {
+                                    "lang": {
+                                        "type": "keyword"
+                                    },
+                                    "name": {
+                                        "type": "text"
+                                    }
+                                }
+                            },
+                            "faculty": {
+                                "type": "nested",
+                                "items": {
+                                    "lang": {
+                                        "type": "keyword"
+                                    },
+                                    "name": {
+                                        "type": "text"
+                                    }
+                                }
+                            },
+                            "department": {
+                                "type": "array",
+                                "items": {
+                                    "lang": {
+                                        "type": "keyword"
+                                    },
+                                    "name": {
+                                        "type": "text"
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
     }
 }
+
