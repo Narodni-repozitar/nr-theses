@@ -1,0 +1,24 @@
+{
+    "multilanguage": {
+        "type": "nested",
+        "properties": {
+            "name": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 100
+                    }
+                }
+            },
+            "lang": {
+                "type": "keyword",
+                "ignore_above": 3
+            }
+        }
+    },
+    "lang": {
+        "type": "keyword",
+        "ignore_above": 3
+    }
+}
