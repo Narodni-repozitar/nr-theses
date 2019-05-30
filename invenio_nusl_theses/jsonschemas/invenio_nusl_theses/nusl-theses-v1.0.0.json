@@ -1,323 +1,323 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "id": "https://nusl.cz/schemas/records/nusl-theses-v1.0.0.json",
-  "additionalProperties": false,
-  "title": "My site v1.0.0",
-  "type": "object",
-  "properties": {
-    "language": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "minItems": 1
-    },
-    "identifier": {
-      "type": "array",
-      "$comment": "nusl, originalRecord, nuslOAI, originalOAI, catalogue, RIV",
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "value": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "id": "https://nusl.cz/schemas/records/nusl-theses-v1.0.0.json",
+    "additionalProperties": false,
+    "title": "My site v1.0.0",
+    "type": "object",
+    "properties": {
+        "language": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "minItems": 1
+        },
+        "identifier": {
+            "type": "array",
+            "$comment": "nusl, originalRecord, nuslOAI, originalOAI, catalogue, RIV",
+            "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "value": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "nusl",
+                            "originalRecord",
+                            "nuslOAI",
+                            "originalOAI",
+                            "catalogue",
+                            "RIV"
+                        ]
+                    }
+                },
+                "required": [
+                    "value",
+                    "type"
+                ]
+            }
+        },
+        "dateAccepted": {
+            "type": "string",
+            "format": "date",
+            "$comment": "datum obhajoby"
+        },
+        "modified": {
+            "type": "string",
+            "format": "date-time",
+            "$comment": "datum modifikace metadat i dat u nas v NUSLU"
+        },
+        "title": {
+            "description": "Title of the work and is allowed to insert title in multiple languages",
+            "type": "array",
+            "items": {
+                "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
+            }
+        },
+        "extent": {
             "type": "string"
-          },
-          "type": {
+        },
+        "abstract": {
+            "type": "array",
+            "items": {
+                "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
+            }
+        },
+        "rights": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "CC": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "code": {
+                            "type": "string",
+                            "enum": [
+                                "CC BY",
+                                "CC BY-NC",
+                                "CC BY-SA",
+                                "CC BY-ND",
+                                "CC BY-NC-SA",
+                                "CC BY-NC-ND"
+                            ]
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "country": {
+                            "type": "string",
+                            "maxLength": 2
+                        }
+                    }
+                },
+                "copyright": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
+                    }
+                }
+            }
+        },
+        "subject": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                    "name",
+                    "lang"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "taxonomy": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "PSH",
+                            "czmesh",
+                            "mednas",
+                            "czenas"
+                        ]
+                    },
+                    "lang": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "id": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    }
+                }
+            }
+        },
+        "creator": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "$ref": "../nusl-common-v1.0.0.json#/definitions/valueType"
+                    }
+                }
+            }
+        },
+        "contributor": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "$ref": "../nusl-common-v1.0.0.json#/definitions/valueType"
+                    },
+                    "role": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "doctype": {
             "type": "string",
             "enum": [
-              "nusl",
-              "originalRecord",
-              "nuslOAI",
-              "originalOAI",
-              "catalogue",
-              "RIV"
+                "bakalarske_prace",
+                "diplomove_prace",
+                "disertacni_prace",
+                "habilitacni_prace",
+                "rigorozni_prace"
             ]
-          }
         },
-        "required": [
-          "value",
-          "type"
-        ]
-      }
-    },
-    "dateAccepted": {
-      "type": "string",
-      "format": "date",
-      "$comment": "datum obhajoby"
-    },
-    "modified": {
-      "type": "string",
-      "format": "date-time",
-      "$comment": "datum modifikace metadat i dat u nas v NUSLU"
-    },
-    "title": {
-      "description": "Title of the work and is allowed to insert title in multiple languages",
-      "type": "array",
-      "items": {
-        "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
-      }
-    },
-    "extent": {
-      "type": "string"
-    },
-    "abstract": {
-      "type": "array",
-      "items": {
-        "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
-      }
-    },
-    "rights": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "CC": {
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "code": {
-              "type": "string",
-              "enum": [
-                "CC BY",
-                "CC BY-NC",
-                "CC BY-SA",
-                "CC BY-ND",
-                "CC BY-NC-SA",
-                "CC BY-NC-ND"
-              ]
-            },
-            "version": {
-              "type": "string"
-            },
-            "country": {
-              "type": "string",
-              "maxLength": 2
+        "id": {
+            "type": "integer"
+        },
+        "subtitle": {
+            "type": "array",
+            "items": {
+                "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
             }
-          }
         },
-        "copyright": {
-          "type": "array",
-          "items": {
-            "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
-          }
-        }
-      }
-    },
-    "subject": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "name",
-          "lang"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "taxonomy": {
-            "type": [
-              "string",
-              "null"
-            ],
+        "note": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "accessibility": {
+            "type": "array",
+            "items": {
+                "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
+            }
+        },
+        "accessRights": {
+            "type": "string",
             "enum": [
-              "PSH",
-              "czmesh",
-              "mednas",
-              "czenas"
+                "open",
+                "embargoed",
+                "restricted",
+                "metadata_only"
             ]
-          },
-          "lang": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "id": {
-            "type": [
-              "string",
-              "null"
-            ]
-          }
-        }
-      }
-    },
-    "creator": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "id": {
-            "$ref": "../nusl-common-v1.0.0.json#/definitions/valueType"
-          }
-        }
-      }
-    },
-    "contributor": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "id": {
-            "$ref": "../nusl-common-v1.0.0.json#/definitions/valueType"
-          },
-          "role": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "doctype": {
-      "type": "string",
-      "enum": [
-        "bakalarske_prace",
-        "diplomove_prace",
-        "disertacni_prace",
-        "habilitacni_prace",
-        "rigorozni_prace"
-      ]
-    },
-    "id": {
-      "type": "integer"
-    },
-    "subtitle": {
-      "type": "array",
-      "items": {
-        "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
-      }
-    },
-    "note": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "accessibility": {
-      "type": "array",
-      "items": {
-        "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
-      }
-    },
-    "accessRights": {
-      "type": "string",
-      "enum": [
-        "open",
-        "embargoed",
-        "restricted",
-        "metadata_only"
-      ]
-    },
-    "provider": {
-      "type": "string"
-    },
-    "defended": {
-      "type": "boolean"
-    },
-    "studyProgramme": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "code": {
-          "type": "string"
         },
-        "name": {
-          "type": "string"
-        }
-      }
-    },
-    "studyField": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "code": {
-          "type": "string"
+        "provider": {
+            "type": "string"
         },
-        "name": {
-          "type": "string"
-        }
-      }
-    },
-    "degreeGrantor": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "university": {
+        "defended": {
+            "type": "boolean"
+        },
+        "studyProgramme": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "studyField": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "degreeGrantor": {
             "type": "array",
             "items": {
-              "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "university": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
+                        }
+                    },
+                    "faculty": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
+                        }
+                    },
+                    "department": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
+                        }
+                    }
+                }
             }
-          },
-          "faculty": {
-            "type": "array",
-            "items": {
-              "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
-            }
-          },
-          "department": {
-            "type": "array",
-            "items": {
-              "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
-            }
-          }
         }
-      }
-    }
-  },
-  "definitions": {
-    "valueType": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "value"
-      ],
-      "properties": {
-        "value": {
-          "type": "string"
-        },
-        "type": {
-          "type": "string"
-        }
-      }
     },
-    "multilanguage": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "name",
-        "lang"
-      ],
-      "properties": {
-        "name": {
-          "type": "string"
+    "definitions": {
+        "valueType": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "value"
+            ],
+            "properties": {
+                "value": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
         },
-        "lang": {
-          "type": "string"
+        "multilanguage": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "name",
+                "lang"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "lang": {
+                    "type": "string"
+                }
+            }
         }
-      }
-    }
-  },
-  "required": [
-    "language",
-    "identifier",
-    "dateAccepted",
-    "title",
-    "subject",
-    "creator",
-    "doctype",
-    "id",
-    "provider",
-    "studyProgramme",
-    "degreeGrantor"
-  ]
+    },
+    "required": [
+        "language",
+        "identifier",
+        "dateAccepted",
+        "title",
+        "subject",
+        "creator",
+        "doctype",
+        "id",
+        "provider",
+        "studyProgramme",
+        "degreeGrantor"
+    ]
 }
 
