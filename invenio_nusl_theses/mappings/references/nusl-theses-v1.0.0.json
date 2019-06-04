@@ -45,11 +45,11 @@
                     "type": "object",
                     "properties": {
                         "CC": {
-                            //hlídat délku
                             "type": "object",
                             "properties": {
                                 "code": {
-                                    "type": "keyword"
+                                    "type": "keyword",
+                                    "ignore_above": 11
                                 },
                                 "version": {
                                     "type": "keyword"
@@ -92,12 +92,12 @@
                 "creator": {
                     "type": "nested",
                     "properties": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "text"
-                            },
-                            "id": {
+                        "name": {
+                            "type": "text"
+                        },
+                        "id": {
+                            "type": "object",
+                            "properties": {
                                 "value": {
                                     "type": "keyword"
                                 },
@@ -111,22 +111,22 @@
                 "contributor": {
                     "type": "nested",
                     "properties": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "text"
-                            },
-                            "id": {
+                        "name": {
+                            "type": "text"
+                        },
+                        "id": {
+                            "type": "object",
+                            "properties": {
                                 "value": {
                                     "type": "keyword"
                                 },
                                 "type": {
                                     "type": "keyword"
                                 }
-                            },
-                            "role": {
-                                "type": "text"
                             }
+                        },
+                        "role": {
+                            "type": "text"
                         }
                     }
                 },
@@ -148,10 +148,7 @@
                     }
                 },
                 "note": {
-                    "type": "nested",
-                    "properties": {
-                        "type": "text"
-                    }
+                    "type": "text"
                 },
                 "accessibility": {
                     "type": "nested",
