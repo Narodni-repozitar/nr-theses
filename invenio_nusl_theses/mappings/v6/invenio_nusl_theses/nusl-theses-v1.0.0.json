@@ -78,7 +78,8 @@
                             "type": "object",
                             "properties": {
                                 "code": {
-                                    "type": "keyword"
+                                    "type": "keyword",
+                                    "ignore_above": 11
                                 },
                                 "version": {
                                     "type": "keyword"
@@ -92,7 +93,8 @@
                             "type": "nested",
                             "properties": {
                                 "lang": {
-                                    "type": "keyword"
+                                    "type": "keyword",
+                                    "ignore_above": 3
                                 },
                                 "name": {
                                     "type": "text"
@@ -104,32 +106,30 @@
                 "subject": {
                     "type": "nested",
                     "properties": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "keyword"
-                            },
-                            "taxonomy": {
-                                "type": "keyword"
-                            },
-                            "lang": {
-                                "type": "keyword"
-                            },
-                            "id": {
-                                "type": "keyword"
-                            }
+                        "name": {
+                            "type": "keyword"
+                        },
+                        "taxonomy": {
+                            "type": "keyword"
+                        },
+                        "lang": {
+                            "type": "keyword",
+                            "ignore_above": 3
+                        },
+                        "id": {
+                            "type": "keyword"
                         }
                     }
                 },
                 "creator": {
                     "type": "nested",
                     "properties": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "text"
-                            },
-                            "id": {
+                        "name": {
+                            "type": "text"
+                        },
+                        "id": {
+                            "type": "object",
+                            "properties": {
                                 "value": {
                                     "type": "keyword"
                                 },
@@ -143,22 +143,22 @@
                 "contributor": {
                     "type": "nested",
                     "properties": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "text"
-                            },
-                            "id": {
+                        "name": {
+                            "type": "text"
+                        },
+                        "id": {
+                            "type": "object",
+                            "properties": {
                                 "value": {
                                     "type": "keyword"
                                 },
                                 "type": {
                                     "type": "keyword"
                                 }
-                            },
-                            "role": {
-                                "type": "text"
                             }
+                        },
+                        "role": {
+                            "type": "text"
                         }
                     }
                 },
@@ -180,10 +180,7 @@
                     }
                 },
                 "note": {
-                    "type": "nested",
-                    "properties": {
-                        "type": "text"
-                    }
+                    "type": "text"
                 },
                 "accessibility": {
                     "type": "nested",
@@ -228,41 +225,59 @@
                     }
                 },
                 "degreeGrantor": {
-                    "type": "nested",
+                    "type": "object",
                     "properties": {
-                        "type": "nested",
-                        "properties": {
-                            "university": {
-                                "type": "nested",
-                                "items": {
-                                    "lang": {
-                                        "type": "keyword"
-                                    },
-                                    "name": {
-                                        "type": "text"
+                        "university": {
+                            "type": "nested",
+                            "properties": {
+                                "name": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword",
+                                            "ignore_above": 100
+                                        }
                                     }
+                                },
+                                "lang": {
+                                    "type": "keyword",
+                                    "ignore_above": 3
                                 }
-                            },
-                            "faculty": {
-                                "type": "nested",
-                                "items": {
-                                    "lang": {
-                                        "type": "keyword"
-                                    },
-                                    "name": {
-                                        "type": "text"
+                            }
+                        },
+                        "faculty": {
+                            "type": "nested",
+                            "properties": {
+                                "name": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword",
+                                            "ignore_above": 100
+                                        }
                                     }
+                                },
+                                "lang": {
+                                    "type": "keyword",
+                                    "ignore_above": 3
                                 }
-                            },
-                            "department": {
-                                "type": "array",
-                                "items": {
-                                    "lang": {
-                                        "type": "keyword"
-                                    },
-                                    "name": {
-                                        "type": "text"
+                            }
+                        },
+                        "department": {
+                            "type": "nested",
+                            "properties": {
+                                "name": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword",
+                                            "ignore_above": 100
+                                        }
                                     }
+                                },
+                                "lang": {
+                                    "type": "keyword",
+                                    "ignore_above": 3
                                 }
                             }
                         }
@@ -272,4 +287,3 @@
         }
     }
 }
-
