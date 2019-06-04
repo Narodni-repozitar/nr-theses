@@ -46,8 +46,11 @@ def validate_language(language):
 class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
     """Schema for the record metadata."""
 
-    language = fields.List(SanitizedUnicode(required=True, validate=validate_language)) #TODO: přepisování CES na CZE, umožnit vložit i string (asi many)
-    identifier = fields.List(Nested(ValueTypeSchemaV1), required=True)
+    language = fields.List(SanitizedUnicode(required=True,
+                                            validate=validate_language))  # TODO: přepisování CES na CZE, umožnit vložit i string (asi many)
+    identifier = fields.List(Nested(ValueTypeSchemaV1), required=True)  # TODO: Dodělat validaci na type
+    dateAccepted = fields.Date(required=True)
+    # modified = fields.DateTime()
 
     ##########    VZOR    ########
     # id = PersistentIdentifier()
