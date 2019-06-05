@@ -50,7 +50,10 @@ class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
                                             validate=validate_language))  # TODO: přepisování CES na CZE, umožnit vložit i string (asi many)
     identifier = fields.List(Nested(ValueTypeSchemaV1), required=True)  # TODO: Dodělat validaci na type
     dateAccepted = fields.Date(required=True)
-    # modified = fields.DateTime()
+    modified = fields.DateTime() #TODO: je required?
+    title = fields.List(Nested(MultilanguageSchemaV1), required=True)
+    extent = SanitizedUnicode()
+    abstract = fields.List(Nested(MultilanguageSchemaV1))
 
     ##########    VZOR    ########
     # id = PersistentIdentifier()
