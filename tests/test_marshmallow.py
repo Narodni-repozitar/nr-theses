@@ -40,6 +40,65 @@ def thesis_metadata():
                 "name": "The bachelor thesis is focused on the possibility of integrating criminals back into society. In the theoretical part are introduced the main terms and issues to layman, thanks to the literature and acquired information. In the practical part will be described the process of data collection up to the results of the research. The main aim of the bachelor thesis on 'Possibilities of social integration of criminals back into society'is to clarify the integration of the perpetrator of criminal activity back into society after release from imprisonment. In a secondary goal will be found out whether the needs of released prisoners, when they are reintegrated into society, correspond to the possibilities provided by our society.",
                 "lang": "eng"
             }
+        ],
+        "rights": {
+            "CC": {
+                "code": "CC BY",
+                "version": "3.0",
+                "country": "CZ"
+            },
+            "copyright": [
+                {
+                    "name": "Dílo je chráněno podle autorského zákona č. 121/2000 Sb.",
+                    "lang": "cze"
+                }
+            ]
+        },
+        "subject": [
+            {
+                "name": "koza",
+                "lang": "cze"
+            },
+            {
+                "name": "anorganická chemie",
+                "lang": "cze",
+                "taxonomy": "psh",
+                "id": "http://psh.techlib.cz/skos/PSH5740"
+            }
+        ],
+        "creator": [
+            {
+                "name": "Kopecký, Daniel",
+                "id": {
+                    "value": "21454545",
+                    "type": "ORCID"
+                }
+            },
+            {
+                "name": "Novák, Jiří",
+                "id": {
+                    "value": "21448754745",
+                    "type": "ORCID"
+                }
+            }
+        ],
+        "contributor": [
+            {
+                "name": "Kopecký, Daniel",
+                "id": {
+                    "value": "21454545",
+                    "type": "ORCID"
+                },
+                "role": "Referee"
+            },
+            {
+                "name": "Novák, Jiří",
+                "id": {
+                    "value": "21448754745",
+                    "type": "ORCID"
+                },
+                "role": "Referee"
+            }
         ]
     }
 
@@ -344,11 +403,13 @@ def test_abstract_load_2(thesis_metadata):
     schema = ThesisMetadataSchemaV1(strict=True)
     assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
 
+
 def test_abstract_load_3(thesis_metadata):
     thesis_metadata["abstract"] = "jiný datový typ"
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
         assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
+
 
 def test_abstract_load_4(thesis_metadata):
     thesis_metadata["abstract"] = [
@@ -362,6 +423,7 @@ def test_abstract_load_4(thesis_metadata):
     schema = ThesisMetadataSchemaV1(strict=True)
     assert final_metadata == schema.load(convert_dates(thesis_metadata)).data
 
+
 def test_abstract_load_5(thesis_metadata):
     thesis_metadata["abstract"] = [
         {
@@ -374,3 +436,356 @@ def test_abstract_load_5(thesis_metadata):
     schema = ThesisMetadataSchemaV1(strict=True)
     assert final_metadata == schema.load(convert_dates(thesis_metadata)).data
 
+
+########################################################################
+#                              rights                                  #
+########################################################################
+def test_rights_dump_1(thesis_metadata):
+    thesis_metadata["rights"] = {
+        "CC": {
+            "code": "CC BY",
+            "version": "3.0",
+            "country": "CZ"
+        },
+        "copyright": [
+            {
+                "name": "Dílo je chráněno podle autorského zákona č. 121/2000 Sb.",
+                "lang": "cze"
+            }
+        ]
+    }
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) == convert_dates(schema.dump(thesis_metadata).data)
+
+
+def test_rights_dump_2(thesis_metadata):
+    thesis_metadata["rights"] = "blbost"
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) != convert_dates(schema.dump(thesis_metadata).data)
+
+
+def test_rights_dump_3(thesis_metadata):
+    del thesis_metadata["rights"]
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) == convert_dates(schema.dump(thesis_metadata).data)
+
+
+def test_rights_load_1(thesis_metadata):
+    thesis_metadata["rights"] = {
+        "CC": {
+            "code": "CC BY",
+            "version": "3.0",
+            "country": "CZ"
+        },
+        "copyright": [
+            {
+                "name": "Dílo je chráněno podle autorského zákona č. 121/2000 Sb.",
+                "lang": "cze"
+            }
+        ]
+    }
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
+
+
+def test_rights_load_2(thesis_metadata):
+    thesis_metadata["rights"] = {
+        "CC": {
+            "code": "CC BY",
+            "version": "3.0",
+            "country": "CZ"
+        },
+        "copyright": [
+            {
+                "name": "Dílo je chráněno podle autorského zákona č. 121/2000 Sb.",
+                "lang": "ces"
+            }
+        ]
+    }
+    final_data = dict(thesis_metadata)
+    final_data["rights"]["copyright"][0]["lang"] = "cze"
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert final_data == schema.load(convert_dates(thesis_metadata)).data
+
+
+def test_rights_load_3(thesis_metadata):
+    thesis_metadata["rights"] = {
+        "CC": {
+            "code": "CC BY",
+            "version": "3.0",
+            "country": "CZ"
+        },
+        "copyright": []
+    }
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
+
+
+def test_rights_load_4(thesis_metadata):
+    del thesis_metadata["rights"]
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
+
+
+########################################################################
+#                              subject                                 #
+########################################################################
+def test_subject_dump_1(thesis_metadata):
+    thesis_metadata["subject"] = [
+        {
+            "name": "koza",
+            "lang": "cze"
+        },
+        {
+            "name": "anorganická chemie",
+            "lang": "cze",
+            "taxonomy": "psh",
+            "id": "http://psh.techlib.cz/skos/PSH5740"
+        }
+    ]
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) == convert_dates(schema.dump(thesis_metadata).data)
+
+
+def test_subject_dump_2(thesis_metadata):
+    thesis_metadata["subject"] = "jiný datový typ"
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) != convert_dates(schema.dump(thesis_metadata).data)
+
+
+def test_subject_dump_3(thesis_metadata):
+    del thesis_metadata["subject"]
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) == convert_dates(schema.dump(thesis_metadata).data)
+
+
+def test_subject_load_1(thesis_metadata):
+    thesis_metadata["subject"] = [
+        {
+            "name": "koza",
+            "lang": "cze"
+        },
+        {
+            "name": "anorganická chemie",
+            "lang": "cze",
+            "taxonomy": "psh",
+            "id": "http://psh.techlib.cz/skos/PSH5740"
+        }
+    ]
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
+
+
+def test_subject_load_2(thesis_metadata):
+    thesis_metadata["subject"] = [
+        {
+            "name": "koza"
+        },
+        {
+            "name": "anorganická chemie",
+            "lang": "cze",
+            "taxonomy": "psh",
+            "id": "http://psh.techlib.cz/skos/PSH5740"
+        }
+    ]
+
+    with pytest.raises(ValidationError):
+        schema = ThesisMetadataSchemaV1(strict=True)
+        schema.load(convert_dates(thesis_metadata))
+
+
+def test_subject_load_3(thesis_metadata):
+    thesis_metadata["subject"] = [
+        {
+            "name": "koza",
+            "lang": "cze"
+        },
+        {
+            "name": "anorganická chemie",
+            "lang": "cze",
+            "taxonomy": "unknown",
+            "id": "http://psh.techlib.cz/skos/PSH5740"
+        }
+    ]
+
+    with pytest.raises(ValidationError):
+        schema = ThesisMetadataSchemaV1(strict=True)
+        schema.load(convert_dates(thesis_metadata))
+
+
+def test_subject_load_4(thesis_metadata):
+    thesis_metadata["subject"] = [
+        {
+            "name": "koza",
+            "lang": "cze"
+        },
+        {
+            "name": "anorganická chemie",
+            "lang": "cze",
+            "taxonomy": "psh",
+            "id": "http://www.bljsdafjhdsahfjdshajkdf.cz/"
+        }
+    ]
+    schema = ThesisMetadataSchemaV1(strict=True)
+    schema.load(convert_dates(thesis_metadata))
+    assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
+
+
+########################################################################
+#                             creator                                  #
+########################################################################
+def test_creator_dump_1(thesis_metadata):
+    thesis_metadata["creator"] = [
+        {
+            "name": "Kopecký, Daniel",
+            "id": {
+                "value": "21454545",
+                "type": "ORCID"
+            }
+        }
+    ]
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) == convert_dates(schema.dump(thesis_metadata).data)
+
+
+def test_creator_dump_2(thesis_metadata):
+    thesis_metadata["creator"] = [
+        {
+            "name": "Kopecký, Daniel"
+        }
+    ]
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) == convert_dates(schema.dump(thesis_metadata).data)
+
+
+def test_creator_dump_3(thesis_metadata):
+    thesis_metadata["creator"] = "jiný datový typ"
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) != convert_dates(schema.dump(thesis_metadata).data)
+
+
+def test_creator_dump_4(thesis_metadata):
+    del thesis_metadata["creator"]
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) == convert_dates(schema.dump(thesis_metadata).data)
+
+
+def test_creator_load_1(thesis_metadata):
+    thesis_metadata["creator"] = [
+        {
+            "name": "Kopecký, Daniel",
+            "id": {
+                "value": "21454545",
+                "type": "ORCID"
+            }
+        }
+    ]
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
+
+
+def test_creator_load_2(thesis_metadata):
+    thesis_metadata["creator"] = [
+        {
+            "name": "Kopecký, Daniel"
+        }
+    ]
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
+
+
+def test_creator_load_3(thesis_metadata):
+    thesis_metadata["creator"] = [
+        {
+            "name": "Kopecký, Daniel",
+            "id": {
+                "value": "21454545",
+            }
+        }
+    ]
+    with pytest.raises(ValidationError):  # Chybí typ id
+        schema = ThesisMetadataSchemaV1(strict=True)
+        schema.load(convert_dates(thesis_metadata))
+
+
+def test_creator_load_4(thesis_metadata):
+    del thesis_metadata["creator"]
+    with pytest.raises(ValidationError):
+        schema = ThesisMetadataSchemaV1(strict=True)
+        schema.load(convert_dates(thesis_metadata))
+
+
+########################################################################
+#                             contributor                              #
+########################################################################
+def test_contributor_dump_1(thesis_metadata):
+    thesis_metadata["contributor"] = [
+        {
+            "name": "Kopecký, Daniel",
+            "id": {
+                "value": "21454545",
+                "type": "ORCID"
+            },
+            "role": "referee"
+        }
+    ]
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) == convert_dates(schema.dump(thesis_metadata).data)
+
+
+def test_contributor_dump_2(thesis_metadata):
+    thesis_metadata["contributor"] = "jiný datový typ"
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) != convert_dates(schema.dump(thesis_metadata).data)
+
+
+def test_contributor_dump_3(thesis_metadata):
+    del thesis_metadata["contributor"]
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) == convert_dates(schema.dump(thesis_metadata).data)
+
+
+def test_contributor_load_1(thesis_metadata):
+    thesis_metadata["contributor"] = [
+        {
+            "name": "Kopecký, Daniel",
+            "id": {
+                "value": "21454545",
+                "type": "ORCID"
+            },
+            "role": "referee"
+        }
+    ]
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
+
+
+def test_contributor_load_2(thesis_metadata):
+    thesis_metadata["contributor"] = [
+        {
+            "name": "Kopecký, Daniel",
+            "id": {
+                "value": "21454545",
+                "type": "ORCID"
+            }
+        }
+    ]
+    with pytest.raises(ValidationError):
+        schema = ThesisMetadataSchemaV1(strict=True)
+        schema.load(convert_dates(thesis_metadata))
+
+
+def test_contributor_load_3(thesis_metadata):
+    thesis_metadata["contributor"] = [
+        {
+            "name": "Kopecký, Daniel",
+            "id": {
+                "value": "21454545",
+                "type": "ORCID"
+            },
+            "role": ["array, špatný datový typ"]
+        }
+    ]
+    with pytest.raises(ValidationError):
+        schema = ThesisMetadataSchemaV1(strict=True)
+        schema.load(convert_dates(thesis_metadata))

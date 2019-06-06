@@ -121,10 +121,19 @@
                             "null"
                         ],
                         "enum": [
-                            "PSH",
+                            "czenas",
+                            "mesh",
                             "czmesh",
+                            "eurovoc",
+                            "psh",
+                            "ctt",
+                            "pedag",
+                            "agroterm",
+                            "agrovoc",
                             "mednas",
-                            "czenas"
+                            "phffuk",
+                            "ph",
+                            "lcsh"
                         ]
                     },
                     "lang": {

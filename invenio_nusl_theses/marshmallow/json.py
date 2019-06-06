@@ -67,6 +67,43 @@ class CCMetadataSchemaV1(StrictKeysMixin):
         return data
 
 
+class RightsMetadataSchemaV1(StrictKeysMixin):
+    CC = fields.Nested(CCMetadataSchemaV1)
+    copyright = fields.List(Nested(MultilanguageSchemaV1))
+
+
+class SubjectMetadataSchemaV1(MultilanguageSchemaV1):
+    taxonomy = SanitizedUnicode(validate=validate.OneOf(["czenas",
+                                                         "mesh",
+                                                         "czmesh",
+                                                         "eurovoc",
+                                                         "psh",
+                                                         "ctt",
+                                                         "pedag",
+                                                         "agroterm",
+                                                         "agrovoc",
+                                                         "mednas",
+                                                         "phffuk",
+                                                         "ph",
+                                                         "lcsh"]))
+    id = fields.Url()
+
+    @pre_load()
+    def lower_taxonomy(self, data):
+        if "taxonomy" in data:
+            taxonomy = data["taxonomy"]
+            data["taxonomy"] = taxonomy.lower()
+            return data
+
+
+class CreatorSubSchemaV1(StrictKeysMixin):
+    name = SanitizedUnicode(required=True)
+    id = Nested(ValueTypeSchemaV1)
+
+class ContributorSubSchemaV1(CreatorSubSchemaV1):
+    role = SanitizedUnicode(required=True)
+
+
 #########################################################################
 #                     Main schema                                       #
 #########################################################################
@@ -74,13 +111,18 @@ class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
     """Schema for the record metadata."""
 
     language = fields.List(SanitizedUnicode(required=True,
-                                            validate=validate_language))  # TODO: přepisování CES na CZE, umožnit vložit i string (asi many)
+                                            validate=validate_language))
     identifier = fields.List(Nested(ValueTypeSchemaV1), required=True)  # TODO: Dodělat validaci na type
     dateAccepted = fields.Date(required=True)
-    modified = fields.DateTime()  # TODO: je required?
+    modified = fields.DateTime()
     title = fields.List(Nested(MultilanguageSchemaV1), required=True)
     extent = SanitizedUnicode()
     abstract = fields.List(Nested(MultilanguageSchemaV1))
+    rights = fields.Nested(RightsMetadataSchemaV1)
+    subject = fields.List(Nested(SubjectMetadataSchemaV1))
+    creator = fields.List(Nested(CreatorSubSchemaV1), required=True)
+    contributor = fields.List(Nested(ContributorSubSchemaV1))
+
 
     ##########    VZOR    ########
     # id = PersistentIdentifier()
