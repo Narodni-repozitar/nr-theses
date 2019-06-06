@@ -301,6 +301,76 @@ def test_extent_load_4(thesis_metadata):
         schema = ThesisMetadataSchemaV1(strict=True)
         schema.load(convert_dates(thesis_metadata))
 
+
 ########################################################################
 #                              abstract                                #
 ########################################################################
+def test_abstract_dump_1(thesis_metadata):
+    thesis_metadata["abstract"] = [
+        {
+            "name": "Bakalářská práce je zaměřena na téma možností integrace pachatelů trestné činnosti zpět do společnosti. V rámci práce je na základě odborné literatury a získaných informací cílem seznámit zájemce, a to v teoretické části práce, s hlavními termíny a problematikou daného tématu. V praktické části je popsán průběh sběru dat až po výsledky kvalitativního výzkumu. Hlavním cílem bakalářské práce na téma Možnosti sociální integrace pachatelů trestné činnosti zpět do společnosti je objasnit okolnosti a podmínky integrace pachatele trestné činnosti zpět do společnosti po propuštění z výkonu trestu odnětí svobody. Ve vedlejším cíli je zjišťováno, zda potřeby propuštěných z výkonu trestu odnětí svobody při jejich zpětné integraci do společnosti odpovídají možnostem, které naše společnost poskytuje.",
+            "lang": "cze"
+        }
+    ]
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) == convert_dates(schema.dump(thesis_metadata).data)
+
+
+def test_abstract_dump_2(thesis_metadata):
+    del thesis_metadata["abstract"]
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) == convert_dates(schema.dump(thesis_metadata).data)
+
+
+def test_abstract_dump_3(thesis_metadata):
+    thesis_metadata["abstract"] = 123  # jiný datový typ
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) != convert_dates(schema.dump(thesis_metadata).data)
+
+
+def test_abstract_load_1(thesis_metadata):
+    thesis_metadata["abstract"] = [
+        {
+            "name": "Bakalářská práce je zaměřena na téma možností integrace pachatelů trestné činnosti zpět do společnosti. V rámci práce je na základě odborné literatury a získaných informací cílem seznámit zájemce, a to v teoretické části práce, s hlavními termíny a problematikou daného tématu. V praktické části je popsán průběh sběru dat až po výsledky kvalitativního výzkumu. Hlavním cílem bakalářské práce na téma Možnosti sociální integrace pachatelů trestné činnosti zpět do společnosti je objasnit okolnosti a podmínky integrace pachatele trestné činnosti zpět do společnosti po propuštění z výkonu trestu odnětí svobody. Ve vedlejším cíli je zjišťováno, zda potřeby propuštěných z výkonu trestu odnětí svobody při jejich zpětné integraci do společnosti odpovídají možnostem, které naše společnost poskytuje.",
+            "lang": "cze"
+        }
+    ]
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
+
+
+def test_abstract_load_2(thesis_metadata):
+    del thesis_metadata["abstract"]
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
+
+def test_abstract_load_3(thesis_metadata):
+    thesis_metadata["abstract"] = "jiný datový typ"
+    with pytest.raises(ValidationError):
+        schema = ThesisMetadataSchemaV1(strict=True)
+        assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
+
+def test_abstract_load_4(thesis_metadata):
+    thesis_metadata["abstract"] = [
+        {
+            "name": "Bakalářská práce je zaměřena na téma možností integrace pachatelů trestné činnosti zpět do společnosti. V rámci práce je na základě odborné literatury a získaných informací cílem seznámit zájemce, a to v teoretické části práce, s hlavními termíny a problematikou daného tématu. V praktické části je popsán průběh sběru dat až po výsledky kvalitativního výzkumu. Hlavním cílem bakalářské práce na téma Možnosti sociální integrace pachatelů trestné činnosti zpět do společnosti je objasnit okolnosti a podmínky integrace pachatele trestné činnosti zpět do společnosti po propuštění z výkonu trestu odnětí svobody. Ve vedlejším cíli je zjišťováno, zda potřeby propuštěných z výkonu trestu odnětí svobody při jejich zpětné integraci do společnosti odpovídají možnostem, které naše společnost poskytuje.",
+            "lang": "cs"
+        }
+    ]
+    final_metadata = dict(thesis_metadata)
+    final_metadata["abstract"][0]["lang"] = "cze"
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert final_metadata == schema.load(convert_dates(thesis_metadata)).data
+
+def test_abstract_load_5(thesis_metadata):
+    thesis_metadata["abstract"] = [
+        {
+            "name": "Bakalářská práce je zaměřena na téma možností integrace pachatelů trestné činnosti zpět do společnosti. V rámci práce je na základě odborné literatury a získaných informací cílem seznámit zájemce, a to v teoretické části práce, s hlavními termíny a problematikou daného tématu. V praktické části je popsán průběh sběru dat až po výsledky kvalitativního výzkumu. Hlavním cílem bakalářské práce na téma Možnosti sociální integrace pachatelů trestné činnosti zpět do společnosti je objasnit okolnosti a podmínky integrace pachatele trestné činnosti zpět do společnosti po propuštění z výkonu trestu odnětí svobody. Ve vedlejším cíli je zjišťováno, zda potřeby propuštěných z výkonu trestu odnětí svobody při jejich zpětné integraci do společnosti odpovídají možnostem, které naše společnost poskytuje.",
+            "lang": "ces"
+        }
+    ]
+    final_metadata = dict(thesis_metadata)
+    final_metadata["abstract"][0]["lang"] = "cze"
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert final_metadata == schema.load(convert_dates(thesis_metadata)).data
+

@@ -12,9 +12,9 @@ from __future__ import absolute_import, print_function
 from invenio_records_rest.schemas import Nested, StrictKeysMixin
 from invenio_records_rest.schemas.fields import DateString, \
     PersistentIdentifier, SanitizedUnicode
-from marshmallow import fields, missing, validate, ValidationError
+from marshmallow import fields, missing, validate, ValidationError, pre_load
 from invenio_nusl_common.marshmallow import MultilanguageSchemaV1, ValueTypeSchemaV1, OrganizationSchemaV1
-from pycountry import languages
+from pycountry import languages, countries
 
 
 ########################################################################
@@ -28,16 +28,43 @@ def validate_language(language):
         raise ValidationError('The language code is not part of ISO-639 codes.')
 
 
+def validate_country(country):
+    country = country.upper()
+    alpha2 = countries.get(alpha_2=country)
+    if alpha2 is None:
+        raise ValidationError('The country code is not part of ISO-3166 codes.')
+
+
 #########################################################################
 #                      Sub-schemas                                      #
 #########################################################################
-# class Pracovni(StrictKeysMixin):
-#     identifier = Nested(ValueTypeSchemaV1)  # TODO: import
-#     dateAccepted = fields.Date()
-#     modified = fields.DateTime()
-#     title = Nested(MultilanguageSchemaV1, many=True)  # TODO: import, many=True
-#     extent = SanitizedUnicode()
-#     abstract = fields.List(Nested(MultilanguageSchemaV1))  # TODO: import
+class CCMetadataSchemaV1(StrictKeysMixin):
+    code = SanitizedUnicode(required=True, validate=validate.OneOf(["CC BY",
+                                                                    "CC BY-NC",
+                                                                    "CC BY-SA",
+                                                                    "CC BY-ND",
+                                                                    "CC BY-NC-SA",
+                                                                    "CC BY-NC-ND"]))
+    version = SanitizedUnicode(required=True, validate=validate.Regexp(r"\d.\d"))
+    country = SanitizedUnicode(required=True, validate=validate_country)
+
+    @pre_load
+    def country_code(self, data):
+        if "country" in data:
+            country = data["country"]
+            if countries.get(alpha_3=country.upper()):
+                country = countries.get(alpha_3=country.upper())
+            elif countries.get(alpha_2=country.upper()):
+                country = countries.get(alpha_2=country.upper())
+            elif countries.get(name=country):
+                country = countries.get(name=country)
+            elif countries.get(official_name=country):
+                country = countries.get(official_name=country)
+            else:
+                country = None
+            if country is not None:
+                data["country"] = country.alpha_2
+        return data
 
 
 #########################################################################
@@ -50,7 +77,7 @@ class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
                                             validate=validate_language))  # TODO: přepisování CES na CZE, umožnit vložit i string (asi many)
     identifier = fields.List(Nested(ValueTypeSchemaV1), required=True)  # TODO: Dodělat validaci na type
     dateAccepted = fields.Date(required=True)
-    modified = fields.DateTime() #TODO: je required?
+    modified = fields.DateTime()  # TODO: je required?
     title = fields.List(Nested(MultilanguageSchemaV1), required=True)
     extent = SanitizedUnicode()
     abstract = fields.List(Nested(MultilanguageSchemaV1))
