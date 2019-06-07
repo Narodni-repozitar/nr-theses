@@ -100,6 +100,7 @@ class CreatorSubSchemaV1(StrictKeysMixin):
     name = SanitizedUnicode(required=True)
     id = Nested(ValueTypeSchemaV1)
 
+
 class ContributorSubSchemaV1(CreatorSubSchemaV1):
     role = SanitizedUnicode(required=True)
 
@@ -122,7 +123,6 @@ class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
     subject = fields.List(Nested(SubjectMetadataSchemaV1))
     creator = fields.List(Nested(CreatorSubSchemaV1), required=True)
     contributor = fields.List(Nested(ContributorSubSchemaV1))
-
 
     ##########    VZOR    ########
     # id = PersistentIdentifier()
