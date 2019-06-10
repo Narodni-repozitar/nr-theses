@@ -53,7 +53,7 @@ with open(os.path.join('invenio_nusl_theses', 'version.py'), 'rt') as fp:
     version = g['__version__']
 
 setup(
-    name='nusl-theses',
+    name='invenio-nusl-theses',
     version=version,
     description=__doc__,
     long_description=readme,

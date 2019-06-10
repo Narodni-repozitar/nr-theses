@@ -185,14 +185,16 @@
             }
         },
         "doctype": {
-            "type": "string",
-            "enum": [
-                "bakalarske_prace",
-                "diplomove_prace",
-                "disertacni_prace",
-                "habilitacni_prace",
-                "rigorozni_prace"
-            ]
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "NUSL": {
+                    "$ref": "../nusl-common-v1.0.0.json#/definitions/doctype"
+                },
+                "RIV": {
+                    "$ref": "../nusl-common-v1.0.0.json#/definitions/doctype"
+                }
+            }
         },
         "id": {
             "type": "integer"
@@ -225,7 +227,7 @@
             ]
         },
         "provider": {
-            "type": "string"
+            "$ref": "../nusl-common-v1.0.0.json#/definitions/organization"
         },
         "defended": {
             "type": "boolean"

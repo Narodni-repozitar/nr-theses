@@ -13,8 +13,30 @@ from invenio_records_rest.schemas import Nested, StrictKeysMixin
 from invenio_records_rest.schemas.fields import DateString, \
     PersistentIdentifier, SanitizedUnicode
 from marshmallow import fields, missing, validate, ValidationError, pre_load
-from invenio_nusl_common.marshmallow import MultilanguageSchemaV1, ValueTypeSchemaV1, OrganizationSchemaV1
+from invenio_nusl_common.marshmallow import MultilanguageSchemaV1, ValueTypeSchemaV1, NUSLDoctypeSchemaV1, \
+    OrganizationSchemaV1, RIVDoctypeSchemaV1
 from pycountry import languages, countries
+import csv
+import os
+
+
+########################################################################
+#                 IMPORT VALIDATION DATA                               #
+########################################################################
+def import_fields_csv(file: str):
+    path = os.path.dirname(__file__)
+    path += f"/data/{file}"
+    file = open(path, "r")
+    reader = csv.reader(file)
+    codes = []
+    names = []
+    for r in reader:
+        code = r[0]
+        name = r[1]
+        codes.append(code)
+        names.append(name)
+    file.close()
+    return codes, names
 
 
 ########################################################################
@@ -33,6 +55,16 @@ def validate_country(country):
     alpha2 = countries.get(alpha_2=country)
     if alpha2 is None:
         raise ValidationError('The country code is not part of ISO-3166 codes.')
+
+
+def validate_programme(code):
+    if code not in import_fields_csv("programme.csv")[0]:
+        raise ValidationError('The study programme code is not valid')
+
+
+def validate_field(code):
+    if code not in import_fields_csv("field.csv"):
+        raise ValidationError('The study field code is not valid')
 
 
 #########################################################################
@@ -105,12 +137,27 @@ class ContributorSubSchemaV1(CreatorSubSchemaV1):
     role = SanitizedUnicode(required=True)
 
 
+class DoctypeSubSchemaV1(StrictKeysMixin):
+    NUSL = Nested(NUSLDoctypeSchemaV1, required=True)
+    RIV = Nested(RIVDoctypeSchemaV1)
+
+
+class ProgrammeSubSchemaV1(StrictKeysMixin):
+    code = SanitizedUnicode(validate=validate_programme)
+    name = SanitizedUnicode()
+
+class FieldSubSchemaV1(StrictKeysMixin):
+    code = SanitizedUnicode(validate=validate_field)
+    name = SanitizedUnicode()
+
+
 #########################################################################
 #                     Main schema                                       #
 #########################################################################
 class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
     """Schema for the record metadata."""
 
+    id = fields.Integer(required=True)
     language = fields.List(SanitizedUnicode(required=True,
                                             validate=validate_language))
     identifier = fields.List(Nested(ValueTypeSchemaV1), required=True)  # TODO: Dodělat validaci na type
@@ -123,13 +170,14 @@ class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
     subject = fields.List(Nested(SubjectMetadataSchemaV1))
     creator = fields.List(Nested(CreatorSubSchemaV1), required=True)
     contributor = fields.List(Nested(ContributorSubSchemaV1))
-
-    ##########    VZOR    ########
-    # id = PersistentIdentifier()
-    # title = SanitizedUnicode(required=True, validate=validate.Length(min=3))
-    # keywords = fields.List(SanitizedUnicode(), many=True)
-    # publication_date = DateString()
-    # contributors = Nested(ContributorSchemaV1, many=True, required=True)
+    doctype = Nested(DoctypeSubSchemaV1, required=True)
+    subtitle = fields.List(Nested(MultilanguageSchemaV1))
+    note = fields.List(SanitizedUnicode())
+    accessibility = fields.List(Nested(MultilanguageSchemaV1))
+    accessRights = SanitizedUnicode(validate=validate.OneOf(["open", "embargoed", "restricted", "metadata_only"]))
+    provider = Nested(OrganizationSchemaV1)
+    defended = fields.Boolean(SanitizedUnicode)
+    studyProgramme = Nested(ProgrammeSubSchemaV1)
 
 
 class ThesisRecordSchemaV1(StrictKeysMixin):  # get - zobrazit
@@ -141,23 +189,3 @@ class ThesisRecordSchemaV1(StrictKeysMixin):  # get - zobrazit
     updated = fields.Str(dump_only=True)
     links = fields.Dict(dump_only=True)
     id = PersistentIdentifier()
-
-#########################################################################
-#                           Vzor                                        #
-#########################################################################
-
-# class PersonIdsSchemaV1(StrictKeysMixin):
-#     """Ids schema."""
-#
-#     source = SanitizedUnicode()
-#     value = SanitizedUnicode()
-#
-#
-# class ContributorSchemaV1(StrictKeysMixin):
-#     """Contributor schema."""
-#
-#     ids = fields.Nested(PersonIdsSchemaV1, many=True)
-#     name = SanitizedUnicode(required=True)
-#     role = SanitizedUnicode()
-#     affiliations = fields.List(SanitizedUnicode())
-#     email = fields.Email()
