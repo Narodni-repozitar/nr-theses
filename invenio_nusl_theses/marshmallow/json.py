@@ -9,34 +9,36 @@
 
 from __future__ import absolute_import, print_function
 
-from invenio_records_rest.schemas import Nested, StrictKeysMixin
-from invenio_records_rest.schemas.fields import DateString, \
-    PersistentIdentifier, SanitizedUnicode
-from marshmallow import fields, missing, validate, ValidationError, pre_load
-from invenio_nusl_common.marshmallow import MultilanguageSchemaV1, ValueTypeSchemaV1, NUSLDoctypeSchemaV1, \
-    OrganizationSchemaV1, RIVDoctypeSchemaV1
-from pycountry import languages, countries
 import csv
 import os
+
+from invenio_records_rest.schemas import Nested, StrictKeysMixin
+from invenio_records_rest.schemas.fields import PersistentIdentifier, SanitizedUnicode
+from marshmallow import fields, validate, ValidationError, pre_load, post_load
+from pycountry import languages, countries
+
+from invenio_nusl_common.marshmallow import MultilanguageSchemaV1, ValueTypeSchemaV1, NUSLDoctypeSchemaV1, \
+    OrganizationSchemaV1, RIVDoctypeSchemaV1
 
 
 ########################################################################
 #                 IMPORT VALIDATION DATA                               #
 ########################################################################
-def import_fields_csv(file: str):
+def import_csv(file: str, start: int, end: int):
     path = os.path.dirname(__file__)
     path += f"/data/{file}"
     file = open(path, "r")
     reader = csv.reader(file)
-    codes = []
-    names = []
+    columns = []
+    for col in range(start, end):
+        columns.append([])
     for r in reader:
-        code = r[0]
-        name = r[1]
-        codes.append(code)
-        names.append(name)
+        i = 0
+        for col in range(start, end):
+            columns[i].append(r[col])
+            i += 1
     file.close()
-    return codes, names
+    return columns
 
 
 ########################################################################
@@ -57,14 +59,24 @@ def validate_country(country):
         raise ValidationError('The country code is not part of ISO-3166 codes.')
 
 
-def validate_programme(code):
-    if code not in import_fields_csv("programme.csv")[0]:
+def validate_programme_code(code):
+    if code not in import_csv("programme.csv", 0, 2)[0]:
         raise ValidationError('The study programme code is not valid')
 
 
-def validate_field(code):
-    if code not in import_fields_csv("field.csv"):
+def validate_field_code(code):
+    if code not in import_csv("field.csv", 0, 2)[0]:
         raise ValidationError('The study field code is not valid')
+
+
+def validate_programme_name(name):
+    if name not in import_csv("programme.csv", 0, 2)[1]:
+        raise ValidationError('The study programme name is not valid')
+
+
+def validate_field_name(name):
+    if name not in import_csv("field.csv", 0, 2)[1]:
+        raise ValidationError('The study field name is not valid')
 
 
 #########################################################################
@@ -143,12 +155,58 @@ class DoctypeSubSchemaV1(StrictKeysMixin):
 
 
 class ProgrammeSubSchemaV1(StrictKeysMixin):
-    code = SanitizedUnicode(validate=validate_programme)
-    name = SanitizedUnicode()
+    code = SanitizedUnicode(validate=validate_programme_code)
+    name = SanitizedUnicode(validate=validate_programme_name)
+
+    @post_load()
+    def validate_code_name_fit(self, data):  # TODO: Dát do jednoho společného kódu
+        if data["code"] and data["name"]:
+            codes_names = import_csv("programme.csv", 0, 2)
+            programme_code = data["code"]
+            programme_name = data["name"]
+            code_index = codes_names[0].index(programme_code)
+            if codes_names[1][code_index] != programme_name:
+                raise ValidationError("The code does not match the program name.")
+
 
 class FieldSubSchemaV1(StrictKeysMixin):
-    code = SanitizedUnicode(validate=validate_field)
-    name = SanitizedUnicode()
+    code = SanitizedUnicode(validate=validate_field_code)
+    name = SanitizedUnicode(validate=validate_field_name)
+
+    @post_load()
+    def validate_code_name_fit(self, data):  # TODO: Dát do jednoho společného kódu
+        if data["code"] and data["name"]:
+            codes_names = import_csv("field.csv", 0, 2)
+            programme_code = data["code"]
+            programme_name = data["name"]
+            code_index = codes_names[0].index(programme_code)
+            if codes_names[1][code_index] != programme_name:
+                raise ValidationError("The code does not match the field name.")
+
+
+class DegreeGrantorSubSchemaV1(StrictKeysMixin):
+    university = fields.List(Nested(MultilanguageSchemaV1, required=True), required=True,
+                             validate=validate.Length(min=1))
+    faculty = fields.List(Nested(MultilanguageSchemaV1))
+    department = fields.List(Nested(MultilanguageSchemaV1))
+
+    @post_load()
+    def validate_university_name(self, data):
+        if data.get("university"):
+            for item in data["university"]:
+                if item["lang"] == "cze":
+                    imported_data = import_csv("universities.csv", 0, 1)
+                    if item["name"] not in imported_data[0]:
+                        raise ValidationError("The University name is not valid")
+
+    @post_load()
+    def validate_faculty_name(self, data):
+        if data.get("faculty"):
+            for item in data["faculty"]:
+                if item["lang"] == "cze":
+                    imported_data = import_csv("faculties.csv", 0, 1)
+                    if item["name"] not in imported_data[0]:
+                        raise ValidationError("The Faculty name is not valid")
 
 
 #########################################################################
@@ -177,7 +235,9 @@ class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
     accessRights = SanitizedUnicode(validate=validate.OneOf(["open", "embargoed", "restricted", "metadata_only"]))
     provider = Nested(OrganizationSchemaV1)
     defended = fields.Boolean(SanitizedUnicode)
-    studyProgramme = Nested(ProgrammeSubSchemaV1)
+    studyProgramme = Nested(ProgrammeSubSchemaV1, required=True)
+    studyField = Nested(FieldSubSchemaV1)
+    degreeGrantor = fields.List(Nested(DegreeGrantorSubSchemaV1), required=True, validate=validate.Length(min=1))
 
 
 class ThesisRecordSchemaV1(StrictKeysMixin):  # get - zobrazit
