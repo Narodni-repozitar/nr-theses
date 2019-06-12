@@ -152,7 +152,15 @@
                     "type": "nested",
                     "properties": {
                         "id": {
-                            "type": "keyword"
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "keyword"
+                                },
+                                "type": {
+                                    "type": "keyword"
+                                }
+                            }
                         },
                         "address": {
                             "type": "text",
