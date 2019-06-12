@@ -37,8 +37,8 @@ def thesis_metadata():
             "value": "151515",
             "type": "nusl"
         }],
-        "dateAccepted": date(2019, 5, 19),
-        "modified": datetime(2014, 12, 22, 3, 12, 58, 19077, tzinfo=pytz.utc),
+        "dateAccepted": "2019-05-19",
+        "modified": "2014-12-22T03:12:58.19077",
         "title": [
             {
                 "name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku středověku.",
@@ -47,6 +47,147 @@ def thesis_metadata():
             {
                 "name": "Historical landscape of the Bohemian-Moravian Highlands. Settlement from prehistoric to late medieval times",
                 "lang": "eng"
+            }
+        ],
+        "extent": "123s",
+        "abstract": [
+            {
+                "name": "Bakalářská práce je zaměřena na téma možností integrace pachatelů trestné činnosti zpět do společnosti. V rámci práce je na základě odborné literatury a získaných informací cílem seznámit zájemce, a to v teoretické části práce, s hlavními termíny a problematikou daného tématu. V praktické části je popsán průběh sběru dat až po výsledky kvalitativního výzkumu. Hlavním cílem bakalářské práce na téma Možnosti sociální integrace pachatelů trestné činnosti zpět do společnosti je objasnit okolnosti a podmínky integrace pachatele trestné činnosti zpět do společnosti po propuštění z výkonu trestu odnětí svobody. Ve vedlejším cíli je zjišťováno, zda potřeby propuštěných z výkonu trestu odnětí svobody při jejich zpětné integraci do společnosti odpovídají možnostem, které naše společnost poskytuje.",
+                "lang": "cze"
+            },
+            {
+                "name": "The bachelor thesis is focused on the possibility of integrating criminals back into society. In the theoretical part are introduced the main terms and issues to layman, thanks to the literature and acquired information. In the practical part will be described the process of data collection up to the results of the research. The main aim of the bachelor thesis on 'Possibilities of social integration of criminals back into society'is to clarify the integration of the perpetrator of criminal activity back into society after release from imprisonment. In a secondary goal will be found out whether the needs of released prisoners, when they are reintegrated into society, correspond to the possibilities provided by our society.",
+                "lang": "eng"
+            }
+        ],
+        "rights": {
+            "CC": {
+                "code": "CC BY",
+                "version": "3.0",
+                "country": "CZ"
+            },
+            "copyright": [
+                {
+                    "name": "Dílo je chráněno podle autorského zákona č. 121/2000 Sb.",
+                    "lang": "cze"
+                }
+            ]
+        },
+        "subject": [
+            {
+                "name": "koza",
+                "lang": "cze"
+            },
+            {
+                "name": "anorganická chemie",
+                "lang": "cze",
+                "taxonomy": "psh",
+                "id": "http://psh.techlib.cz/skos/PSH5740"
+            }
+        ],
+        "creator": [
+            {
+                "name": "Kopecký, Daniel",
+                "id": {
+                    "value": "21454545",
+                    "type": "ORCID"
+                }
+            },
+            {
+                "name": "Novák, Jiří",
+                "id": {
+                    "value": "21448754745",
+                    "type": "ORCID"
+                }
+            }
+        ],
+        "contributor": [
+            {
+                "name": "Kopecký, Daniel",
+                "id": {
+                    "value": "21454545",
+                    "type": "ORCID"
+                },
+                "role": "Referee"
+            },
+            {
+                "name": "Novák, Jiří",
+                "id": {
+                    "value": "21448754745",
+                    "type": "ORCID"
+                },
+                "role": "Referee"
+            }
+        ],
+        "doctype": {
+            "NUSL": {"term": "studie",
+                     "bterm": "anl_met_mat"}
+        },
+        "id": 1276327,
+        "subtitle": [
+            {
+                "name": "Alternativní název",
+                "lang": "cze"
+            }
+        ],
+        "note": [
+            "Poznámka 1",
+            "Poznámka 2"
+        ],
+        "accessibility": [
+            {
+                "name": "Dostupné kdesi blabla",
+                "lang": "cze"
+            },
+            {
+                "name": "Available at blabla",
+                "lang": "eng"
+            }
+        ],
+        "accessRights": "open",
+        "provider": {
+            "id": {
+                "value": "60461373",
+                "type": "IČO"},
+            "address": "Technická 1905/5, Dejvice, 160 00 Praha",
+            "contactPoint": "info@vscht.cz",
+            "name": {
+                "name": "Vysoká škola chemicko-technologická",
+                "lang": "cze"
+            },
+            "url": "https://www.vscht.cz/",
+            "provider": True,
+            "isPartOf": ["public_uni", "edu"]
+        },
+        "defended": True,
+        "studyProgramme": {
+            "code": "B1407",
+            "name": "Chemie"
+        },
+        "studyField": {
+            "code": "2801T015",
+            "name": "Technologie organických látek a chemické speciality"
+        },
+        "degreeGrantor": [
+            {
+                "university": [
+                    {
+                        "name": "Vysoká škola chemicko-technologická v Praze",
+                        "lang": "cze"
+                    }
+                ],
+                "faculty": [
+                    {
+                        "name": "Fakulta chemické technologie",
+                        "lang": "cze"
+                    }
+                ],
+                "department": [
+                    {
+                        "name": "UOT",
+                        "lang": "cze"
+                    }
+                ]
             }
         ]
     }
