@@ -20,5 +20,16 @@
     "lang": {
         "type": "keyword",
         "ignore_above": 3
+    },
+    "doctype": {
+        "type": "nested",
+        "properties": {
+            "bterm": {
+                "type": "keyword"
+            },
+            "term": {
+                "type": "keyword"
+            }
+        }
     }
 }

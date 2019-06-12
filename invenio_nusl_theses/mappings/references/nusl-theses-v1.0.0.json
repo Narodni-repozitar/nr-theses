@@ -29,7 +29,7 @@
                 },
                 "modified": {
                     "type": "date",
-                    "format": "date"
+                    "format": "date_time"
                 },
                 "title": {
                     "$ref": "./nusl-common-v1.0.0.json#/multilanguage"
@@ -60,15 +60,7 @@
                             }
                         },
                         "copyright": {
-                            "type": "nested",
-                            "properties": {
-                                "lang": {
-                                    "$ref": "./nusl-common-v1.0.0.json#/lang"
-                                },
-                                "name": {
-                                    "type": "text"
-                                }
-                            }
+                            "$ref": "./nusl-common-v1.0.0.json#/multilanguage"
                         }
                     }
                 },
@@ -131,41 +123,61 @@
                     }
                 },
                 "doctype": {
-                    "type": "keyword"
+                    "type": "nested",
+                    "properties": {
+                        "NUSL": {
+                            "$ref": "./nusl-common-v1.0.0.json#/doctype"
+                        },
+                        "RIV": {
+                            "$ref": "./nusl-common-v1.0.0.json#/doctype"
+                        }
+                    }
                 },
                 "id": {
                     "type": "integer"
                 },
                 "subtitle": {
-                    "type": "nested",
-                    "properties": {
-                        "lang": {
-                            "type": "keyword"
-                        },
-                        "name": {
-                            "type": "text"
-                        }
-                    }
+                    "$ref": "./nusl-common-v1.0.0.json#/multilanguage"
                 },
                 "note": {
                     "type": "text"
                 },
                 "accessibility": {
-                    "type": "nested",
-                    "properties": {
-                        "lang": {
-                            "type": "keyword"
-                        },
-                        "name": {
-                            "type": "text"
-                        }
-                    }
+                    "$ref": "./nusl-common-v1.0.0.json#/multilanguage"
                 },
                 "accessRights": {
                     "type": "keyword"
                 },
                 "provider": {
-                    "type": "text"
+                    "type": "nested",
+                    "properties": {
+                        "id": {
+                            "type": "keyword"
+                        },
+                        "address": {
+                            "type": "text",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword"
+                                }
+                            }
+                        },
+                        "contactPoint": {
+                            "type": "keyword"
+                        },
+                        "name": {
+                            "$ref": "./nusl-common-v1.0.0.json#/multilanguage"
+                        },
+                        "url": {
+                            "type": "keyword"
+                        },
+                        "provider": {
+                            "type": "boolean"
+                        },
+                        "isPartOf": {
+                            "type": "keyword"
+                        }
+                    }
                 },
                 "defended": {
                     "type": "boolean"
