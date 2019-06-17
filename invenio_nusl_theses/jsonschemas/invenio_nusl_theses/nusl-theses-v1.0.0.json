@@ -113,7 +113,13 @@
                 ],
                 "properties": {
                     "name": {
-                        "type": "string"
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
+                            }
+                        }
                     },
                     "taxonomy": {
                         "type": [
@@ -134,12 +140,6 @@
                             "phffuk",
                             "ph",
                             "lcsh"
-                        ]
-                    },
-                    "lang": {
-                        "type": [
-                            "string",
-                            "null"
                         ]
                     },
                     "id": {
