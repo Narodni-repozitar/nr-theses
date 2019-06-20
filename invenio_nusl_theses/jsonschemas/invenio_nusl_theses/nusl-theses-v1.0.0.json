@@ -263,22 +263,34 @@
                 "additionalProperties": false,
                 "properties": {
                     "university": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
+                        "type": "object",
+                        "aditionalProperties": false,
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "faculties": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "departments": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     },
-                    "faculty": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
-                        }
-                    },
-                    "department": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
-                        }
+                    "language": {
+                        "type": "string"
                     }
                 }
             }
