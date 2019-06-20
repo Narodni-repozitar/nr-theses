@@ -235,7 +235,7 @@ class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
     accessRights = SanitizedUnicode(validate=validate.OneOf(["open", "embargoed", "restricted", "metadata_only"]))
     provider = Nested(OrganizationSchemaV1)
     defended = fields.Boolean(SanitizedUnicode)
-    studyProgramme = Nested(ProgrammeSubSchemaV1, required=True)
+    studyProgramme = Nested(ProgrammeSubSchemaV1)
     studyField = Nested(FieldSubSchemaV1)
     degreeGrantor = fields.List(Nested(DegreeGrantorSubSchemaV1), required=True, validate=validate.Length(min=1))
 
