@@ -160,7 +160,7 @@ class ProgrammeSubSchemaV1(StrictKeysMixin):
 
     @post_load()
     def validate_code_name_fit(self, data):  # TODO: Dát do jednoho společného kódu
-        if data["code"] and data["name"]:
+        if data.get("code") and data.get("name"):
             codes_names = import_csv("programme.csv", 0, 2)
             programme_code = data["code"]
             programme_name = data["name"]
@@ -175,7 +175,7 @@ class FieldSubSchemaV1(StrictKeysMixin):
 
     @post_load()
     def validate_code_name_fit(self, data):  # TODO: Dát do jednoho společného kódu
-        if data["code"] and data["name"]:
+        if data.get("code") and data.get("name"):
             codes_names = import_csv("field.csv", 0, 2)
             programme_code = data["code"]
             programme_name = data["name"]
@@ -186,7 +186,7 @@ class FieldSubSchemaV1(StrictKeysMixin):
 
 class FacultySubSchemaV1(StrictKeysMixin):
     name = SanitizedUnicode(required=True)
-    departments = fields.List(SanitizedUnicode())
+    departments = fields.List(SanitizedUnicode(allow_none=True))
 
 
 class UniversitySubSchemaV1(StrictKeysMixin):
@@ -200,18 +200,18 @@ class DegreeGrantorSubSchemaV1(StrictKeysMixin):
 
     @post_load()
     def validate_university_name(self, data):
-        imported_data = import_csv("universities.csv", 0, 1)[0]
-        if data["university"]["name"] not in imported_data:
-            raise ValidationError("The University name is not valid")
+        if data["language"] == "cze":
+            imported_data = import_csv("universities.csv", 0, 1)[0]
+            if data["university"]["name"] not in imported_data:
+                raise ValidationError("The University name is not valid")
 
     @post_load()
     def validate_faculty_name(self, data):
-        imported_data = import_csv("faculties.csv", 0, 1)[0]
-        print(imported_data)
-        for faculty in data["university"]["faculties"]:
-            print(faculty)
-            if faculty["name"] not in imported_data:
-                raise ValidationError("The Faculty name is not valid")
+        if data["language"] == "cze":
+            imported_data = import_csv("faculties.csv", 0, 1)[0]
+            for faculty in data["university"]["faculties"]:
+                if faculty["name"] not in imported_data:
+                    raise ValidationError("The Faculty name is not valid")
 
 
 #########################################################################
@@ -233,7 +233,7 @@ class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
     subject = fields.List(Nested(SubjectMetadataSchemaV1))
     creator = fields.List(Nested(CreatorSubSchemaV1), required=True)
     contributor = fields.List(Nested(ContributorSubSchemaV1))
-    doctype = Nested(DoctypeSubSchemaV1, required=True)
+    doctype = Nested(DoctypeSubSchemaV1, required=False)  # TODO: required změnit na True
     subtitle = fields.List(Nested(MultilanguageSchemaV1))
     note = fields.List(SanitizedUnicode())
     accessibility = fields.List(Nested(MultilanguageSchemaV1))
@@ -242,7 +242,7 @@ class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
     defended = fields.Boolean(SanitizedUnicode)
     studyProgramme = Nested(ProgrammeSubSchemaV1)
     studyField = Nested(FieldSubSchemaV1)
-    degreeGrantor = fields.List(Nested(DegreeGrantorSubSchemaV1), required=True, validate=validate.Length(min=1))
+    degreeGrantor = fields.List(Nested(DegreeGrantorSubSchemaV1), required=False) # TODO: Po lepším namapování změnit required na True a validate.Length(min=1)
 
 
 class ThesisRecordSchemaV1(StrictKeysMixin):  # get - zobrazit

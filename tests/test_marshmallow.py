@@ -1363,6 +1363,16 @@ def test_studyProgramme_load_4(thesis_metadata):
         schema = ThesisMetadataSchemaV1(strict=True)
         convert_dates(schema.load(convert_dates(thesis_metadata)).data)
 
+def test_studyProgramme_load_5(thesis_metadata):
+    thesis_metadata["studyProgramme"] = {
+        "name": "Chemie"
+    }
+
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) == convert_dates(schema.load(convert_dates(thesis_metadata)).data)
+
+
+
 
 #######################################################################
 #                           Study Field                               #
@@ -1490,6 +1500,7 @@ def test_degreeGrantor_load_1(thesis_metadata):
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(thesis_metadata) == convert_dates(schema.load(convert_dates(thesis_metadata)).data)
 
+
 def test_degreeGrantor_load_2(thesis_metadata):
     thesis_metadata["degreeGrantor"] = [
         {
@@ -1510,6 +1521,7 @@ def test_degreeGrantor_load_2(thesis_metadata):
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
         convert_dates(schema.load(convert_dates(thesis_metadata)).data)
+
 
 def test_degreeGrantor_load_3(thesis_metadata):
     thesis_metadata["degreeGrantor"] = [
@@ -1532,6 +1544,7 @@ def test_degreeGrantor_load_3(thesis_metadata):
         schema = ThesisMetadataSchemaV1(strict=True)
         convert_dates(schema.load(convert_dates(thesis_metadata)).data)
 
+
 def test_degreeGrantor_load_4(thesis_metadata):
     thesis_metadata["degreeGrantor"] = [
         {
@@ -1552,6 +1565,7 @@ def test_degreeGrantor_load_4(thesis_metadata):
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
         convert_dates(schema.load(convert_dates(thesis_metadata)).data)
+
 
 def test_degreeGrantor_load_5(thesis_metadata):
     thesis_metadata["degreeGrantor"] = [
@@ -1574,8 +1588,43 @@ def test_degreeGrantor_load_5(thesis_metadata):
         schema = ThesisMetadataSchemaV1(strict=True)
         convert_dates(schema.load(convert_dates(thesis_metadata)).data)
 
+
 def test_degreeGrantor_load_6(thesis_metadata):
     del thesis_metadata["degreeGrantor"]
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
         convert_dates(schema.load(convert_dates(thesis_metadata)).data)
+
+def test_degreeGrantor_load_7(thesis_metadata):
+    thesis_metadata["degreeGrantor"] = [
+            {
+                "language": "cze",
+                "university": {
+                    "name": "Univerzita Karlova",
+                    "faculties": [
+                        {
+                            "name": "Fakulta tělesné výchovy a sportu",
+                            "departments": [
+                                "Fyzioterapie"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "language": "eng",
+                "university": {
+                    "name": "Charles University",
+                    "faculties": [
+                        {
+                            "name": "Faculty of Physical Education and Sport",
+                            "departments": [
+                                None
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) == convert_dates(schema.load(convert_dates(thesis_metadata)).data)
