@@ -184,29 +184,34 @@ class FieldSubSchemaV1(StrictKeysMixin):
                 raise ValidationError("The code does not match the field name.")
 
 
+class FacultySubSchemaV1(StrictKeysMixin):
+    name = SanitizedUnicode(required=True)
+    departments = fields.List(SanitizedUnicode())
+
+
+class UniversitySubSchemaV1(StrictKeysMixin):
+    name = SanitizedUnicode(required=True)
+    faculties = fields.List(Nested(FacultySubSchemaV1))
+
+
 class DegreeGrantorSubSchemaV1(StrictKeysMixin):
-    university = fields.List(Nested(MultilanguageSchemaV1, required=True), required=True,
-                             validate=validate.Length(min=1))
-    faculty = fields.List(Nested(MultilanguageSchemaV1))
-    department = fields.List(Nested(MultilanguageSchemaV1))
+    university = Nested(UniversitySubSchemaV1, required=True)
+    language = SanitizedUnicode(validate=validate_language)
 
     @post_load()
     def validate_university_name(self, data):
-        if data.get("university"):
-            for item in data["university"]:
-                if item["lang"] == "cze":
-                    imported_data = import_csv("universities.csv", 0, 1)
-                    if item["name"] not in imported_data[0]:
-                        raise ValidationError("The University name is not valid")
+        imported_data = import_csv("universities.csv", 0, 1)[0]
+        if data["university"]["name"] not in imported_data:
+            raise ValidationError("The University name is not valid")
 
     @post_load()
     def validate_faculty_name(self, data):
-        if data.get("faculty"):
-            for item in data["faculty"]:
-                if item["lang"] == "cze":
-                    imported_data = import_csv("faculties.csv", 0, 1)
-                    if item["name"] not in imported_data[0]:
-                        raise ValidationError("The Faculty name is not valid")
+        imported_data = import_csv("faculties.csv", 0, 1)[0]
+        print(imported_data)
+        for faculty in data["university"]["faculties"]:
+            print(faculty)
+            if faculty["name"] not in imported_data:
+                raise ValidationError("The Faculty name is not valid")
 
 
 #########################################################################

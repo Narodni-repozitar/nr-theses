@@ -151,24 +151,18 @@ def thesis_metadata():
         },
         "degreeGrantor": [
             {
-                "university": [
-                    {
-                        "name": "Vysoká škola chemicko-technologická v Praze",
-                        "lang": "cze"
-                    }
-                ],
-                "faculty": [
-                    {
-                        "name": "Fakulta chemické technologie",
-                        "lang": "cze"
-                    }
-                ],
-                "department": [
-                    {
-                        "name": "UOT",
-                        "lang": "cze"
-                    }
-                ]
+                "language": "cze",
+                "university": {
+                    "name": "Vysoká škola chemicko-technologická v Praze",
+                    "faculties": [
+                        {
+                            "name": "Fakulta chemické technologie",
+                            "departments": [
+                                "Ústav organické technologie"
+                            ]
+                        }
+                    ]
+                }
             }
         ]
     }
@@ -1356,9 +1350,8 @@ def test_studyProgramme_load_2(thesis_metadata):
 
 def test_studyProgramme_load_3(thesis_metadata):
     del thesis_metadata["studyProgramme"]
-    with pytest.raises(ValidationError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        convert_dates(schema.load(convert_dates(thesis_metadata)).data)
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) == convert_dates(schema.load(convert_dates(thesis_metadata)).data)
 
 
 def test_studyProgramme_load_4(thesis_metadata):
@@ -1447,24 +1440,18 @@ def test_studyField_load_5(thesis_metadata):
 def test_degreeGrantor_dump_1(thesis_metadata):
     thesis_metadata["degreeGrantor"] = [
         {
-            "university": [
-                {
-                    "name": "VSCHT",
-                    "lang": "cze"
-                }
-            ],
-            "faculty": [
-                {
-                    "name": "FCHT",
-                    "lang": "cze"
-                }
-            ],
-            "department": [
-                {
-                    "name": "UOT",
-                    "lang": "cze"
-                }
-            ]
+            "language": "cze",
+            "university": {
+                "name": "Vysoká škola chemicko-technologická",
+                "faculties": [
+                    {
+                        "name": "Fakulta chemické technologie",
+                        "departments": [
+                            "Ústav organické technologie"
+                        ]
+                    }
+                ]
+            }
         }
     ]
     schema = ThesisMetadataSchemaV1(strict=True)
@@ -1478,7 +1465,7 @@ def test_degreeGrantor_dump_2(thesis_metadata):
 
 
 def test_degreeGrantor_dump_3(thesis_metadata):
-    thesis_metadata["degreeGrantor"] = "špatný datový typ"
+    thesis_metadata["degreeGrantor"] = "jiný datový typ"
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(thesis_metadata) != schema.dump(thesis_metadata).data
 
@@ -1486,202 +1473,109 @@ def test_degreeGrantor_dump_3(thesis_metadata):
 def test_degreeGrantor_load_1(thesis_metadata):
     thesis_metadata["degreeGrantor"] = [
         {
-            "university": [
-                {
-                    "name": "Vysoká škola chemicko-technologická v Praze",
-                    "lang": "cze"
-                }
-            ],
-            "faculty": [
-                {
-                    "name": "Fakulta chemické technologie",
-                    "lang": "cze"
-                }
-            ],
-            "department": [
-                {
-                    "name": "UOT",
-                    "lang": "cze"
-                }
-            ]
+            "language": "cze",
+            "university": {
+                "name": "Vysoká škola chemicko-technologická v Praze",
+                "faculties": [
+                    {
+                        "name": "Fakulta chemické technologie",
+                        "departments": [
+                            "Ústav organické technologie"
+                        ]
+                    }
+                ]
+            }
         }
     ]
-
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(thesis_metadata) == convert_dates(schema.load(convert_dates(thesis_metadata)).data)
 
-
 def test_degreeGrantor_load_2(thesis_metadata):
-    del thesis_metadata["degreeGrantor"]
+    thesis_metadata["degreeGrantor"] = [
+        {
+            "language": "cze",
+            "university": {
+                "name": "Vysoká škola chemicko-technologická",
+                "faculties": [
+                    {
+                        "name": "Fakulta chemické technologie",
+                        "departments": [
+                            "Ústav organické technologie"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
         convert_dates(schema.load(convert_dates(thesis_metadata)).data)
-
 
 def test_degreeGrantor_load_3(thesis_metadata):
-    thesis_metadata["degreeGrantor"] = []
+    thesis_metadata["degreeGrantor"] = [
+        {
+            "language": "cze",
+            "university": {
+                "name": "Vysoká škola chemicko-technologická",
+                "faculties": [
+                    {
+                        "name": "Fakulta chemické technologie",
+                        "departments": [
+                            "Ústav organické technologie"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
         convert_dates(schema.load(convert_dates(thesis_metadata)).data)
-
 
 def test_degreeGrantor_load_4(thesis_metadata):
-    thesis_metadata["degreeGrantor"] = {}
+    thesis_metadata["degreeGrantor"] = [
+        {
+            "language": "cz",
+            "university": {
+                "name": "Vysoká škola chemicko-technologická v Praze",
+                "faculties": [
+                    {
+                        "name": "Fakulta chemické technologie",
+                        "departments": [
+                            "Ústav organické technologie"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
         convert_dates(schema.load(convert_dates(thesis_metadata)).data)
-
 
 def test_degreeGrantor_load_5(thesis_metadata):
     thesis_metadata["degreeGrantor"] = [
         {
-            "university": [
-                {
-                    "name": "Vysoká škola chemicko-technologická v Praze",
-                    "lang": "cze"
-                }
-            ]
+            "language": "cze",
+            "university": {
+                "name": "Vysoká škola chemicko-technologická v Praze",
+                "faculties": [
+                    {
+                        "name": "Neexistující fakulta",
+                        "departments": [
+                            "Ústav organické technologie"
+                        ]
+                    }
+                ]
+            }
         }
     ]
-
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(thesis_metadata) == convert_dates(schema.load(convert_dates(thesis_metadata)).data)
-
+    with pytest.raises(ValidationError):
+        schema = ThesisMetadataSchemaV1(strict=True)
+        convert_dates(schema.load(convert_dates(thesis_metadata)).data)
 
 def test_degreeGrantor_load_6(thesis_metadata):
-    thesis_metadata["degreeGrantor"] = [
-        {
-            "faculty": [
-                {
-                    "name": "FCHT",
-                    "lang": "cze"
-                }
-            ],
-            "department": [
-                {
-                    "name": "UOT",
-                    "lang": "cze"
-                }
-            ]
-        }
-    ]
+    del thesis_metadata["degreeGrantor"]
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
         convert_dates(schema.load(convert_dates(thesis_metadata)).data)
-
-
-def test_degreeGrantor_load_7(thesis_metadata):
-    thesis_metadata["degreeGrantor"] = [
-        {
-            "university": [
-
-            ],
-            "faculty": [
-                {
-                    "name": "FCHT",
-                    "lang": "cze"
-                }
-            ],
-            "department": [
-                {
-                    "name": "UOT",
-                    "lang": "cze"
-                }
-            ]
-        }
-    ]
-    with pytest.raises(ValidationError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        convert_dates(schema.load(convert_dates(thesis_metadata)).data)
-
-
-def test_degreeGrantor_load_8(thesis_metadata):
-    thesis_metadata["degreeGrantor"] = [
-        {
-            "university": [
-                {
-                    "name": "VŠCHT",
-                    "lang": "cze"
-                }
-            ],
-            "faculty": [
-                {
-                    "name": "FCHT",
-                    "lang": "cze"
-                }
-            ],
-            "department": [
-                {
-                    "name": "UOT",
-                    "lang": "cze"
-                }
-            ]
-        }
-    ]
-    with pytest.raises(ValidationError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        convert_dates(schema.load(convert_dates(thesis_metadata)).data)
-
-
-def test_degreeGrantor_load_9(thesis_metadata):
-    thesis_metadata["degreeGrantor"] = [
-        {
-            "university": [
-                {
-                    "name": "Vysoká škola chemicko-technologická v Praze",
-                    "lang": "cze"
-                },
-                {
-                    "name": "VŠCHT",
-                    "lang": "cze"
-                },
-            ],
-            "faculty": [
-                {
-                    "name": "FCHT",
-                    "lang": "cze"
-                }
-            ],
-            "department": [
-                {
-                    "name": "UOT",
-                    "lang": "cze"
-                }
-            ]
-        }
-    ]
-    with pytest.raises(ValidationError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        convert_dates(schema.load(convert_dates(thesis_metadata)).data)
-
-
-def test_degreeGrantor_load_10(thesis_metadata):
-    thesis_metadata["degreeGrantor"] = [
-        {
-            "university": [
-                {
-                    "name": "Vysoká škola chemicko-technologická v Praze",
-                    "lang": "cze"
-                },
-                {
-                    "name": "University of chemical technology",
-                    "lang": "eng"
-                },
-            ],
-            "faculty": [
-                {
-                    "name": "Fakulta chemické technologie",
-                    "lang": "cze"
-                }
-            ],
-            "department": [
-                {
-                    "name": "UOT",
-                    "lang": "cze"
-                }
-            ]
-        }
-    ]
-
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(thesis_metadata) == convert_dates(schema.load(convert_dates(thesis_metadata)).data)
