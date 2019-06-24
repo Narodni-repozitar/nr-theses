@@ -10,6 +10,7 @@
 from __future__ import absolute_import, print_function
 
 import csv
+import functools
 import os
 
 from invenio_records_rest.schemas import Nested, StrictKeysMixin
@@ -24,6 +25,7 @@ from invenio_nusl_common.marshmallow import MultilanguageSchemaV1, ValueTypeSche
 ########################################################################
 #                 IMPORT VALIDATION DATA                               #
 ########################################################################
+@functools.lru_cache()
 def import_csv(file: str, start: int, end: int):
     path = os.path.dirname(__file__)
     path += f"/data/{file}"
@@ -238,7 +240,7 @@ class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
     note = fields.List(SanitizedUnicode())
     accessibility = fields.List(Nested(MultilanguageSchemaV1))
     accessRights = SanitizedUnicode(validate=validate.OneOf(["open", "embargoed", "restricted", "metadata_only"]))
-    provider = Nested(OrganizationSchemaV1)
+    provider = SanitizedUnicode()
     defended = fields.Boolean(SanitizedUnicode)
     studyProgramme = Nested(ProgrammeSubSchemaV1)
     studyField = Nested(FieldSubSchemaV1)
