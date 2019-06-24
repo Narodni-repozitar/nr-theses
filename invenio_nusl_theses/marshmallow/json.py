@@ -25,6 +25,9 @@ from invenio_nusl_common.marshmallow import MultilanguageSchemaV1, ValueTypeSche
 ########################################################################
 #                 IMPORT VALIDATION DATA                               #
 ########################################################################
+from invenio_nusl_common.marshmallow.json import DoctypeSubSchemaV1
+
+
 @functools.lru_cache()
 def import_csv(file: str, start: int, end: int):
     path = os.path.dirname(__file__)
@@ -151,11 +154,6 @@ class ContributorSubSchemaV1(CreatorSubSchemaV1):
     role = SanitizedUnicode(required=True)
 
 
-class DoctypeSubSchemaV1(StrictKeysMixin):
-    NUSL = Nested(NUSLDoctypeSchemaV1, required=True)
-    RIV = Nested(RIVDoctypeSchemaV1)
-
-
 class ProgrammeSubSchemaV1(StrictKeysMixin):
     code = SanitizedUnicode(validate=validate_programme_code)
     name = SanitizedUnicode(validate=validate_programme_name)
@@ -235,7 +233,7 @@ class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
     subject = fields.List(Nested(SubjectMetadataSchemaV1))
     creator = fields.List(Nested(CreatorSubSchemaV1), required=True)
     contributor = fields.List(Nested(ContributorSubSchemaV1))
-    doctype = Nested(DoctypeSubSchemaV1, required=False)  # TODO: required změnit na True
+    doctype = fields.List(Nested(DoctypeSubSchemaV1), required=False)  # TODO: required změnit na True
     subtitle = fields.List(Nested(MultilanguageSchemaV1))
     note = fields.List(SanitizedUnicode())
     accessibility = fields.List(Nested(MultilanguageSchemaV1))
