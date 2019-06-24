@@ -339,7 +339,6 @@
         "doctype",
         "id",
         "provider",
-        "studyProgramme",
         "degreeGrantor"
     ]
 }
