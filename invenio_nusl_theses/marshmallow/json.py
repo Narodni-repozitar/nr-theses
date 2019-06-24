@@ -132,7 +132,7 @@ class SubjectMetadataSchemaV1(MultilanguageSchemaV1):
                                                          "phffuk",
                                                          "ph",
                                                          "lcsh"]))
-    id = SanitizedUnicode()
+    id = SanitizedUnicode() #TODO: Dodělat MEDNAS: http://www.medvik.cz/link/nlk20040148348; http://www.medvik.cz/link/ + id z nušl
 
     @pre_load()
     def lower_taxonomy(self, data):
