@@ -135,7 +135,7 @@ class SubjectMetadataSchemaV1(MultilanguageSchemaV1):
                                                          "phffuk",
                                                          "ph",
                                                          "lcsh"]))
-    id = fields.Url()
+    id = SanitizedUnicode()
 
     @pre_load()
     def lower_taxonomy(self, data):
