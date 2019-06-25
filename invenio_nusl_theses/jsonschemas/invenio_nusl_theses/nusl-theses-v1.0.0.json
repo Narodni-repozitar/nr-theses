@@ -234,7 +234,7 @@
             ]
         },
         "provider": {
-            "$ref": "../nusl-common-v1.0.0.json#/definitions/organization"
+            "type": "string"
         },
         "defended": {
             "type": "boolean"
