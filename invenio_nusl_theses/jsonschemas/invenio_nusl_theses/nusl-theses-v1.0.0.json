@@ -108,8 +108,7 @@
                 "type": "object",
                 "additionalProperties": false,
                 "required": [
-                    "name",
-                    "lang"
+                    "name"
                 ],
                 "properties": {
                     "name": {

@@ -56,12 +56,21 @@ def thesis_metadata():
         },
         "subject": [
             {
-                "name": "koza",
-                "lang": "cze"
+                "name": [
+                    {
+                        "name": "koza",
+                        "lang": "cze"
+                    }
+                ]
+
             },
             {
-                "name": "anorganická chemie",
-                "lang": "cze",
+                "name": [
+                    {
+                        "name": "anorganická chemie",
+                        "lang": "cze"
+                    }
+                ],
                 "taxonomy": "psh",
                 "id": "http://psh.techlib.cz/skos/PSH5740"
             }
@@ -101,8 +110,10 @@ def thesis_metadata():
             }
         ],
         "doctype": {
-            "NUSL": {"term": "studie",
-                     "bterm": "anl_met_mat"}
+            "taxonomy": "NUSL",
+            "value": [
+                "vskp", "bakalarske_prace"
+            ]
         },
         "id": 1276327,
         "subtitle": [
@@ -126,20 +137,7 @@ def thesis_metadata():
             }
         ],
         "accessRights": "open",
-        "provider": {
-            "id": {
-                "value": "60461373",
-                "type": "IČO"},
-            "address": "Technická 1905/5, Dejvice, 160 00 Praha",
-            "contactPoint": "info@vscht.cz",
-            "name": {
-                "name": "Vysoká škola chemicko-technologická",
-                "lang": "cze"
-            },
-            "url": "https://www.vscht.cz/",
-            "provider": True,
-            "isPartOf": ["public_uni", "edu"]
-        },
+        "provider": "univerzita_karlova",
         "defended": True,
         "studyProgramme": {
             "code": "B1407",
@@ -598,12 +596,21 @@ def test_rights_load_4(thesis_metadata):
 def test_subject_dump_1(thesis_metadata):
     thesis_metadata["subject"] = [
         {
-            "name": "koza",
-            "lang": "cze"
+            "name": [
+                {
+                    "name": "koza",
+                    "lang": "cze"
+                }
+            ]
+
         },
         {
-            "name": "anorganická chemie",
-            "lang": "cze",
+            "name": [
+                {
+                    "name": "anorganická chemie",
+                    "lang": "cze"
+                }
+            ],
             "taxonomy": "psh",
             "id": "http://psh.techlib.cz/skos/PSH5740"
         }
@@ -627,12 +634,21 @@ def test_subject_dump_3(thesis_metadata):
 def test_subject_load_1(thesis_metadata):
     thesis_metadata["subject"] = [
         {
-            "name": "koza",
-            "lang": "cze"
+            "name": [
+                {
+                    "name": "koza",
+                    "lang": "cze"
+                }
+            ]
+
         },
         {
-            "name": "anorganická chemie",
-            "lang": "cze",
+            "name": [
+                {
+                    "name": "anorganická chemie",
+                    "lang": "cze"
+                }
+            ],
             "taxonomy": "psh",
             "id": "http://psh.techlib.cz/skos/PSH5740"
         }
@@ -644,11 +660,20 @@ def test_subject_load_1(thesis_metadata):
 def test_subject_load_2(thesis_metadata):
     thesis_metadata["subject"] = [
         {
-            "name": "koza"
+            "name": [
+                {
+                    "name": "koza",
+                }
+            ]
+
         },
         {
-            "name": "anorganická chemie",
-            "lang": "cze",
+            "name": [
+                {
+                    "name": "anorganická chemie",
+                    "lang": "cze"
+                }
+            ],
             "taxonomy": "psh",
             "id": "http://psh.techlib.cz/skos/PSH5740"
         }
@@ -662,12 +687,21 @@ def test_subject_load_2(thesis_metadata):
 def test_subject_load_3(thesis_metadata):
     thesis_metadata["subject"] = [
         {
-            "name": "koza",
-            "lang": "cze"
+            "name": [
+                {
+                    "name": "koza",
+                    "lang": "cze"
+                }
+            ]
+
         },
         {
-            "name": "anorganická chemie",
-            "lang": "cze",
+            "name": [
+                {
+                    "name": "anorganická chemie",
+                    "lang": "cze"
+                }
+            ],
             "taxonomy": "unknown",
             "id": "http://psh.techlib.cz/skos/PSH5740"
         }
@@ -681,14 +715,23 @@ def test_subject_load_3(thesis_metadata):
 def test_subject_load_4(thesis_metadata):
     thesis_metadata["subject"] = [
         {
-            "name": "koza",
-            "lang": "cze"
+            "name": [
+                {
+                    "name": "koza",
+                    "lang": "cze"
+                }
+            ]
+
         },
         {
-            "name": "anorganická chemie",
-            "lang": "cze",
+            "name": [
+                {
+                    "name": "anorganická chemie",
+                    "lang": "cze"
+                }
+            ],
             "taxonomy": "psh",
-            "id": "http://www.bljsdafjhdsahfjdshajkdf.cz/"
+            "id": "http://blboist.cz"
         }
     ]
     schema = ThesisMetadataSchemaV1(strict=True)
@@ -861,8 +904,10 @@ def test_contributor_load_3(thesis_metadata):
 ########################################################################
 def test_doctype_dump_1(thesis_metadata):
     thesis_metadata["doctype"] = {
-        "NUSL": {"term": "studie",
-                 "bterm": "anl_met_mat"}
+        "taxonomy": "NUSL",
+        "value": [
+            "vskp", "bakalarske_prace"
+        ]
     }
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(thesis_metadata) == convert_dates(schema.dump(thesis_metadata).data)
@@ -870,10 +915,10 @@ def test_doctype_dump_1(thesis_metadata):
 
 def test_doctype_dump_2(thesis_metadata):
     thesis_metadata["doctype"] = {
-        "NUSL": {"term": "studie",
-                 "bterm": "anl_met_mat"},
-        "RIV": {"term": "polop",
-                "bterm": "Z"}
+        "taxonomy": "NUSL",
+        "value": [
+            "studie", "anl_met_mat"
+        ]
     }
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(thesis_metadata) == convert_dates(schema.dump(thesis_metadata).data)
@@ -887,8 +932,10 @@ def test_doctype_dump_3(thesis_metadata):
 
 def test_doctype_load_1(thesis_metadata):
     thesis_metadata["doctype"] = {
-        "NUSL": {"term": "studie",
-                 "bterm": "anl_met_mat"}
+        "taxonomy": "NUSL",
+        "value": [
+            "vskp", "bakalarske_prace"
+        ]
     }
     schema = ThesisMetadataSchemaV1(strict=True)
     assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
@@ -896,44 +943,45 @@ def test_doctype_load_1(thesis_metadata):
 
 def test_doctype_load_2(thesis_metadata):
     thesis_metadata["doctype"] = {
-        "NUSL": {"term": "studie",
-                 "bterm": "anl_met_mat"},
-        "RIV": {"term": "polop",
-                "bterm": "Z"}
-    }
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
-
-
-def test_doctype_load_3(thesis_metadata):
-    thesis_metadata["doctype"] = {
-        "RIV": {"term": "polop",
-                "bterm": "Z"}
+        "taxonomy": "RIV",
+        "value": [
+            "polop", "Z"
+        ]
     }
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
-        schema.load(convert_dates(thesis_metadata))
+        schema.load(convert_dates(thesis_metadata)).data
+
+
+# def test_doctype_load_3(thesis_metadata):
+#     thesis_metadata["doctype"] = {
+#         "RIV": {"term": "polop",
+#                 "bterm": "Z"}
+#     }
+#     with pytest.raises(ValidationError):
+#         schema = ThesisMetadataSchemaV1(strict=True)
+#         schema.load(convert_dates(thesis_metadata))
 
 
 def test_doctype_load_4(thesis_metadata):
     thesis_metadata["doctype"] = {
-        "NUSL": {"term": "studie",
-                 "bterm": "vskp"}
+        "taxonomy": "NUSL",
+        "value": ["vskp", "studie"]
     }
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
         schema.load(convert_dates(thesis_metadata))
 
 
-def test_doctype_load_5(thesis_metadata):
-    thesis_metadata["doctype"] = {
-        "NUSL": {"term": "bakalarske_prace",
-                 "bterm": "vskp"},
-        "RIV": {"term": None,
-                "bterm": "W"}
-    }
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
+# def test_doctype_load_5(thesis_metadata):
+#     thesis_metadata["doctype"] = {
+#         "NUSL": {"term": "bakalarske_prace",
+#                  "bterm": "vskp"},
+#         "RIV": {"term": None,
+#                 "bterm": "W"}
+#     }
+#     schema = ThesisMetadataSchemaV1(strict=True)
+#     assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
 
 
 ########################################################################
@@ -1205,26 +1253,13 @@ def test_accessRights_load_4(thesis_metadata):
 #                           Provider                                   #
 ########################################################################
 def test_provider_dump_1(thesis_metadata):
-    thesis_metadata["provider"] = {
-        "id": {
-            "value": "60461373",
-            "type": "IČO"},
-        "address": "Technická 1905/5, Dejvice, 160 00 Praha",
-        "contactPoint": "info@vscht.cz",
-        "name": {
-            "name": "Vysoká škola chemicko-technologická",
-            "lang": "cze"
-        },
-        "url": "https://www.vscht.cz/",
-        "provider": True,
-        "isPartOf": ["public_uni", "edu"]
-    }
+    thesis_metadata["provider"] = "univerzita_karlova"
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(thesis_metadata) == schema.dump(thesis_metadata).data
 
 
 def test_provider_dump_2(thesis_metadata):
-    thesis_metadata["provider"] = "jiný datový typ"
+    thesis_metadata["provider"] = ["jiný datový typ"]
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(thesis_metadata) != schema.dump(thesis_metadata).data
 
@@ -1236,21 +1271,7 @@ def test_provider_dump_3(thesis_metadata):
 
 
 def test_provider_load_1(thesis_metadata):
-    thesis_metadata["provider"] = {
-        "id": {
-            "value": "60461373",
-            "type": "IČO"},
-        "address": "Technická 1905/5, Dejvice, 160 00 Praha",
-        "contactPoint": "info@vscht.cz",
-        "name": {
-            "name": "Vysoká škola chemicko-technologická",
-            "lang": "cze"
-        },
-        "url": "https://www.vscht.cz/",
-        "provider": True,
-        "isPartOf": ["public_uni", "edu"]
-    }
-
+    thesis_metadata["provider"] = "univerzita_karlova"
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(thesis_metadata) == convert_dates(schema.load(convert_dates(thesis_metadata)).data)
 
@@ -1363,6 +1384,7 @@ def test_studyProgramme_load_4(thesis_metadata):
         schema = ThesisMetadataSchemaV1(strict=True)
         convert_dates(schema.load(convert_dates(thesis_metadata)).data)
 
+
 def test_studyProgramme_load_5(thesis_metadata):
     thesis_metadata["studyProgramme"] = {
         "name": "Chemie"
@@ -1370,8 +1392,6 @@ def test_studyProgramme_load_5(thesis_metadata):
 
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(thesis_metadata) == convert_dates(schema.load(convert_dates(thesis_metadata)).data)
-
-
 
 
 #######################################################################
@@ -1595,36 +1615,37 @@ def test_degreeGrantor_load_6(thesis_metadata):
         schema = ThesisMetadataSchemaV1(strict=True)
         convert_dates(schema.load(convert_dates(thesis_metadata)).data)
 
+
 def test_degreeGrantor_load_7(thesis_metadata):
     thesis_metadata["degreeGrantor"] = [
-            {
-                "language": "cze",
-                "university": {
-                    "name": "Univerzita Karlova",
-                    "faculties": [
-                        {
-                            "name": "Fakulta tělesné výchovy a sportu",
-                            "departments": [
-                                "Fyzioterapie"
-                            ]
-                        }
-                    ]
-                }
-            },
-            {
-                "language": "eng",
-                "university": {
-                    "name": "Charles University",
-                    "faculties": [
-                        {
-                            "name": "Faculty of Physical Education and Sport",
-                            "departments": [
-                                None
-                            ]
-                        }
-                    ]
-                }
+        {
+            "language": "cze",
+            "university": {
+                "name": "Univerzita Karlova",
+                "faculties": [
+                    {
+                        "name": "Fakulta tělesné výchovy a sportu",
+                        "departments": [
+                            "Fyzioterapie"
+                        ]
+                    }
+                ]
             }
-        ]
+        },
+        {
+            "language": "eng",
+            "university": {
+                "name": "Charles University",
+                "faculties": [
+                    {
+                        "name": "Faculty of Physical Education and Sport",
+                        "departments": [
+                            None
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(thesis_metadata) == convert_dates(schema.load(convert_dates(thesis_metadata)).data)

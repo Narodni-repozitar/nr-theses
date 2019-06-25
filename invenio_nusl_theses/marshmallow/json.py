@@ -118,7 +118,8 @@ class RightsMetadataSchemaV1(StrictKeysMixin):
     copyright = fields.List(Nested(MultilanguageSchemaV1))
 
 
-class SubjectMetadataSchemaV1(MultilanguageSchemaV1):
+class SubjectMetadataSchemaV1(StrictKeysMixin):
+    name = fields.List(Nested(MultilanguageSchemaV1))
     taxonomy = SanitizedUnicode(validate=validate.OneOf(["czenas",
                                                          "mesh",
                                                          "czmesh",
@@ -227,7 +228,7 @@ class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
     extent = SanitizedUnicode()
     abstract = fields.List(Nested(MultilanguageSchemaV1))
     rights = fields.Nested(RightsMetadataSchemaV1)
-    subject = fields.List(Nested(SubjectMetadataSchemaV1))
+    subject = fields.List(Nested(SubjectMetadataSchemaV1), required=True)
     creator = fields.List(Nested(CreatorSubSchemaV1), required=True)
     contributor = fields.List(Nested(ContributorSubSchemaV1))
     doctype = Nested((DoctypeSubSchemaV1), required=True)
