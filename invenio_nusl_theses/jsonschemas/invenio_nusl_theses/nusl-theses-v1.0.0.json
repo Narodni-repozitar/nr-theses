@@ -187,12 +187,19 @@
         "doctype": {
             "type": "object",
             "additionalProperties": false,
+            "required": [
+                "value",
+                "taxonomy"
+            ],
             "properties": {
-                "NUSL": {
-                    "$ref": "../nusl-common-v1.0.0.json#/definitions/doctype"
+                "taxonomy": {
+                    "type": "string"
                 },
-                "RIV": {
-                    "$ref": "../nusl-common-v1.0.0.json#/definitions/doctype"
+                "value": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },

@@ -242,7 +242,7 @@ class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
     defended = fields.Boolean(SanitizedUnicode)
     studyProgramme = Nested(ProgrammeSubSchemaV1)
     studyField = Nested(FieldSubSchemaV1)
-    degreeGrantor = fields.List(Nested(DegreeGrantorSubSchemaV1), required=True) # TODO: Po lepším namapování změnit required na True a validate.Length(min=1)
+    degreeGrantor = fields.List(Nested(DegreeGrantorSubSchemaV1), required=True)
 
 
 class ThesisRecordSchemaV1(StrictKeysMixin):  # get - zobrazit
