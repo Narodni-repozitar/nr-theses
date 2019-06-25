@@ -18,10 +18,7 @@ from invenio_records_rest.schemas.fields import PersistentIdentifier, SanitizedU
 from marshmallow import fields, validate, ValidationError, pre_load, post_load
 from pycountry import languages, countries
 
-from invenio_nusl_common.marshmallow import MultilanguageSchemaV1, ValueTypeSchemaV1, NUSLDoctypeSchemaV1, \
-    OrganizationSchemaV1, RIVDoctypeSchemaV1
-
-
+from invenio_nusl_common.marshmallow import MultilanguageSchemaV1, ValueTypeSchemaV1
 ########################################################################
 #                 IMPORT VALIDATION DATA                               #
 ########################################################################
@@ -238,7 +235,7 @@ class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
     note = fields.List(SanitizedUnicode())
     accessibility = fields.List(Nested(MultilanguageSchemaV1))
     accessRights = SanitizedUnicode(validate=validate.OneOf(["open", "embargoed", "restricted", "metadata_only"]))
-    provider = SanitizedUnicode()
+    provider = SanitizedUnicode() #TODO: dodělat validaci na providera viz csv v NUSL_schemas
     defended = fields.Boolean(SanitizedUnicode)
     studyProgramme = Nested(ProgrammeSubSchemaV1)
     studyField = Nested(FieldSubSchemaV1)
