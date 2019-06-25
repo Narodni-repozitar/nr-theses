@@ -233,7 +233,7 @@ class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
     subject = fields.List(Nested(SubjectMetadataSchemaV1))
     creator = fields.List(Nested(CreatorSubSchemaV1), required=True)
     contributor = fields.List(Nested(ContributorSubSchemaV1))
-    doctype = fields.List(Nested(DoctypeSubSchemaV1), required=False)  # TODO: required změnit na True
+    doctype = Nested((DoctypeSubSchemaV1), required=True)
     subtitle = fields.List(Nested(MultilanguageSchemaV1))
     note = fields.List(SanitizedUnicode())
     accessibility = fields.List(Nested(MultilanguageSchemaV1))
