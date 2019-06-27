@@ -273,7 +273,10 @@
                         "aditionalProperties": false,
                         "properties": {
                             "name": {
-                                "type": "string"
+                                "type": "array",
+                                "items": {
+                                    "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
+                                }
                             },
                             "faculties": {
                                 "type": "array",
@@ -282,21 +285,21 @@
                                     "additionalProperties": false,
                                     "properties": {
                                         "name": {
-                                            "type": "string"
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
+                                            }
                                         },
                                         "departments": {
                                             "type": "array",
                                             "items": {
-                                                "type": "string"
+                                                "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
                                             }
                                         }
                                     }
                                 }
                             }
                         }
-                    },
-                    "language": {
-                        "type": "string"
                     }
                 }
             }
@@ -340,7 +343,6 @@
         "identifier",
         "dateAccepted",
         "title",
-        "subject",
         "creator",
         "doctype",
         "id",

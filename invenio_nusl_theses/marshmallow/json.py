@@ -133,7 +133,7 @@ class SubjectMetadataSchemaV1(StrictKeysMixin):
                                                          "phffuk",
                                                          "ph",
                                                          "lcsh"]))
-    id = SanitizedUnicode() #TODO: Dodělat MEDNAS: http://www.medvik.cz/link/nlk20040148348; http://www.medvik.cz/link/ + id z nušl
+    id = SanitizedUnicode()  # TODO: Dodělat MEDNAS: http://www.medvik.cz/link/nlk20040148348; http://www.medvik.cz/link/ + id z nušl
 
     @pre_load()
     def lower_taxonomy(self, data):
@@ -171,8 +171,24 @@ class FieldSubSchemaV1(StrictKeysMixin):
     code = SanitizedUnicode(validate=validate_field_code)
     name = SanitizedUnicode(validate=validate_field_name)
 
+    @pre_load()
+    def standardize_name(self, data):
+        FIELDS = {
+            "Cizí jazyk pro evropský a mezinárodní obchod-ruský jazyk": "Cizí jazyk pro evropský a mezinárodní obchod",
+            "Ošetřovatelství ve vybraných klinických oborech - modul chirurgie":"Ošetřovatelství ve vybraných klinických oborech"
+        }
+        if "name" in data:
+            data["name"] = FIELDS.get(data["name"], data["name"])
+
     @post_load()
     def validate_code_name_fit(self, data):  # TODO: Dát do jednoho společného kódu
+        if ("name" in data) and ("code" not in data):
+            codes_names = import_csv("field.csv", 0, 2)
+            index = codes_names[1].index(data["name"])
+            code = codes_names[0][index]
+            data["code"] = code
+            return data
+
         if data.get("code") and data.get("name"):
             codes_names = import_csv("field.csv", 0, 2)
             programme_code = data["code"]
@@ -183,33 +199,74 @@ class FieldSubSchemaV1(StrictKeysMixin):
 
 
 class FacultySubSchemaV1(StrictKeysMixin):
-    name = SanitizedUnicode(required=True)
-    departments = fields.List(SanitizedUnicode(allow_none=True))
+    name = fields.List(Nested(MultilanguageSchemaV1))
+    departments = fields.List(Nested(MultilanguageSchemaV1), allow_none=True)
 
 
 class UniversitySubSchemaV1(StrictKeysMixin):
-    name = SanitizedUnicode(required=True)
+    name = fields.List(Nested(MultilanguageSchemaV1))
     faculties = fields.List(Nested(FacultySubSchemaV1))
+
+    @pre_load()
+    def standardize_name(self, data):
+        FACULTIES = {
+            "Filmová a televizní fakulta AMU": "Filmová a televizní fakulta",
+            "Divadelní fakulta AMU": "Divadelní fakulta",
+            "Hudební a taneční fakulta AMU": "Hudební a taneční fakulta",
+            "Hudební fakulta AMU": "Hudební fakulta",
+            "Stavební fakulta": "Fakulta stavební"
+        }
+        if "faculties" in data:
+            faculties = []
+            for faculty in data["faculties"]:
+                names = []
+                for fac_name in faculty["name"]:
+                    fac_name["name"] = FACULTIES.get(fac_name["name"], fac_name["name"])
+                    names.append(fac_name)
+                faculty["name"] = names
+                faculties.append(faculty)
+            data["faculties"] = faculties
+        return data
 
 
 class DegreeGrantorSubSchemaV1(StrictKeysMixin):
     university = Nested(UniversitySubSchemaV1, required=True)
-    language = SanitizedUnicode(validate=validate_language)
+
+    @pre_load()
+    def standardize_name(self, data):
+        UNIVERSITIES = {
+            "Mendelova univerzita": "Mendelova univerzita v Brně",
+            "Mendelova zemědělská a lesnická univerzita": "Mendelova univerzita v Brně",
+            "Vysoká škola zemědělská v Brně": "Mendelova univerzita v Brně",
+            "Vysoká škola zemědělská a lesnická v Brně": "Mendelova univerzita v Brně",
+            "Mendelova univerzita (Brno)": "Mendelova univerzita v Brně"
+        }
+        names = []
+        for uni_name in data["university"]["name"]:
+            uni_name["name"] = UNIVERSITIES.get(uni_name["name"], uni_name["name"])
+            names.append(uni_name)
+        data["university"]["name"] = names
+        return data
 
     @post_load()
     def validate_university_name(self, data):
-        if data["language"] == "cze":
-            imported_data = import_csv("universities.csv", 0, 1)[0]
-            if data["university"]["name"] not in imported_data:
-                raise ValidationError("The University name is not valid")
+        for uni_name in data["university"]["name"]:
+            if uni_name["lang"] == "cze":
+                imported_data = import_csv("universities.csv", 0, 1)[0]
+                universities = [university.lower() for university in imported_data]
+                name = uni_name["name"].lower()
+                if name not in universities:
+                    raise ValidationError("The University name is not valid")
 
     @post_load()
     def validate_faculty_name(self, data):
-        if data["language"] == "cze":
-            imported_data = import_csv("faculties.csv", 0, 1)[0]
+        if "faculties" in data["university"]:
             for faculty in data["university"]["faculties"]:
-                if faculty["name"] not in imported_data:
-                    raise ValidationError("The Faculty name is not valid")
+                for fac_name in faculty["name"]:
+                    if fac_name["lang"] == "cze":
+                        imported_data = import_csv("faculties.csv", 0, 1)[0]
+                        if fac_name["name"] not in imported_data:
+                            raise ValidationError("The Faculty name is not valid")
 
 
 #########################################################################
@@ -220,7 +277,7 @@ class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
 
     id = fields.Integer(required=True)
     language = fields.List(SanitizedUnicode(required=True,
-                                            validate=validate_language))
+                                            validate=validate_language), required=True)
     identifier = fields.List(Nested(ValueTypeSchemaV1), required=True)  # TODO: Dodělat validaci na type
     dateAccepted = fields.Date(required=True)
     modified = fields.DateTime()
@@ -228,7 +285,7 @@ class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
     extent = SanitizedUnicode()
     abstract = fields.List(Nested(MultilanguageSchemaV1))
     rights = fields.Nested(RightsMetadataSchemaV1)
-    subject = fields.List(Nested(SubjectMetadataSchemaV1), required=True)
+    subject = fields.List(Nested(SubjectMetadataSchemaV1))  # TODO: udělat required
     creator = fields.List(Nested(CreatorSubSchemaV1), required=True)
     contributor = fields.List(Nested(ContributorSubSchemaV1))
     doctype = Nested((DoctypeSubSchemaV1), required=True)
@@ -236,8 +293,8 @@ class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
     note = fields.List(SanitizedUnicode())
     accessibility = fields.List(Nested(MultilanguageSchemaV1))
     accessRights = SanitizedUnicode(validate=validate.OneOf(["open", "embargoed", "restricted", "metadata_only"]))
-    provider = SanitizedUnicode() #TODO: dodělat validaci na providera viz csv v NUSL_schemas
-    defended = fields.Boolean(SanitizedUnicode)
+    provider = SanitizedUnicode()  # TODO: dodělat validaci na providera viz csv v NUSL_schemas
+    defended = fields.Boolean()
     studyProgramme = Nested(ProgrammeSubSchemaV1)
     studyField = Nested(FieldSubSchemaV1)
     degreeGrantor = fields.List(Nested(DegreeGrantorSubSchemaV1), required=True)

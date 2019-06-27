@@ -149,14 +149,26 @@ def thesis_metadata():
         },
         "degreeGrantor": [
             {
-                "language": "cze",
                 "university": {
-                    "name": "Vysoká škola chemicko-technologická v Praze",
+                    "name": [
+                        {
+                            "name": "Vysoká škola chemicko-technologická v Praze",
+                            "lang": "cze"
+                        }
+                    ],
                     "faculties": [
                         {
-                            "name": "Fakulta chemické technologie",
+                            "name": [
+                                {
+                                    "name": "Fakulta chemické technologie",
+                                    "lang": "cze"
+                                }
+                            ],
                             "departments": [
-                                "Ústav organické technologie"
+                                {
+                                    "name": "Ústav organické technologie",
+                                    "lang": "cze"
+                                }
                             ]
                         }
                     ]
@@ -1470,14 +1482,26 @@ def test_studyField_load_5(thesis_metadata):
 def test_degreeGrantor_dump_1(thesis_metadata):
     thesis_metadata["degreeGrantor"] = [
         {
-            "language": "cze",
             "university": {
-                "name": "Vysoká škola chemicko-technologická",
+                "name": [
+                    {
+                        "name": "Vysoká škola chemicko-technologická v Praze",
+                        "lang": "cze"
+                    }
+                ],
                 "faculties": [
                     {
-                        "name": "Fakulta chemické technologie",
+                        "name": [
+                            {
+                                "name": "Fakulta chemické technologie",
+                                "lang": "cze"
+                            }
+                        ],
                         "departments": [
-                            "Ústav organické technologie"
+                            {
+                                "name": "Ústav organické technologie",
+                                "lang": "cze"
+                            }
                         ]
                     }
                 ]
@@ -1503,14 +1527,26 @@ def test_degreeGrantor_dump_3(thesis_metadata):
 def test_degreeGrantor_load_1(thesis_metadata):
     thesis_metadata["degreeGrantor"] = [
         {
-            "language": "cze",
             "university": {
-                "name": "Vysoká škola chemicko-technologická v Praze",
+                "name": [
+                    {
+                        "name": "Vysoká škola chemicko-technologická v Praze",
+                        "lang": "cze"
+                    }
+                ],
                 "faculties": [
                     {
-                        "name": "Fakulta chemické technologie",
+                        "name": [
+                            {
+                                "name": "Fakulta chemické technologie",
+                                "lang": "cze"
+                            }
+                        ],
                         "departments": [
-                            "Ústav organické technologie"
+                            {
+                                "name": "Ústav organické technologie",
+                                "lang": "cze"
+                            }
                         ]
                     }
                 ]
@@ -1524,14 +1560,26 @@ def test_degreeGrantor_load_1(thesis_metadata):
 def test_degreeGrantor_load_2(thesis_metadata):
     thesis_metadata["degreeGrantor"] = [
         {
-            "language": "cze",
             "university": {
-                "name": "Vysoká škola chemicko-technologická",
+                "name": [
+                    {
+                        "name": "blbost",
+                        "lang": "cze"
+                    }
+                ],
                 "faculties": [
                     {
-                        "name": "Fakulta chemické technologie",
+                        "name": [
+                            {
+                                "name": "Fakulta chemické technologie",
+                                "lang": "cze"
+                            }
+                        ],
                         "departments": [
-                            "Ústav organické technologie"
+                            {
+                                "name": "Ústav organické technologie",
+                                "lang": "cze"
+                            }
                         ]
                     }
                 ]
@@ -1546,14 +1594,26 @@ def test_degreeGrantor_load_2(thesis_metadata):
 def test_degreeGrantor_load_3(thesis_metadata):
     thesis_metadata["degreeGrantor"] = [
         {
-            "language": "cze",
             "university": {
-                "name": "Vysoká škola chemicko-technologická",
+                "name": [
+                    {
+                        "name": "Vysoká škola chemicko-technologická v Praze",
+                        "lang": "hjk"
+                    }
+                ],
                 "faculties": [
                     {
-                        "name": "Fakulta chemické technologie",
+                        "name": [
+                            {
+                                "name": "Fakulta chemické technologie",
+                                "lang": "cze"
+                            }
+                        ],
                         "departments": [
-                            "Ústav organické technologie"
+                            {
+                                "name": "Ústav organické technologie",
+                                "lang": "cze"
+                            }
                         ]
                     }
                 ]
@@ -1568,45 +1628,46 @@ def test_degreeGrantor_load_3(thesis_metadata):
 def test_degreeGrantor_load_4(thesis_metadata):
     thesis_metadata["degreeGrantor"] = [
         {
-            "language": "cz",
             "university": {
-                "name": "Vysoká škola chemicko-technologická v Praze",
+                "name": [
+                    {
+                        "name": "Vysoká škola chemicko-technologická v Praze",
+                        "lang": "cze"
+                    }
+                ],
                 "faculties": [
                     {
-                        "name": "Fakulta chemické technologie",
-                        "departments": [
-                            "Ústav organické technologie"
+                        "name": [
+                            {
+                                "name": "Fakulta chemické technologie",
+                                "lang": "cze"
+                            }
                         ]
                     }
                 ]
             }
         }
     ]
-    with pytest.raises(ValidationError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        convert_dates(schema.load(convert_dates(thesis_metadata)).data)
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) == convert_dates(schema.load(convert_dates(thesis_metadata)).data)
 
 
 def test_degreeGrantor_load_5(thesis_metadata):
     thesis_metadata["degreeGrantor"] = [
         {
-            "language": "cze",
             "university": {
-                "name": "Vysoká škola chemicko-technologická v Praze",
-                "faculties": [
+                "name": [
                     {
-                        "name": "Neexistující fakulta",
-                        "departments": [
-                            "Ústav organické technologie"
-                        ]
+                        "name": "Vysoká škola chemicko-technologická v Praze",
+                        "lang": "cze"
                     }
                 ]
             }
         }
     ]
-    with pytest.raises(ValidationError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        convert_dates(schema.load(convert_dates(thesis_metadata)).data)
+
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(thesis_metadata) == convert_dates(schema.load(convert_dates(thesis_metadata)).data)
 
 
 def test_degreeGrantor_load_6(thesis_metadata):
@@ -1616,36 +1677,4 @@ def test_degreeGrantor_load_6(thesis_metadata):
         convert_dates(schema.load(convert_dates(thesis_metadata)).data)
 
 
-def test_degreeGrantor_load_7(thesis_metadata):
-    thesis_metadata["degreeGrantor"] = [
-        {
-            "language": "cze",
-            "university": {
-                "name": "Univerzita Karlova",
-                "faculties": [
-                    {
-                        "name": "Fakulta tělesné výchovy a sportu",
-                        "departments": [
-                            "Fyzioterapie"
-                        ]
-                    }
-                ]
-            }
-        },
-        {
-            "language": "eng",
-            "university": {
-                "name": "Charles University",
-                "faculties": [
-                    {
-                        "name": "Faculty of Physical Education and Sport",
-                        "departments": [
-                            None
-                        ]
-                    }
-                ]
-            }
-        }
-    ]
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(thesis_metadata) == convert_dates(schema.load(convert_dates(thesis_metadata)).data)
+
