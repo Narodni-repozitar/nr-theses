@@ -19,10 +19,12 @@ from marshmallow import fields, validate, ValidationError, pre_load, post_load
 from pycountry import languages, countries
 
 from invenio_nusl_common.marshmallow import MultilanguageSchemaV1, ValueTypeSchemaV1
+from invenio_nusl_common.marshmallow.json import DoctypeSubSchemaV1
+from invenio_nusl_theses.marshmallow.data.fields_dict import FIELDS
 ########################################################################
 #                 IMPORT VALIDATION DATA                               #
 ########################################################################
-from invenio_nusl_common.marshmallow.json import DoctypeSubSchemaV1
+
 
 
 @functools.lru_cache()
@@ -78,6 +80,10 @@ def validate_programme_name(name):
 
 def validate_field_name(name):
     if name not in import_csv("field.csv", 0, 2)[1]:
+        if not os.path.exists('/tmp/import-nusl-theses'):
+            os.makedirs('/tmp/import-nusl-theses')
+        with open("/tmp/import-nusl-theses/wrong_fields.txt", "a") as fp:
+            fp.write(f"{name}\n")
         raise ValidationError('The study field name is not valid')
 
 
@@ -173,10 +179,6 @@ class FieldSubSchemaV1(StrictKeysMixin):
 
     @pre_load()
     def standardize_name(self, data):
-        FIELDS = {
-            "Cizí jazyk pro evropský a mezinárodní obchod-ruský jazyk": "Cizí jazyk pro evropský a mezinárodní obchod",
-            "Ošetřovatelství ve vybraných klinických oborech - modul chirurgie":"Ošetřovatelství ve vybraných klinických oborech"
-        }
         if "name" in data:
             data["name"] = FIELDS.get(data["name"], data["name"])
 
