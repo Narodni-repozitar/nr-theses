@@ -13,6 +13,7 @@ import csv
 import functools
 import os
 
+from invenio_nusl_common.marshmallow_utils import marshmallow_remove_required
 from invenio_records_rest.schemas import Nested, StrictKeysMixin
 from invenio_records_rest.schemas.fields import PersistentIdentifier, SanitizedUnicode
 from marshmallow import fields, validate, ValidationError, pre_load, post_load
@@ -21,10 +22,11 @@ from pycountry import languages, countries
 from invenio_nusl_common.marshmallow import MultilanguageSchemaV1, ValueTypeSchemaV1
 from invenio_nusl_common.marshmallow.json import DoctypeSubSchemaV1
 from invenio_nusl_theses.marshmallow.data.fields_dict import FIELDS
+
+
 ########################################################################
 #                 IMPORT VALIDATION DATA                               #
 ########################################################################
-
 
 
 @functools.lru_cache()
@@ -332,3 +334,7 @@ class ThesisRecordSchemaV1(StrictKeysMixin):  # get - zobrazit
     updated = fields.Str(dump_only=True)
     links = fields.Dict(dump_only=True)
     id = PersistentIdentifier()
+
+
+ThesisMetadataStagingSchemaV1 = marshmallow_remove_required(ThesisMetadataSchemaV1)
+ThesisRecordStagingSchemaV1 = marshmallow_remove_required(ThesisRecordSchemaV1)

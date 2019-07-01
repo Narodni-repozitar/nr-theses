@@ -67,18 +67,23 @@ setup(
     include_package_data=True,
     platforms='any',
     entry_points={
+        'invenio_base.apps': [
+            'theses = invenio_nusl_theses:InvenioNUSLTheses',
+        ],
+        'invenio_base.api_apps': [
+            'theses = invenio_nusl_theses:InvenioNUSLTheses',
+        ],
         'console_scripts': [
-
         ],
         'invenio_base.blueprints': [
         ],
-
         'invenio_config.module': [
         ],
         'invenio_i18n.translations': [
         ],
         'invenio_jsonschemas.schemas': [
-            'invenio_nusl_theses = invenio_nusl_theses.jsonschemas'],
+            'invenio_nusl_theses = invenio_nusl_theses.jsonschemas'
+        ],
         'invenio_search.mappings': [
             'invenio_nusl_theses =invenio_nusl_theses.mappings'
         ]
