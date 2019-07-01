@@ -300,7 +300,7 @@ class DegreeGrantorSubSchemaV1(StrictKeysMixin):
 class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
     """Schema for the record metadata."""
 
-    id = fields.Integer(required=True)
+    id = SanitizedUnicode(required=True)
     language = fields.List(SanitizedUnicode(required=True,
                                             validate=validate_language), required=True)
     identifier = fields.List(Nested(ValueTypeSchemaV1), required=True)  # TODO: Dodělat validaci na type
