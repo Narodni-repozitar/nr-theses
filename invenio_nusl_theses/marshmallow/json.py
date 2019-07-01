@@ -162,6 +162,27 @@ class ProgrammeSubSchemaV1(StrictKeysMixin):
     code = SanitizedUnicode(validate=validate_programme_code)
     name = SanitizedUnicode(validate=validate_programme_name)
 
+
+
+    @pre_load()
+    def standardize_name(self, data):
+        STUDY_PROGRAMME = {
+            'Zootechnics': "Zootechnika",
+            'Hudebního umění': 'Hudební umění',
+            'Biochemistry': "Biochemie",
+            'Biology': "Biologie",
+            "Applied Informatics": "Aplikovaná informatika",
+            'Economics and Management': "Ekonomika a management",
+            'Teorie filmové a multimediální tvorby': 'Teorie a praxe audiovizuální tvorby',
+            'Botany': 'Botanika',
+            'Physiology and Immunology': 'Fyziologie a imunologie',
+            'Molecular and Cell Biology': "Molekulární a buněčná biologie",
+            "Finance a účetnictví": "Finance a účetnictví"
+        }
+
+        if "name" in data:
+            data["name"] = STUDY_PROGRAMME.get(data["name"], data["name"])
+
     @post_load()
     def validate_code_name_fit(self, data):  # TODO: Dát do jednoho společného kódu
         if data.get("code") and data.get("name"):
