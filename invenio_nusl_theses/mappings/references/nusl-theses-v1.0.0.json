@@ -68,13 +68,10 @@
                     "type": "nested",
                     "properties": {
                         "name": {
-                            "type": "keyword"
+                            "$ref": "./nusl-common-v1.0.0.json#/multilanguage"
                         },
                         "taxonomy": {
                             "type": "keyword"
-                        },
-                        "lang": {
-                            "$ref": "./nusl-common-v1.0.0.json#/lang"
                         },
                         "id": {
                             "type": "keyword"
@@ -88,15 +85,7 @@
                             "type": "text"
                         },
                         "id": {
-                            "type": "object",
-                            "properties": {
-                                "value": {
-                                    "type": "keyword"
-                                },
-                                "type": {
-                                    "type": "keyword"
-                                }
-                            }
+                            "$ref": "./nusl-common-v1.0.0.json#/valueType"
                         }
                     }
                 },
@@ -107,15 +96,7 @@
                             "type": "text"
                         },
                         "id": {
-                            "type": "object",
-                            "properties": {
-                                "value": {
-                                    "type": "keyword"
-                                },
-                                "type": {
-                                    "type": "keyword"
-                                }
-                            }
+                            "$ref": "./nusl-common-v1.0.0.json#/valueType"
                         },
                         "role": {
                             "type": "text"
@@ -125,16 +106,16 @@
                 "doctype": {
                     "type": "nested",
                     "properties": {
-                        "NUSL": {
-                            "$ref": "./nusl-common-v1.0.0.json#/doctype"
+                        "taxonomy": {
+                            "type": "keyword"
                         },
-                        "RIV": {
-                            "$ref": "./nusl-common-v1.0.0.json#/doctype"
+                        "value": {
+                            "type": "keyword"
                         }
                     }
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "keyword"
                 },
                 "subtitle": {
                     "$ref": "./nusl-common-v1.0.0.json#/multilanguage"
@@ -149,80 +130,38 @@
                     "type": "keyword"
                 },
                 "provider": {
-                    "type": "nested",
-                    "properties": {
-                        "id": {
-                            "type": "object",
-                            "properties": {
-                                "value": {
-                                    "type": "keyword"
-                                },
-                                "type": {
-                                    "type": "keyword"
-                                }
-                            }
-                        },
-                        "address": {
-                            "type": "text",
-                            "fields": {
-                                "keyword": {
-                                    "type": "keyword"
-                                }
-                            }
-                        },
-                        "contactPoint": {
-                            "type": "keyword"
-                        },
-                        "name": {
-                            "$ref": "./nusl-common-v1.0.0.json#/multilanguage"
-                        },
-                        "url": {
-                            "type": "keyword"
-                        },
-                        "provider": {
-                            "type": "boolean"
-                        },
-                        "isPartOf": {
-                            "type": "keyword"
-                        }
-                    }
+                    "type": "keyword"
                 },
                 "defended": {
                     "type": "boolean"
                 },
                 "studyProgramme": {
-                    "type": "object",
-                    "properties": {
-                        "code": {
-                            "type": "keyword"
-                        },
-                        "name": {
-                            "type": "text"
-                        }
-                    }
+                    "$ref": "./nusl-common-v1.0.0.json#/codeName"
                 },
                 "studyField": {
-                    "type": "object",
-                    "properties": {
-                        "code": {
-                            "type": "keyword"
-                        },
-                        "name": {
-                            "type": "text"
-                        }
-                    }
+                    "$ref": "./nusl-common-v1.0.0.json#/codeName"
                 },
                 "degreeGrantor": {
-                    "type": "object",
+                    "type": "nested",
                     "properties": {
                         "university": {
-                            "$ref": "./nusl-common-v1.0.0.json#/multilanguage"
-                        },
-                        "faculty": {
-                            "$ref": "./nusl-common-v1.0.0.json#/multilanguage"
-                        },
-                        "department": {
-                            "$ref": "./nusl-common-v1.0.0.json#/multilanguage"
+                            "type": "nested",
+                            "properties": {
+                                "name": {
+                                    "$ref": "./nusl-common-v1.0.0.json#/multilanguage"
+                                },
+                                "faculties": {
+                                    "type": "nested",
+                                    "properties": {
+                                        "name": {
+                                            "$ref": "./nusl-common-v1.0.0.json#/multilanguage"
+                                        },
+                                        "departments": {
+                                            "$ref": "./nusl-common-v1.0.0.json#/multilanguage"
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }

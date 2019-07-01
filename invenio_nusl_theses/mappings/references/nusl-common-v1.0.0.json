@@ -17,19 +17,40 @@
             }
         }
     },
-    "lang": {
-        "type": "keyword",
-        "ignore_above": 3
-    },
-    "doctype": {
+    "valueType": {
         "type": "nested",
         "properties": {
-            "bterm": {
-                "type": "keyword"
+            "value": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                }
             },
-            "term": {
+            "type": {
                 "type": "keyword"
             }
         }
+    },
+    "codeName": {
+        "type": "nested",
+        "properties": {
+            "name": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "code": {
+                "type": "keyword"
+            }
+        }
+    },
+    "lang": {
+        "type": "keyword",
+        "ignore_above": 3
     }
 }
