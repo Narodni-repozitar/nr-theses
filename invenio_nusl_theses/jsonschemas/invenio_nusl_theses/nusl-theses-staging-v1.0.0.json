@@ -5,6 +5,9 @@
     "title": "Staging collection for NUSL theses",
     "type": "object",
     "properties": {
+        "$schema": {
+            "type": "string"
+        },
         "language": {
             "type": "array",
             "items": {

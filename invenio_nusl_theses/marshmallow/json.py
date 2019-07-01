@@ -13,6 +13,8 @@ import csv
 import functools
 import os
 
+from invenio_explicit_acls.marshmallow import SchemaEnforcingMixin
+
 from invenio_nusl_common.marshmallow_utils import marshmallow_remove_required
 from invenio_records_rest.schemas import Nested, StrictKeysMixin
 from invenio_records_rest.schemas.fields import PersistentIdentifier, SanitizedUnicode
@@ -21,6 +23,7 @@ from pycountry import languages, countries
 
 from invenio_nusl_common.marshmallow import MultilanguageSchemaV1, ValueTypeSchemaV1
 from invenio_nusl_common.marshmallow.json import DoctypeSubSchemaV1
+from invenio_nusl_theses.api import ThesisRecord
 from invenio_nusl_theses.marshmallow.data.fields_dict import FIELDS
 
 
@@ -297,8 +300,11 @@ class DegreeGrantorSubSchemaV1(StrictKeysMixin):
 #########################################################################
 #                     Main schema                                       #
 #########################################################################
-class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
+class ThesisMetadataSchemaV1(SchemaEnforcingMixin, StrictKeysMixin):  # modifikace
     """Schema for the record metadata."""
+
+    ALLOWED_SCHEMAS = ThesisRecord.ALLOWED_SCHEMAS
+    PREFERRED_SCHEMA = ThesisRecord.PREFERRED_SCHEMA
 
     id = SanitizedUnicode(required=True)
     language = fields.List(SanitizedUnicode(required=True,
