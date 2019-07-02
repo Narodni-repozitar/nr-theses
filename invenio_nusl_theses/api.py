@@ -68,4 +68,4 @@ class ThesisAPI:
                 db_record = existing_record
 
         db.session.commit()
-        # self.indexer.index(db_record)
+        self.indexer.index(db_record)

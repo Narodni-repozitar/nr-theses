@@ -29,7 +29,7 @@
                 },
                 "modified": {
                     "type": "date",
-                    "format": "date"
+                    "format": "date_time"
                 },
                 "title": {
                     "type": "nested",
@@ -92,12 +92,18 @@
                         "copyright": {
                             "type": "nested",
                             "properties": {
+                                "name": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword",
+                                            "ignore_above": 100
+                                        }
+                                    }
+                                },
                                 "lang": {
                                     "type": "keyword",
                                     "ignore_above": 3
-                                },
-                                "name": {
-                                    "type": "text"
                                 }
                             }
                         }
@@ -107,14 +113,25 @@
                     "type": "nested",
                     "properties": {
                         "name": {
-                            "type": "keyword"
+                            "type": "nested",
+                            "properties": {
+                                "name": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword",
+                                            "ignore_above": 100
+                                        }
+                                    }
+                                },
+                                "lang": {
+                                    "type": "keyword",
+                                    "ignore_above": 3
+                                }
+                            }
                         },
                         "taxonomy": {
                             "type": "keyword"
-                        },
-                        "lang": {
-                            "type": "keyword",
-                            "ignore_above": 3
                         },
                         "id": {
                             "type": "keyword"
@@ -128,10 +145,15 @@
                             "type": "text"
                         },
                         "id": {
-                            "type": "object",
+                            "type": "nested",
                             "properties": {
                                 "value": {
-                                    "type": "keyword"
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword"
+                                        }
+                                    }
                                 },
                                 "type": {
                                     "type": "keyword"
@@ -147,10 +169,15 @@
                             "type": "text"
                         },
                         "id": {
-                            "type": "object",
+                            "type": "nested",
                             "properties": {
                                 "value": {
-                                    "type": "keyword"
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword"
+                                        }
+                                    }
                                 },
                                 "type": {
                                     "type": "keyword"
@@ -163,19 +190,34 @@
                     }
                 },
                 "doctype": {
-                    "type": "keyword"
+                    "type": "nested",
+                    "properties": {
+                        "taxonomy": {
+                            "type": "keyword"
+                        },
+                        "value": {
+                            "type": "keyword"
+                        }
+                    }
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "keyword"
                 },
                 "subtitle": {
                     "type": "nested",
                     "properties": {
-                        "lang": {
-                            "type": "keyword"
-                        },
                         "name": {
-                            "type": "text"
+                            "type": "text",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword",
+                                    "ignore_above": 100
+                                }
+                            }
+                        },
+                        "lang": {
+                            "type": "keyword",
+                            "ignore_above": 3
                         }
                     }
                 },
@@ -185,11 +227,18 @@
                 "accessibility": {
                     "type": "nested",
                     "properties": {
-                        "lang": {
-                            "type": "keyword"
-                        },
                         "name": {
-                            "type": "text"
+                            "type": "text",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword",
+                                    "ignore_above": 100
+                                }
+                            }
+                        },
+                        "lang": {
+                            "type": "keyword",
+                            "ignore_above": 3
                         }
                     }
                 },
@@ -197,89 +246,120 @@
                     "type": "keyword"
                 },
                 "provider": {
-                    "type": "text"
+                    "type": "keyword"
                 },
                 "defended": {
                     "type": "boolean"
                 },
                 "studyProgramme": {
-                    "type": "object",
+                    "type": "nested",
                     "properties": {
+                        "name": {
+                            "type": "text",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword"
+                                }
+                            }
+                        },
                         "code": {
                             "type": "keyword"
-                        },
-                        "name": {
-                            "type": "text"
                         }
                     }
                 },
                 "studyField": {
-                    "type": "object",
+                    "type": "nested",
                     "properties": {
+                        "name": {
+                            "type": "text",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword"
+                                }
+                            }
+                        },
                         "code": {
                             "type": "keyword"
-                        },
-                        "name": {
-                            "type": "text"
                         }
                     }
                 },
                 "degreeGrantor": {
-                    "type": "object",
+                    "type": "nested",
                     "properties": {
                         "university": {
                             "type": "nested",
                             "properties": {
                                 "name": {
-                                    "type": "text",
-                                    "fields": {
-                                        "keyword": {
+                                    "type": "nested",
+                                    "properties": {
+                                        "name": {
+                                            "type": "text",
+                                            "fields": {
+                                                "keyword": {
+                                                    "type": "keyword",
+                                                    "ignore_above": 100
+                                                }
+                                            }
+                                        },
+                                        "lang": {
                                             "type": "keyword",
-                                            "ignore_above": 100
+                                            "ignore_above": 3
                                         }
                                     }
                                 },
-                                "lang": {
-                                    "type": "keyword",
-                                    "ignore_above": 3
+                                "faculties": {
+                                    "type": "nested",
+                                    "properties": {
+                                        "name": {
+                                            "type": "nested",
+                                            "properties": {
+                                                "name": {
+                                                    "type": "text",
+                                                    "fields": {
+                                                        "keyword": {
+                                                            "type": "keyword",
+                                                            "ignore_above": 100
+                                                        }
+                                                    }
+                                                },
+                                                "lang": {
+                                                    "type": "keyword",
+                                                    "ignore_above": 3
+                                                }
+                                            }
+                                        },
+                                        "departments": {
+                                            "type": "nested",
+                                            "properties": {
+                                                "name": {
+                                                    "type": "text",
+                                                    "fields": {
+                                                        "keyword": {
+                                                            "type": "keyword",
+                                                            "ignore_above": 100
+                                                        }
+                                                    }
+                                                },
+                                                "lang": {
+                                                    "type": "keyword",
+                                                    "ignore_above": 3
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
+                        }
+                    }
+                },
+                "validations": {
+                    "type": "nested",
+                    "properties": {
+                        "valid": {
+                            "type": "boolean"
                         },
-                        "faculty": {
-                            "type": "nested",
-                            "properties": {
-                                "name": {
-                                    "type": "text",
-                                    "fields": {
-                                        "keyword": {
-                                            "type": "keyword",
-                                            "ignore_above": 100
-                                        }
-                                    }
-                                },
-                                "lang": {
-                                    "type": "keyword",
-                                    "ignore_above": 3
-                                }
-                            }
-                        },
-                        "department": {
-                            "type": "nested",
-                            "properties": {
-                                "name": {
-                                    "type": "text",
-                                    "fields": {
-                                        "keyword": {
-                                            "type": "keyword",
-                                            "ignore_above": 100
-                                        }
-                                    }
-                                },
-                                "lang": {
-                                    "type": "keyword",
-                                    "ignore_above": 3
-                                }
-                            }
+                        "extra": {
+                            "type": "object"
                         }
                     }
                 }
