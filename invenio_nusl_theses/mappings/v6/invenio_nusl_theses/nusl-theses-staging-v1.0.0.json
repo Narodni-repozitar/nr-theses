@@ -1,6 +1,6 @@
 {
     "mappings": {
-        "nusl-theses-v1.0.0": {
+        "nusl-theses-staging-v1.0.0": {
             "date_detection": false,
             "numeric_detection": false,
             "dynamic": false,
