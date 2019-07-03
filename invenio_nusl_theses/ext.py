@@ -18,6 +18,10 @@ from invenio_nusl_theses.marshmallow import ThesisMetadataSchemaV1
 from invenio_nusl_theses.proxies import nusl_theses
 from . import config
 
+import logging
+
+log = logging.getLogger('nusl-theses')
+
 
 class InvenioNUSLTheses(object):
     """CIS theses repository extension."""
@@ -75,3 +79,14 @@ def validate_thesis(*args, record=None, **kwargs):
         # if set(e.field_names) - IGNORED_ERROR_FIELDS:
         #     raise
         # continue
+
+    # TODO: odchytnout tady dalsi exceptions ktere mohou vylitnout (json schema?) a vytvorit k nim spravne validations
+    except Exception as e:
+        log.exception('Unhandled exception in import. Please add exception handler for %s', type(e))
+        record["validations"] = {
+            "valid": False,
+            "extra": {
+                "reason": "Unhandled exception in validation",
+                "message": str(e)
+            }
+        }
