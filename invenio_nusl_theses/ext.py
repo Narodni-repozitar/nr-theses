@@ -9,8 +9,11 @@
 
 from __future__ import absolute_import, print_function
 
+import re
+
 from flask import Blueprint
 from invenio_explicit_acls.utils import convert_relative_schema_to_absolute
+import jsonschema
 from marshmallow import ValidationError
 
 from invenio_nusl_theses.api import ThesisAPI, ThesisRecord
@@ -70,17 +73,32 @@ def validate_thesis(*args, record=None, **kwargs):
 
     except ValidationError as e:
         record["validations"] = {
-            "valid": False
+            "valid": False,
+            "extra": {
+                "reason": "ValidationError",
+                "message": str(e)
+            }
         }
-        # TODO: do extra přihodit fieldy, které jsou špatně
-        # for field in e.field_names:
-        #     error_counts[field] += 1
-        #     error_documents[field].append(recid)
-        # if set(e.field_names) - IGNORED_ERROR_FIELDS:
-        #     raise
-        # continue
+
+    except ValueError as e:
+        record["validations"] = {
+            "valid": False,
+            "extra": {
+                "reason": "ValueError",
+                "message": str(e)
+            }
+        }
 
     # TODO: odchytnout tady dalsi exceptions ktere mohou vylitnout (json schema?) a vytvorit k nim spravne validations
+    except jsonschema.ValidationError as e:
+        record["validations"] = {
+            "valid": False,
+            "extra": {
+                "reason": "JSON-schema validation",
+                "message": re.sub(r'[\W_]+', ' ', e.message).strip()
+            }
+        }
+
     except Exception as e:
         log.exception('Unhandled exception in import. Please add exception handler for %s', type(e))
         record["validations"] = {

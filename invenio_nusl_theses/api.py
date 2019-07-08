@@ -53,7 +53,7 @@ class ThesisAPI:
                 pass
 
             if not existing_record:
-                db_record = ThesisRecord.create(record)
+                db_record = ThesisRecord.create(record)   #Zde dochází i k validaci přes signály z ext
             else:
                 # remove everything from the record except of id and pid - keep them
                 previous_id = existing_record['id']
@@ -68,4 +68,4 @@ class ThesisAPI:
                 db_record = existing_record
 
         db.session.commit()
-        self.indexer.index(db_record)
+        # self.indexer.index(db_record)

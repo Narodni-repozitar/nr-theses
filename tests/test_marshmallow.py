@@ -11,6 +11,7 @@ from tests.utils import convert_dates
 @pytest.fixture
 def thesis_metadata():
     return {
+        '$schema': 'https://nusl.cz/schemas/invenio_nusl_theses/nusl-theses-staging-v1.0.0.json',
         "language": [
             "CZE"
         ],
@@ -115,7 +116,7 @@ def thesis_metadata():
                 "vskp", "bakalarske_prace"
             ]
         },
-        "id": 1276327,
+        "id": "1276327",
         "subtitle": [
             {
                 "name": "Alternativní název",
@@ -181,13 +182,13 @@ def thesis_metadata():
 ########################################################################
 #                           Language                                   #
 ########################################################################
-def test_language_dump_1(thesis_metadata):
+def test_language_dump_1(app, thesis_metadata):
     thesis_metadata["language"] = ["CZE", "GER"]
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(thesis_metadata) == convert_dates(schema.dump(thesis_metadata).data)
 
 
-def test_language_load_1(thesis_metadata):
+def test_language_load_1(app, thesis_metadata):
     thesis_metadata["language"] = [
         "CZE", "GER"
     ]
@@ -195,7 +196,7 @@ def test_language_load_1(thesis_metadata):
     assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
 
 
-def test_language_load_2(thesis_metadata):
+def test_language_load_2(app, thesis_metadata):
     thesis_metadata["language"] = [
         "CZE", "blbost"
     ]
@@ -205,7 +206,7 @@ def test_language_load_2(thesis_metadata):
         result = schema.load(convert_dates(thesis_metadata))
 
 
-def test_language_load_3(thesis_metadata):
+def test_language_load_3(app, thesis_metadata):
     thesis_metadata["language"] = "CZE"
 
     with pytest.raises(ValidationError):
@@ -216,7 +217,7 @@ def test_language_load_3(thesis_metadata):
 ########################################################################
 #                           Identifier                                 #
 ########################################################################
-def test_identifier_dump_1(thesis_metadata):
+def test_identifier_dump_1(app, thesis_metadata):
     thesis_metadata["identifier"] = [{
         "value": "151515",
         "type": "nusl"
@@ -225,7 +226,7 @@ def test_identifier_dump_1(thesis_metadata):
     assert convert_dates(thesis_metadata) == convert_dates(schema.dump(thesis_metadata).data)
 
 
-def test_identifier_load_1(thesis_metadata):
+def test_identifier_load_1(app, thesis_metadata):
     thesis_metadata["identifier"] = [{
         "value": "151515",
         "type": "nusl"
@@ -235,7 +236,7 @@ def test_identifier_load_1(thesis_metadata):
     assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
 
 
-def test_identifier_load_2(thesis_metadata):
+def test_identifier_load_2(app, thesis_metadata):
     thesis_metadata["identifier"] = [{
         "value": "151515",
         "type": "nusl"
@@ -250,7 +251,7 @@ def test_identifier_load_2(thesis_metadata):
     assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
 
 
-def test_identifier_load_3(thesis_metadata):
+def test_identifier_load_3(app, thesis_metadata):
     del thesis_metadata["identifier"]
 
     with pytest.raises(ValidationError):
@@ -261,26 +262,26 @@ def test_identifier_load_3(thesis_metadata):
 ########################################################################
 #                           dateAccepted                               #
 ########################################################################
-def test_dateaccepted_dump_1(thesis_metadata):
+def test_dateaccepted_dump_1(app, thesis_metadata):
     thesis_metadata["dateAccepted"] = date(2019, 5, 19)
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(thesis_metadata) == schema.dump(thesis_metadata).data
 
 
-def test_dateaccepted_dump_2(thesis_metadata):
+def test_dateaccepted_dump_2(app, thesis_metadata):
     del thesis_metadata["dateAccepted"]
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(thesis_metadata) == schema.dump(thesis_metadata).data
 
 
-def test_dateaccepted_dump_3(thesis_metadata):
+def test_dateaccepted_dump_3(app, thesis_metadata):
     thesis_metadata["dateAccepted"] = "blbost"
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
         schema.dump(thesis_metadata)
 
 
-def test_dateaccepted_load_1(thesis_metadata):
+def test_dateaccepted_load_1(app, thesis_metadata):
     thesis_metadata["dateAccepted"] = "2019-05-19"
 
     schema = ThesisMetadataSchemaV1(strict=True)
@@ -294,7 +295,7 @@ def test_dateaccepted_load_1(thesis_metadata):
 #     assert convert_dates(thesis_metadata) == convert_dates(schema.load(convert_dates(thesis_metadata)).data)
 
 
-def test_dateaccepted_load_3(thesis_metadata):
+def test_dateaccepted_load_3(app, thesis_metadata):
     del thesis_metadata["dateAccepted"]
 
     with pytest.raises(ValidationError):
@@ -305,21 +306,21 @@ def test_dateaccepted_load_3(thesis_metadata):
 ########################################################################
 #                           modified                                   #
 ########################################################################
-def test_modified_dump_1(thesis_metadata):
+def test_modified_dump_1(app, thesis_metadata):
     thesis_metadata["modified"] = "blbost"
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
         result = schema.dump(thesis_metadata).data
 
 
-def test_modified_load_1(thesis_metadata):
+def test_modified_load_1(app, thesis_metadata):
     thesis_metadata["modified"] = "2014-12-22T03:12:58.019077+00:00"
 
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(thesis_metadata) == convert_dates(schema.load(convert_dates(thesis_metadata)).data)
 
 
-def test_modified_load_2(thesis_metadata):
+def test_modified_load_2(app, thesis_metadata):
     thesis_metadata["modified"] = "2014-12-22"
 
     with pytest.raises(ValidationError):
@@ -327,7 +328,7 @@ def test_modified_load_2(thesis_metadata):
         schema.load(convert_dates(thesis_metadata))
 
 
-def test_modified_load_3(thesis_metadata):
+def test_modified_load_3(app, thesis_metadata):
     del thesis_metadata["modified"]
 
     schema = ThesisMetadataSchemaV1(strict=True)
@@ -337,7 +338,7 @@ def test_modified_load_3(thesis_metadata):
 ########################################################################
 #                              title                                   #
 ########################################################################
-def test_title_dump_1(thesis_metadata):
+def test_title_dump_1(app, thesis_metadata):
     thesis_metadata["title"] = [
         {"name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku středověku.",
          "lang": "cze"
@@ -346,7 +347,7 @@ def test_title_dump_1(thesis_metadata):
     assert convert_dates(thesis_metadata) == schema.dump(thesis_metadata).data
 
 
-def test_title_dump_2(thesis_metadata):
+def test_title_dump_2(app, thesis_metadata):
     thesis_metadata["title"] = [
         {"name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku středověku.",
          "lang": "cz"
@@ -356,20 +357,20 @@ def test_title_dump_2(thesis_metadata):
     assert convert_dates(thesis_metadata) == schema.dump(thesis_metadata).data
 
 
-def test_title_dump_3(thesis_metadata):
+def test_title_dump_3(app, thesis_metadata):
     thesis_metadata["title"] = "blbost"
     with pytest.raises(AssertionError):
         schema = ThesisMetadataSchemaV1(strict=True)
         assert convert_dates(thesis_metadata) == schema.dump(thesis_metadata).data
 
 
-def test_title_dump_4(thesis_metadata):
+def test_title_dump_4(app, thesis_metadata):
     del thesis_metadata["title"]
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(thesis_metadata) == schema.dump(thesis_metadata).data
 
 
-def test_title_load_1(thesis_metadata):
+def test_title_load_1(app, thesis_metadata):
     thesis_metadata["title"] = [
         {"name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku středověku.",
          "lang": "cze"
@@ -379,7 +380,7 @@ def test_title_load_1(thesis_metadata):
     assert convert_dates(thesis_metadata) == convert_dates(schema.load(convert_dates(thesis_metadata)).data)
 
 
-def test_title_load_2(thesis_metadata):
+def test_title_load_2(app, thesis_metadata):
     thesis_metadata["title"] = [
         {"name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku středověku.",
          "lang": "cz"
@@ -975,7 +976,7 @@ def test_doctype_load_2(thesis_metadata):
 #         schema.load(convert_dates(thesis_metadata))
 
 
-def test_doctype_load_4(thesis_metadata):
+def test_doctype_load_4(app, thesis_metadata):
     thesis_metadata["doctype"] = {
         "taxonomy": "NUSL",
         "value": ["vskp", "studie"]
@@ -985,22 +986,22 @@ def test_doctype_load_4(thesis_metadata):
         schema.load(convert_dates(thesis_metadata))
 
 
-# def test_doctype_load_5(thesis_metadata):
-#     thesis_metadata["doctype"] = {
-#         "NUSL": {"term": "bakalarske_prace",
-#                  "bterm": "vskp"},
-#         "RIV": {"term": None,
-#                 "bterm": "W"}
-#     }
-#     schema = ThesisMetadataSchemaV1(strict=True)
-#     assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
+def test_doctype_load_5(app, thesis_metadata):
+    thesis_metadata["doctype"] = {
+        "taxonomy": "NUSL",
+        "value": [None, "studie"]
+    }
+
+    with pytest.raises(ValidationError):
+        schema = ThesisMetadataSchemaV1(strict=True)
+        schema.load(convert_dates(thesis_metadata)).data
 
 
 ########################################################################
 #                             id                                       #
 ########################################################################
 def test_id_dump_1(thesis_metadata):
-    thesis_metadata["id"] = 2562727272
+    thesis_metadata["id"] = "2562727272"
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(thesis_metadata) == convert_dates(schema.dump(thesis_metadata).data)
 
@@ -1012,13 +1013,13 @@ def test_id_dump_2(thesis_metadata):
 
 
 def test_id_dump_3(thesis_metadata):
-    thesis_metadata["id"] = "2562727272"
+    thesis_metadata["id"] = 2562727272
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(thesis_metadata) != convert_dates(schema.dump(thesis_metadata).data)
 
 
 def test_id_load_1(thesis_metadata):
-    thesis_metadata["id"] = 2562727272
+    thesis_metadata["id"] = "2562727272"
     schema = ThesisMetadataSchemaV1(strict=True)
     assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
 
@@ -1031,10 +1032,10 @@ def test_id_load_2(thesis_metadata):
 
 
 def test_id_load_3(thesis_metadata):
-    thesis_metadata["id"] = "2562727272"
+    thesis_metadata["id"] = 2562727272
     schema = ThesisMetadataSchemaV1(strict=True)
     final_metadata = dict(thesis_metadata)
-    final_metadata["id"] = 2562727272
+    final_metadata["id"] = "2562727272"
     assert final_metadata == schema.load(convert_dates(thesis_metadata)).data
 
 
@@ -1446,7 +1447,7 @@ def test_studyField_load_2(thesis_metadata):
     assert convert_dates(thesis_metadata) == convert_dates(schema.load(convert_dates(thesis_metadata)).data)
 
 
-def test_studyField_load_3(thesis_metadata):
+def test_studyField_load_3(app, thesis_metadata):
     thesis_metadata["studyField"] = {
         "code": "blbost",
         "name": "Technologie organických látek a chemické speciality"
