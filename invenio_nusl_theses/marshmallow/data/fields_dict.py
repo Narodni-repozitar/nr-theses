@@ -34,7 +34,6 @@ FIELDS = {
     'Botanika - specializace Mykologie': 'Botanika',
     'Zemědělství - Prvovýroba': 'Zemědělství',
     'Zoologie - specializace Ekologie živočichů': 'Zoologie',
-    'Cizí jazyk pro evropský a mezinárodní obchod-ruský jazyk': 'Cizí jazyk pro evropský a mezinárodní obchod',
     "Ošetřovatelství ve vybraných klinických oborech - modul chirurgie": "Ošetřovatelství ve vybraných klinických oborech",
     'Historie - bohemistika': ['Historie', 'Bohemistika'],
     'M-OV/ZŠ, Učitelství matematiky pro 2. stupeň ZŠ, společný základ': 'Učitelství matematiky pro 2. stupeň ZŠ',
@@ -48,7 +47,7 @@ FIELDS = {
     'Učitelství pro 1. stupeň základních škol': 'Učitelství pro 1. stupeň základní školy',
     'Učitelství biologie pro SŠ - Učitelství tělesné výchovy pro SŠ': ['Učitelství biologie pro střední školy', 'Učitelství tělesné výchovy pro střední školy'],
     'Režie-dramaturgie alternativního a loutkového divadla': 'Režie - dramaturgie alternativního a loutkového divadla',
-    'Režie alternativního a loutkového divadla': ['Režie alternativního a loutkového divadla /Directing of Divised, Object Theatre/',
+    'Režie alternativního a loutkového divadla': 'Režie alternativního a loutkového divadla /Directing of Divised, Object Theatre/',
     'Podnikání a administrativa': 'Podnikání a administrativa /Business Administration/',
     'Environmental Modelling': 'Environmentální modelování /Environmental Modelling/',
     'Historie - Španělský jazyk a literatura': ['Historie','Španělský jazyk a literatura'],
@@ -84,6 +83,8 @@ FIELDS = {
     'Chemie-Matematika': ['Matematika', 'Chemie'],
     'Veřejná správa a regionální rozvoj - k.s. Klatovy': 'Veřejná správa a regionální rozvoj',
 }
+
+
 #
 # {
 #  'Corporate Finance and Management': ['Finanční management', 'Informatika a finanční management',

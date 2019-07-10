@@ -93,7 +93,7 @@ def validate_field_name(name):
 
 
 #########################################################################
-#                      Mixin                                      #
+#                      Mixin                                            #
 #########################################################################
 
 class StagingMixin:
@@ -102,12 +102,7 @@ class StagingMixin:
         return self.context.get("staging")
 
 
-
-
-
-
 def createThesisMetadataSchemaV1():
-
     #########################################################################
     #                      Sub-schemas                                      #
     #########################################################################
@@ -282,13 +277,8 @@ def createThesisMetadataSchemaV1():
         code = SanitizedUnicode(validate=validate_field_code)
         name = SanitizedUnicode(validate=validate_field_name)
 
-        @pre_load()
-        def standardize_name(self, data):
-            if "name" in data:
-                data["name"] = FIELDS.get(data["name"], data["name"])
-
         @post_load()
-        def validate_code_name_fit(self, data):  # TODO: Dát do jednoho společného kódu
+        def validate_code_name_fit(self, data):
             try:
                 if ("name" in data) and ("code" not in data):
                     codes_names = import_csv("field.csv", 0, 2)
@@ -338,7 +328,7 @@ def createThesisMetadataSchemaV1():
         provider = SanitizedUnicode()  # TODO: dodělat validaci na providera viz csv v NUSL_schemas
         defended = fields.Boolean()
         studyProgramme = Nested(ProgrammeSubSchemaV1)
-        studyField = Nested(FieldSubSchemaV1)
+        studyField = fields.List(Nested(FieldSubSchemaV1))
         degreeGrantor = fields.List(Nested(DegreeGrantorSubSchemaV1), required=True)
 
         @pre_load()

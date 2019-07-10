@@ -144,10 +144,12 @@ def thesis_metadata():
             "code": "B1407",
             "name": "Chemie"
         },
-        "studyField": {
-            "code": "2801T015",
-            "name": "Technologie organických látek a chemické speciality"
-        },
+        "studyField": [
+            {
+                "code": "2801T015",
+                "name": "Technologie organických látek a chemické speciality"
+            }
+        ],
         "degreeGrantor": [
             {
                 "university": {
@@ -1411,10 +1413,12 @@ def test_studyProgramme_load_5(thesis_metadata):
 #                           Study Field                               #
 #######################################################################
 def test_studyField_dump_1(thesis_metadata):
-    thesis_metadata["studyField"] = {
-        "code": "2801T015",
-        "name": "Technologie organických látek a chemické speciality"
-    }
+    thesis_metadata["studyField"] = [
+        {
+            "code": "2801T015",
+            "name": "Technologie organických látek a chemické speciality"
+        }
+    ]
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(thesis_metadata) == schema.dump(thesis_metadata).data
 
@@ -1432,10 +1436,12 @@ def test_studyField_dump_3(thesis_metadata):
 
 
 def test_studyField_load_1(thesis_metadata):
-    thesis_metadata["studyField"] = {
-        "code": "2801T015",
-        "name": "Technologie organických látek a chemické speciality"
-    }
+    thesis_metadata["studyField"] = [
+        {
+            "code": "2801T015",
+            "name": "Technologie organických látek a chemické speciality"
+        }
+    ]
 
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(thesis_metadata) == convert_dates(schema.load(convert_dates(thesis_metadata)).data)
@@ -1448,30 +1454,36 @@ def test_studyField_load_2(thesis_metadata):
 
 
 def test_studyField_load_3(app, thesis_metadata):
-    thesis_metadata["studyField"] = {
-        "code": "blbost",
-        "name": "Technologie organických látek a chemické speciality"
-    }
+    thesis_metadata["studyField"] = [
+        {
+            "code": "blbost",
+            "name": "Technologie organických látek a chemické speciality"
+        }
+    ]
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
         convert_dates(schema.load(convert_dates(thesis_metadata)).data)
 
 
 def test_studyField_load_4(thesis_metadata):
-    thesis_metadata["studyField"] = {
-        "code": "2801T015",
-        "name": "blbost"
-    }
+    thesis_metadata["studyField"] = [
+        {
+            "code": "2801T015",
+            "name": "blbost"
+        }
+    ]
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
         convert_dates(schema.load(convert_dates(thesis_metadata)).data)
 
 
 def test_studyField_load_5(thesis_metadata):
-    thesis_metadata["studyField"] = {
-        "code": "2801T007",
-        "name": "Technologie organických látek a chemické speciality"
-    }
+    thesis_metadata["studyField"] = [
+        {
+            "code": "2801T007",
+            "name": "Technologie organických látek a chemické speciality"
+        }
+    ]
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
         convert_dates(schema.load(convert_dates(thesis_metadata)).data)
@@ -1676,6 +1688,3 @@ def test_degreeGrantor_load_6(thesis_metadata):
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
         convert_dates(schema.load(convert_dates(thesis_metadata)).data)
-
-
-

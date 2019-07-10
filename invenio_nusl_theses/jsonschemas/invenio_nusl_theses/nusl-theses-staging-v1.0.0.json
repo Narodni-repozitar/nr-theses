@@ -243,14 +243,17 @@
             }
         },
         "studyField": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "code": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
                 }
             }
         },
