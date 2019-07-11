@@ -28,8 +28,7 @@
                     "format": "date"
                 },
                 "modified": {
-                    "type": "date",
-                    "format": "date_time"
+                    "type": "date"
                 },
                 "title": {
                     "type": "nested",
