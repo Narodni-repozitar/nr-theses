@@ -67,9 +67,10 @@ def validate_thesis(*args, record=None, **kwargs):
     try:
         nusl_theses.validate(marshmallow_schema, record,
                              "https://nusl.cz/schemas/invenio_nusl_theses/nusl-theses-v1.0.0.json")
-        record["validations"] = {
-            "valid": True
-        }
+        record["$schema"] = "https://nusl.cz/schemas/invenio_nusl_theses/nusl-theses-v1.0.0.json"
+        # record["validations"] = {
+        #     "valid": True
+        # }
 
     except ValidationError as e:
         record["validations"] = {
@@ -89,7 +90,6 @@ def validate_thesis(*args, record=None, **kwargs):
             }
         }
 
-    # TODO: odchytnout tady dalsi exceptions ktere mohou vylitnout (json schema?) a vytvorit k nim spravne validations
     except jsonschema.ValidationError as e:
         record["validations"] = {
             "valid": False,
