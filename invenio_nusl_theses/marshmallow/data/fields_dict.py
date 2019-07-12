@@ -34,7 +34,6 @@ FIELDS = {
     'Botanika - specializace Mykologie': 'Botanika',
     'Zemědělství - Prvovýroba': 'Zemědělství',
     'Zoologie - specializace Ekologie živočichů': 'Zoologie',
-    'Cizí jazyk pro evropský a mezinárodní obchod-ruský jazyk': 'Cizí jazyk pro evropský a mezinárodní obchod',
     "Ošetřovatelství ve vybraných klinických oborech - modul chirurgie": "Ošetřovatelství ve vybraných klinických oborech",
     'Historie - bohemistika': ['Historie', 'Bohemistika'],
     'M-OV/ZŠ, Učitelství matematiky pro 2. stupeň ZŠ, společný základ': ['Učitelství matematiky pro 2. stupeň základních škol', 'Učitelství občanské výchovy pro 2. stupeň základních škol'],
