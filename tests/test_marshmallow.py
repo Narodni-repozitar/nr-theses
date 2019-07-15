@@ -11,7 +11,7 @@ from tests.utils import convert_dates
 @pytest.fixture
 def thesis_metadata():
     return {
-        '$schema': 'https://nusl.cz/schemas/invenio_nusl_theses/nusl-theses-staging-v1.0.0.json',
+        '$schema': 'https://nusl.cz/schemas/invenio_nusl_theses/nusl-theses-v1.0.0.json',
         "language": [
             "CZE"
         ],

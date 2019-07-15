@@ -28,7 +28,8 @@
                     "format": "date"
                 },
                 "modified": {
-                    "type": "date"
+                    "type": "date",
+                    "format": "yyyy-MM-dd'T'HH:mm:ss"
                 },
                 "title": {
                     "type": "nested",

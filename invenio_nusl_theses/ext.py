@@ -68,9 +68,6 @@ def validate_thesis(*args, record=None, **kwargs):
         nusl_theses.validate(marshmallow_schema, record,
                              "https://nusl.cz/schemas/invenio_nusl_theses/nusl-theses-v1.0.0.json")
         record["$schema"] = "https://nusl.cz/schemas/invenio_nusl_theses/nusl-theses-v1.0.0.json"
-        # record["validations"] = {
-        #     "valid": True
-        # }
 
     except ValidationError as e:
         record["validations"] = {

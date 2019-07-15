@@ -21,8 +21,8 @@ from invenio_records_rest.schemas.fields import PersistentIdentifier, SanitizedU
 from marshmallow import fields, validate, ValidationError, pre_load, post_load
 from pycountry import languages, countries
 
-from invenio_nusl_common.marshmallow import MultilanguageSchemaV1, ValueTypeSchemaV1
-from invenio_nusl_common.marshmallow.json import DoctypeSubSchemaV1
+from invenio_nusl_common.marshmallow import createMultilanguageSchemaV1, createValueTypeSchemaV1
+from invenio_nusl_common.marshmallow.json import createDoctypeSubSchemaV1
 from invenio_nusl_theses.api import ThesisRecord
 from invenio_nusl_theses.marshmallow.data.fields_dict import FIELDS
 
@@ -136,10 +136,10 @@ def createThesisMetadataSchemaV1():
 
     class RightsMetadataSchemaV1(StagingMixin, StrictKeysMixin):
         CC = fields.Nested(CCMetadataSchemaV1)
-        copyright = fields.List(Nested(MultilanguageSchemaV1))
+        copyright = fields.List(Nested(createMultilanguageSchemaV1()))
 
     class SubjectMetadataSchemaV1(StagingMixin, StrictKeysMixin):
-        name = fields.List(Nested(MultilanguageSchemaV1))
+        name = fields.List(Nested(createMultilanguageSchemaV1()))
         taxonomy = SanitizedUnicode(validate=validate.OneOf(["czenas",
                                                              "mesh",
                                                              "czmesh",
@@ -164,7 +164,7 @@ def createThesisMetadataSchemaV1():
 
     class CreatorSubSchemaV1(StagingMixin, StrictKeysMixin):
         name = SanitizedUnicode(required=True)
-        id = Nested(ValueTypeSchemaV1)
+        id = Nested(createValueTypeSchemaV1())
 
     class ContributorSubSchemaV1(CreatorSubSchemaV1):
         role = SanitizedUnicode(required=True)
@@ -204,11 +204,11 @@ def createThesisMetadataSchemaV1():
                         raise ValidationError("The code does not match the program name.")
 
     class FacultySubSchemaV1(StagingMixin, StrictKeysMixin):
-        name = fields.List(Nested(MultilanguageSchemaV1))
-        departments = fields.List(Nested(MultilanguageSchemaV1), allow_none=True)
+        name = fields.List(Nested(createMultilanguageSchemaV1()))
+        departments = fields.List(Nested(createMultilanguageSchemaV1()), allow_none=True)
 
     class UniversitySubSchemaV1(StagingMixin, StrictKeysMixin):
-        name = fields.List(Nested(MultilanguageSchemaV1))
+        name = fields.List(Nested(createMultilanguageSchemaV1()))
         faculties = fields.List(Nested(FacultySubSchemaV1))
 
         @pre_load()
@@ -310,20 +310,20 @@ def createThesisMetadataSchemaV1():
         id = SanitizedUnicode(required=True)
         language = fields.List(SanitizedUnicode(required=True,
                                                 validate=validate_language), required=True)
-        identifier = fields.List(Nested(ValueTypeSchemaV1), required=True)  # TODO: Dodělat validaci na type
+        identifier = fields.List(Nested(createValueTypeSchemaV1()), required=True)  # TODO: Dodělat validaci na type
         dateAccepted = fields.Date(required=True)
-        modified = fields.DateTime()
-        title = fields.List(Nested(MultilanguageSchemaV1), required=True)
+        modified = fields.DateTime(format="%Y-%m-%dT%H:%M:%S")
+        title = fields.List(Nested(createMultilanguageSchemaV1()), required=True)
         extent = SanitizedUnicode()
-        abstract = fields.List(Nested(MultilanguageSchemaV1))
+        abstract = fields.List(Nested(createMultilanguageSchemaV1()))
         rights = fields.Nested(RightsMetadataSchemaV1)
         subject = fields.List(Nested(SubjectMetadataSchemaV1))  # TODO: udělat required
         creator = fields.List(Nested(CreatorSubSchemaV1), required=True)
         contributor = fields.List(Nested(ContributorSubSchemaV1))
-        doctype = Nested((DoctypeSubSchemaV1), required=True)
-        subtitle = fields.List(Nested(MultilanguageSchemaV1))
+        doctype = Nested((createDoctypeSubSchemaV1()), required=True)
+        subtitle = fields.List(Nested(createMultilanguageSchemaV1()))
         note = fields.List(SanitizedUnicode())
-        accessibility = fields.List(Nested(MultilanguageSchemaV1))
+        accessibility = fields.List(Nested(createMultilanguageSchemaV1()))
         accessRights = SanitizedUnicode(validate=validate.OneOf(["open", "embargoed", "restricted", "metadata_only"]))
         provider = SanitizedUnicode()  # TODO: dodělat validaci na providera viz csv v NUSL_schemas
         defended = fields.Boolean()
