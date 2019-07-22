@@ -1,0 +1,56 @@
+{
+    "ProviderType": {
+        "type": "nested",
+        "properties": {
+            "address": {
+                "type": "nested",
+                "properties": {
+                    "name": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword"
+                            }
+                        }
+                    }
+                }
+            },
+            "id": {
+                "type": "integer"
+            },
+            "lib_url": {
+                "type": "keyword"
+            },
+            "links": {
+                "type": "nested",
+                "properties": {
+                    "self": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "name": {
+                "type": "nested",
+                "properties": {
+                    "name": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword"
+                            }
+                        }
+                    }
+                }
+            },
+            "path": {
+                "type": "keyword"
+            },
+            "slug": {
+                "type": "keyword"
+            },
+            "url": {
+                "type": "keyword"
+            }
+        }
+    }
+}

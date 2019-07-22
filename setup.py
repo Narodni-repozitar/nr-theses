@@ -87,6 +87,9 @@ setup(
         'invenio_search.mappings': [
             'invenio_nusl_theses =invenio_nusl_theses.mappings'
         ],
+        'invenio_oarepo_mapping_includes': [
+            'invenio_nusl_theses=invenio_nusl_theses.included_mappings'
+        ]
     },
     extras_require=extras_require,
     install_requires=install_requires,

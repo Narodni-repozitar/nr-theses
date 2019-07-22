@@ -1,0 +1,40 @@
+{
+    "DocType": {
+        "type": "nested",
+        "properties": {
+            "Kód": {
+                "type": "keyword"
+            },
+            "id": {
+                "type": "integer"
+            },
+            "links": {
+                "type": "nested",
+                "properties": {
+                    "self": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "path": {
+                "type": "keyword"
+            },
+            "slug": {
+                "type": "keyword"
+            },
+            "title": {
+                "type": "nested",
+                "properties": {
+                    "name": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

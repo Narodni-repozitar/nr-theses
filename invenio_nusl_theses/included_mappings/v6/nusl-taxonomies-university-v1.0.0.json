@@ -1,0 +1,88 @@
+{
+    "UniversityType": {
+        "type": "nested",
+        "properties": {
+            "Datová schránka": {
+                "type": "keyword"
+            },
+            "Forma VŠ": {
+                "type": "keyword"
+            },
+            "Funkční období do": {
+                "type": "date"
+            },
+            "Funkční období od": {
+                "type": "date"
+            },
+            "IČO": {
+                "type": "keyword"
+            },
+            "Kraj": {
+                "type": "keyword"
+            },
+            "Název": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "Resortní identifikátor (RID)": {
+                "type": "keyword"
+            },
+            "Statutární zástupce": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "Sídlo": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "Typ VŠ": {
+                "type": "keyword"
+            },
+            "Web": {
+                "type": "keyword"
+            },
+            "id": {
+                "type": "integer"
+            },
+            "links": {
+                "type": "nested",
+                "properties": {
+                    "self": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "path": {
+                "type": "keyword"
+            },
+            "slug": {
+                "type": "keyword"
+            },
+            "title": {
+                "type": "nested",
+                "properties": {
+                    "name": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
