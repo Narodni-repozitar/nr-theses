@@ -3,6 +3,7 @@ from invenio_explicit_acls.record import SchemaEnforcingRecord
 from invenio_indexer.api import RecordIndexer
 from invenio_pidstore.errors import PIDDoesNotExistError
 from invenio_pidstore.models import PersistentIdentifier
+from invenio_search import RecordsSearch
 from sqlalchemy.orm.exc import NoResultFound
 from invenio_records.api import _records_state
 
@@ -14,6 +15,9 @@ class ThesisRecord(SchemaEnforcingRecord):
                        PUBLISHED_SCHEMA,)
     PREFERRED_SCHEMA = STAGING_SCHEMA
 
+
+class ThesisSearch(RecordsSearch):
+    pass
 
 
 class ThesisAPI:
@@ -53,7 +57,7 @@ class ThesisAPI:
                 pass
 
             if not existing_record:
-                db_record = ThesisRecord.create(record)   #Zde dochází i k validaci přes signály z ext
+                db_record = ThesisRecord.create(record)  # Zde dochází i k validaci přes signály z ext
             else:
                 # remove everything from the record except of id and pid - keep them
                 previous_id = existing_record['id']

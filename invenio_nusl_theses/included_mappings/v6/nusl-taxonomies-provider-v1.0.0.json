@@ -1,6 +1,6 @@
 {
     "ProviderType": {
-        "type": "nested",
+        "type": "taxonomy-v1.0.0.json#/Taxonomy",
         "properties": {
             "address": {
                 "type": "nested",
@@ -21,14 +21,7 @@
             "lib_url": {
                 "type": "keyword"
             },
-            "links": {
-                "type": "nested",
-                "properties": {
-                    "self": {
-                        "type": "keyword"
-                    }
-                }
-            },
+
             "name": {
                 "type": "nested",
                 "properties": {
@@ -41,12 +34,6 @@
                         }
                     }
                 }
-            },
-            "path": {
-                "type": "keyword"
-            },
-            "slug": {
-                "type": "keyword"
             },
             "url": {
                 "type": "keyword"

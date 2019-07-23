@@ -236,7 +236,27 @@
             ]
         },
         "provider": {
-            "type": "string"
+            "allOf": [
+                {
+                    "$ref": "../taxonomy-v1.0.0.json#/definitions/taxonomy"
+                },
+                {
+                    "properties": {
+                        "name": {
+                            "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
+                        },
+                        "address": {
+                            "type": "string"
+                        },
+                        "url": {
+                            "type": "string"
+                        },
+                        "lib_url": {
+                            "type": "string"
+                        }
+                    }
+                }
+            ]
         },
         "defended": {
             "type": "boolean"

@@ -12,6 +12,8 @@ from __future__ import absolute_import, print_function
 from invenio_records_rest.utils import deny_all, check_elasticsearch
 from invenio_search import RecordsSearch
 
+from invenio_nusl_theses.api import ThesisSearch
+
 THESES_SEARCH_INDEX = 'invenio_nusl_theses-nusl-theses-v1.0.0'
 THESES_STAGING_SEARCH_INDEX ='invenio_nusl_theses-nusl-theses-staging-v1.0.0'
 THESES_PID = 'pid(nusl,record_class="invenio_nusl_theses.api:ThesisRecord")'
@@ -24,7 +26,7 @@ THESES_REST_ENDPOINT = dict(
     pid_fetcher='nusl',
     record_class='invenio_nusl_theses.api:ThesisRecord',
     default_endpoint_prefix=True,
-    search_class=RecordsSearch,
+    search_class=ThesisSearch,
     search_index=THESES_SEARCH_INDEX,
     search_type=None,
     record_serializers={
