@@ -20,7 +20,7 @@ def thesis_metadata():
             "type": "nusl"
         }],
         "dateAccepted": date(2019, 5, 19),
-        "modified": datetime(2014, 12, 22, 3, 12, 58, 19077, tzinfo=pytz.utc),
+        "modified": datetime(2014, 12, 22, 3, 12, 58),
         "title": [
             {
                 "name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku středověku.",
@@ -138,7 +138,26 @@ def thesis_metadata():
             }
         ],
         "accessRights": "open",
-        "provider": "univerzita_karlova",
+        "provider":  # "univerzita_karlova",
+            {
+                "address": "Ovocný trh 5, 116 36 Praha 1",
+                "id": 8347,
+                "lib_url": "https://dspace.cuni.cz/",
+                "links": {
+                    "self": "https://localhost:5000/api/taxonomies/provider/edu/public_uni/univerzita_karlova_v_praze/",
+                    "tree": "https://localhost:5000/api/taxonomies/provider/edu/public_uni/univerzita_karlova_v_praze/?drilldown=True"
+                },
+
+                "name": [
+                    {
+                        "lang": "cze",
+                        "name": "Univerzita Karlova"
+                    }
+                ],
+                "path": "/provider/edu/public_uni/univerzita_karlova_v_praze",
+                "slug": "univerzita_karlova_v_praze",
+                "url": "http://cuni.cz/"
+            },
         "defended": True,
         "studyProgramme": {
             "code": "B1407",
@@ -190,7 +209,7 @@ def test_language_dump_1(app, thesis_metadata):
     assert convert_dates(thesis_metadata) == convert_dates(schema.dump(thesis_metadata).data)
 
 
-def test_language_load_1(app, thesis_metadata):
+def test_language_load_1(app, db, thesis_metadata):
     thesis_metadata["language"] = [
         "CZE", "GER"
     ]

@@ -20,6 +20,7 @@ from invenio_records_rest.schemas import Nested, StrictKeysMixin
 from invenio_records_rest.schemas.fields import PersistentIdentifier, SanitizedUnicode
 from marshmallow import fields, validate, ValidationError, pre_load, post_load
 from pycountry import languages, countries
+from flask_taxonomies.marshmallow import TaxonomySchemaV1
 
 from invenio_nusl_common.marshmallow import createMultilanguageSchemaV1, createValueTypeSchemaV1
 from invenio_nusl_common.marshmallow.json import createDoctypeSubSchemaV1
@@ -298,6 +299,12 @@ def createThesisMetadataSchemaV1():
                     if codes_names[1][code_index] != programme_name:
                         raise ValidationError("The code does not match the field name.")
 
+    class ProviderSubSchemaV1(StagingMixin, TaxonomySchemaV1):
+        slug = SanitizedUnicode(required=True)
+        name = fields.List(Nested(createMultilanguageSchemaV1()))
+        address = SanitizedUnicode()
+        url = fields.Url()
+        lib_url = fields.Url()
     #########################################################################
     #                     Main schema                                       #
     #########################################################################
@@ -325,7 +332,7 @@ def createThesisMetadataSchemaV1():
         note = fields.List(SanitizedUnicode())
         accessibility = fields.List(Nested(createMultilanguageSchemaV1()))
         accessRights = SanitizedUnicode(validate=validate.OneOf(["open", "embargoed", "restricted", "metadata_only"]))
-        provider = SanitizedUnicode()  # TODO: dodělat validaci na providera viz csv v NUSL_schemas
+        provider = Nested(ProviderSubSchemaV1)  # TODO: dodělat validaci na providera viz csv v NUSL_schemas
         defended = fields.Boolean()
         studyProgramme = Nested(ProgrammeSubSchemaV1)
         studyField = fields.List(Nested(FieldSubSchemaV1))

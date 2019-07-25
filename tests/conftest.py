@@ -9,6 +9,8 @@
 
 from __future__ import absolute_import, print_function
 
+from invenio_db import db as db_
+import os
 import shutil
 import tempfile
 from datetime import date, datetime
@@ -17,8 +19,12 @@ import pytest
 import pytz
 from flask import Flask
 from invenio_app.factory import create_api
+from invenio_db import InvenioDB
 from invenio_jsonschemas import InvenioJSONSchemas
 from invenio_records import InvenioRecords
+from sqlalchemy_utils import create_database, database_exists
+
+from flask_taxonomies import FlaskTaxonomies
 
 
 @pytest.fixture(scope='module')
@@ -199,11 +205,28 @@ def app():
     app = Flask('testapp', instance_path=instance_path)
 
     app.config.update(
-        JSONSCHEMAS_HOST="nusl.cz"
+        JSONSCHEMAS_HOST="nusl.cz",
+        SQLALCHEMY_TRACK_MODIFICATIONS=True,
+        SQLALCHEMY_DATABASE_URI=os.environ.get(
+            'SQLALCHEMY_DATABASE_URI',
+            'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user="oarepo",pw="oarepo",url="127.0.0.1",db="nusl_test")),
+        SERVER_NAME='localhost',
     )
     InvenioJSONSchemas(app)
     InvenioRecords(app)
+    InvenioDB(app)
+    FlaskTaxonomies(app)
     with app.app_context():
         yield app
 
     shutil.rmtree(instance_path)
+
+@pytest.yield_fixture()
+def db(app):
+    """Database fixture."""
+    if not database_exists(str(db_.engine.url)):
+        create_database(str(db_.engine.url))
+    db_.create_all()
+    yield db_
+    db_.session.remove()
+    db_.drop_all()
