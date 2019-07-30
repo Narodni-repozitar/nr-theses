@@ -4,6 +4,7 @@ import pytest
 import pytz
 from marshmallow.exceptions import ValidationError
 
+from flask_taxonomies.models import Taxonomy
 from invenio_nusl_theses.marshmallow.json import ThesisMetadataSchemaV1
 from tests.utils import convert_dates
 
@@ -138,10 +139,10 @@ def thesis_metadata():
             }
         ],
         "accessRights": "open",
-        "provider":  # "univerzita_karlova",
+        "provider":
             {
                 "address": "Ovocný trh 5, 116 36 Praha 1",
-                "id": 8347,
+                # "id": 8347,
                 "lib_url": "https://dspace.cuni.cz/",
                 "links": {
                     "self": "https://localhost:5000/api/taxonomies/provider/edu/public_uni/univerzita_karlova_v_praze/",

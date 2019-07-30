@@ -209,7 +209,8 @@ def app():
         SQLALCHEMY_TRACK_MODIFICATIONS=True,
         SQLALCHEMY_DATABASE_URI=os.environ.get(
             'SQLALCHEMY_DATABASE_URI',
-            'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user="oarepo",pw="oarepo",url="127.0.0.1",db="nusl_test")),
+            'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user="oarepo", pw="oarepo", url="127.0.0.1",
+                                                                  db="oarepo")),
         SERVER_NAME='localhost',
     )
     InvenioJSONSchemas(app)
@@ -221,12 +222,13 @@ def app():
 
     shutil.rmtree(instance_path)
 
+
 @pytest.yield_fixture()
 def db(app):
     """Database fixture."""
     if not database_exists(str(db_.engine.url)):
         create_database(str(db_.engine.url))
-    db_.create_all()
+    # db_.create_all()
     yield db_
-    db_.session.remove()
-    db_.drop_all()
+    # db_.session.remove()
+    # db_.drop_all()
