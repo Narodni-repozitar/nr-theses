@@ -142,7 +142,6 @@ def thesis_metadata():
         "provider":
             {
                 "address": "Ovocný trh 5, 116 36 Praha 1",
-                # "id": 8347,
                 "lib_url": "https://dspace.cuni.cz/",
                 "links": {
                     "self": "https://localhost:5000/api/taxonomies/provider/edu/public_uni/univerzita_karlova_v_praze/",

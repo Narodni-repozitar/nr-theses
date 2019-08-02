@@ -300,7 +300,6 @@ def createThesisMetadataSchemaV1():
                         raise ValidationError("The code does not match the field name.")
 
     class ProviderSubSchemaV1(StagingMixin, TaxonomySchemaV1):
-        slug = SanitizedUnicode(required=True)
         name = fields.List(Nested(createMultilanguageSchemaV1()))
         address = SanitizedUnicode()
         url = fields.Url()
