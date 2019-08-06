@@ -1,3 +1,5 @@
+import csv
+
 ALIASES = {'Péče o životní prostředí': ['Péče o životní prostředí - specializace Ekologie půdy',
                                         'Péče o životní prostředí, Péče o životní prostředí',
                                         'Péče o životní prostředí - specializace Hydrobiologie',
@@ -443,3 +445,48 @@ ALIASES = {'Péče o životní prostředí': ['Péče o životní prostředí - 
            'Trvale udržitelný rozvoj venkova tropů a subtropů /Sustainable Rural Devel.in tr': 'Sustainable Rural Development in TS',
            'Obchodní podnikání': 'Commerce and Entrepreneurship',
            'Finance a účetnictví': 'Finance and Accounting for Common Europe'}
+
+
+def check_aliases(ALIASES):
+    not_found_keys = []
+    with open('/home/semtex/Projekty/nusl/invenio-nusl/invenio_nusl/data/field.csv', newline='') as csvfile:
+        reader = csv.DictReader(csvfile, delimiter=",")
+        names = []
+        for row in reader:
+            names.append(row["NAZEV"])
+        names = set(names)
+
+    for key in ALIASES.keys():
+        if key not in names:
+            not_found_keys.append(key)
+
+    print(not_found_keys)
+
+
+if __name__ == "__main__":
+    check_aliases(ALIASES)
+
+WRONG_ALIASES = ['Učitelství matematiky pro 2. stupeň základních škol',
+                 'Učitelství občanské výchovy pro 2. stupeň základních škol',
+                 'Učitelství výtvarné výchovy pro 2. stupeň základních škol',
+                 'Učitelství tělesné výchovy pro 1. stupeň ZŠ',
+                 'Učitelství českého jazyka a literatury pro střední školy',
+                 'Učitelství přírodopisu pro 2. stupeň základních škol',
+                 'Učitelství německého jazyka pro 2. stupeň základních škol',
+                 'Učitelství hudební výchovy pro 2. stupeň základních škol',
+                 'Učitelství španělského jazyka pro 2. stupeň základních škol',
+                 'Učitelství českého jazyka a literatury pro 2. stupeň základních škol',
+                 'Učitelství chemie pro 2. stupeň základních škol',
+                 'Učitelství fyziky a informatiky pro 2. stupeň základních škol',
+                 'Učitelství zeměpisu pro 2. stupeň základních škol',
+                 'Učitelství francouzského jazyka pro 2. stupeň základních škol',
+                 'Učitelství dějepisu pro 2. stupeň základních škol',
+                 'Učitelství anglického jazyka pro 2. stupeň základních škol',
+                 'Učitelství výchovy ke zdraví pro 2. stupeň základních škol',
+                 'Učitelství informatiky pro 2. stupeň základních škol',
+                 'Učitelství přírodopisu pro střední školy', 'Učitelství výtvarné výchovy pro základní umělecké školy',
+                 'Učitelství základů společenských věd a občanské výchovy pro střední školy a 2. stupeň základních škol',
+                 'Učitelství technické výchovy a výpočetní techniky pro 2. stupeň základních škol',
+                 'Učitelství hry na nástroj nebo zpěvu pro střední školy a základní umělecké školy',
+                 'Učitelství pro 1. stupeň základních škol  – anglický jazyk pro 1. stupeň základních škol',
+                 'Anglický jazyk pro 2. stupeň základních škol']
