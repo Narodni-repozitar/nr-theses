@@ -212,67 +212,67 @@ def createThesisMetadataSchemaV1():
         name = fields.List(Nested(createMultilanguageSchemaV1()))
         faculties = fields.List(Nested(FacultySubSchemaV1))
 
-        @pre_load()
-        def standardize_name(self, data):
-            FACULTIES = {
-                "Filmová a televizní fakulta AMU": "Filmová a televizní fakulta",
-                "Divadelní fakulta AMU": "Divadelní fakulta",
-                "Hudební a taneční fakulta AMU": "Hudební a taneční fakulta",
-                "Hudební fakulta AMU": "Hudební fakulta",
-                "Stavební fakulta": "Fakulta stavební"
-            }
-            if "faculties" in data:
-                faculties = []
-                for faculty in data["faculties"]:
-                    names = []
-                    for fac_name in faculty["name"]:
-                        fac_name["name"] = FACULTIES.get(fac_name["name"], fac_name["name"])
-                        names.append(fac_name)
-                    faculty["name"] = names
-                    faculties.append(faculty)
-                data["faculties"] = faculties
-            return data
+        # @pre_load()
+        # def standardize_name(self, data):
+        #     FACULTIES = {
+        #         "Filmová a televizní fakulta AMU": "Filmová a televizní fakulta",
+        #         "Divadelní fakulta AMU": "Divadelní fakulta",
+        #         "Hudební a taneční fakulta AMU": "Hudební a taneční fakulta",
+        #         "Hudební fakulta AMU": "Hudební fakulta",
+        #         "Stavební fakulta": "Fakulta stavební"
+        #     }
+        #     if "faculties" in data:
+        #         faculties = []
+        #         for faculty in data["faculties"]:
+        #             names = []
+        #             for fac_name in faculty["name"]:
+        #                 fac_name["name"] = FACULTIES.get(fac_name["name"], fac_name["name"])
+        #                 names.append(fac_name)
+        #             faculty["name"] = names
+        #             faculties.append(faculty)
+        #         data["faculties"] = faculties
+        #     return data
 
     class DegreeGrantorSubSchemaV1(StagingMixin, StrictKeysMixin):
         university = Nested(UniversitySubSchemaV1, required=True)
 
-        @pre_load()
-        def standardize_name(self, data):
-            UNIVERSITIES = {
-                "Mendelova univerzita": "Mendelova univerzita v Brně",
-                "Mendelova zemědělská a lesnická univerzita": "Mendelova univerzita v Brně",
-                "Vysoká škola zemědělská v Brně": "Mendelova univerzita v Brně",
-                "Vysoká škola zemědělská a lesnická v Brně": "Mendelova univerzita v Brně",
-                "Mendelova univerzita (Brno)": "Mendelova univerzita v Brně"
-            }
-            names = []
-            for uni_name in data["university"]["name"]:
-                uni_name["name"] = UNIVERSITIES.get(uni_name["name"], uni_name["name"])
-                names.append(uni_name)
-            data["university"]["name"] = names
-            return data
-
-        @post_load()
-        def validate_university_name(self, data):
-            if not self.staging:
-                for uni_name in data["university"]["name"]:
-                    if uni_name["lang"] == "cze":
-                        imported_data = import_csv("universities.csv", 0, 1)[0]
-                        universities = [university.lower() for university in imported_data]
-                        name = uni_name["name"].lower()
-                        if name not in universities:
-                            raise ValidationError("The University name is not valid")
-
-        @post_load()
-        def validate_faculty_name(self, data):
-            if not self.staging:
-                if "faculties" in data["university"]:
-                    for faculty in data["university"]["faculties"]:
-                        for fac_name in faculty["name"]:
-                            if fac_name["lang"] == "cze":
-                                imported_data = import_csv("faculties.csv", 0, 1)[0]
-                                if fac_name["name"] not in imported_data:
-                                    raise ValidationError("The Faculty name is not valid")
+        # @pre_load()
+        # def standardize_name(self, data):
+        #     UNIVERSITIES = {
+        #         "Mendelova univerzita": "Mendelova univerzita v Brně",
+        #         "Mendelova zemědělská a lesnická univerzita": "Mendelova univerzita v Brně",
+        #         "Vysoká škola zemědělská v Brně": "Mendelova univerzita v Brně",
+        #         "Vysoká škola zemědělská a lesnická v Brně": "Mendelova univerzita v Brně",
+        #         "Mendelova univerzita (Brno)": "Mendelova univerzita v Brně"
+        #     }
+        #     names = []
+        #     for uni_name in data["university"]["name"]:
+        #         uni_name["name"] = UNIVERSITIES.get(uni_name["name"], uni_name["name"])
+        #         names.append(uni_name)
+        #     data["university"]["name"] = names
+        #     return data
+        #
+        # @post_load()
+        # def validate_university_name(self, data):
+        #     if not self.staging:
+        #         for uni_name in data["university"]["name"]:
+        #             if uni_name["lang"] == "cze":
+        #                 imported_data = import_csv("universities.csv", 0, 1)[0]
+        #                 universities = [university.lower() for university in imported_data]
+        #                 name = uni_name["name"].lower()
+        #                 if name not in universities:
+        #                     raise ValidationError("The University name is not valid")
+        #
+        # @post_load()
+        # def validate_faculty_name(self, data):
+        #     if not self.staging:
+        #         if "faculties" in data["university"]:
+        #             for faculty in data["university"]["faculties"]:
+        #                 for fac_name in faculty["name"]:
+        #                     if fac_name["lang"] == "cze":
+        #                         imported_data = import_csv("faculties.csv", 0, 1)[0]
+        #                         if fac_name["name"] not in imported_data:
+        #                             raise ValidationError("The Faculty name is not valid")
 
     class FieldSubSchemaV1(StagingMixin, StrictKeysMixin):
         code = SanitizedUnicode(validate=validate_field_code)
@@ -304,6 +304,7 @@ def createThesisMetadataSchemaV1():
         address = SanitizedUnicode()
         url = fields.Url()
         lib_url = fields.Url()
+
     #########################################################################
     #                     Main schema                                       #
     #########################################################################
@@ -331,7 +332,7 @@ def createThesisMetadataSchemaV1():
         note = fields.List(SanitizedUnicode())
         accessibility = fields.List(Nested(createMultilanguageSchemaV1()))
         accessRights = SanitizedUnicode(validate=validate.OneOf(["open", "embargoed", "restricted", "metadata_only"]))
-        provider = Nested(ProviderSubSchemaV1)  # TODO: dodělat validaci na providera viz csv v NUSL_schemas
+        provider = Nested(ProviderSubSchemaV1)
         defended = fields.Boolean()
         studyProgramme = Nested(ProgrammeSubSchemaV1)
         studyField = fields.List(Nested(FieldSubSchemaV1))
