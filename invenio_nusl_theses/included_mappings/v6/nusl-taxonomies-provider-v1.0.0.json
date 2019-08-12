@@ -1,6 +1,6 @@
 {
     "ProviderType": {
-        "type": "taxonomy-v1.0.0.json#/Taxonomy",
+        "type": "taxonomy-v1.0.0.json#/TaxonomyTerm",
         "properties": {
             "address": {
                 "type": "nested",

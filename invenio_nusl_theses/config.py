@@ -89,6 +89,11 @@ RECORDS_REST_ENDPOINTS = {
     'theses-staging': THESES_STAGING_REST_ENDPOINT
 }
 
+INVENIO_RECORD_DRAFT_SCHEMAS = [
+    'invenio_nusl_theses/nusl-theses-v1.0.0.json',
+]
+
+
 RECORDS_REST_FACETS = {
 }
 

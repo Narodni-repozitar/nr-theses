@@ -187,7 +187,7 @@
             }
         },
         "doctype": {
-            "$ref": "../taxonomy-v1.0.0.json#/definitions/taxonomy"
+            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTerm"
         },
         "id": {
             "type": "string"
@@ -222,7 +222,7 @@
         "provider": {
             "allOf": [
                 {
-                    "$ref": "../taxonomy-v1.0.0.json#/definitions/taxonomy"
+                    "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTerm"
                 },
                 {
                     "properties": {
@@ -245,7 +245,7 @@
         "studyField": {
             "allOf": [
                 {
-                    "$ref": "../taxonomy-v1.0.0.json#/definitions/taxonomy"
+                    "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTerm"
                 },
                 {
                     "properties": {
@@ -295,7 +295,7 @@
         "degreeGrantor": {
             "allOf": [
                 {
-                    "$ref": "../taxonomy-v1.0.0.json#/definitions/taxonomy"
+                    "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTerm"
                 },
                 {
                     "properties": {

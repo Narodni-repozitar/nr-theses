@@ -131,7 +131,7 @@
                     "type": "nusl-taxonomies-studyfields-v1.0.0.json#/FieldType"
                 },
                 "degreeGrantor": {
-                    "type": "nusl-taxonomies-studyfields-v1.0.0.json#/UniversityType"
+                    "type": "nusl-taxonomies-university-v1.0.0.json#/UniversityType"
                 }
             }
         }

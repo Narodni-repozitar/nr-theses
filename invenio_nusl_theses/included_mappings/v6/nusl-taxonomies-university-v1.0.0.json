@@ -1,6 +1,6 @@
 {
     "UniversityType": {
-        "type": "taxonomy-v1.0.0.json#/Taxonomy",
+        "type": "taxonomy-v1.0.0.json#/TaxonomyTerm",
         "properties": {
             "data_box": {
                 "type": "keyword"
