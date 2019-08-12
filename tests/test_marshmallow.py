@@ -112,10 +112,18 @@ def dump_metadata():
             }
         ],
         "doctype": {
-            "taxonomy": "NUSL",
-            "value": [
-                "vskp", "bakalarske_prace"
-            ]
+            "links": {
+                "self": "https://127.0.0.1:5000/api/taxonomies/doctype/vskp/diplomove_prace/",
+                "tree": "https://127.0.0.1:5000/api/taxonomies/doctype/vskp/diplomove_prace/?drilldown=True"
+            },
+            "title": [
+                {
+                    "lang": "cze",
+                    "value": "Diplomové práce"
+                }
+            ],
+            "path": "/vskp/diplomove_prace",
+            "slug": "diplomove_prace"
         },
         "id": "1276327",
         "subtitle": [
@@ -159,42 +167,67 @@ def dump_metadata():
                 "url": "http://www.vscht.cz/"
             },
         "defended": True,
-        "studyProgramme": {
-            "code": "B1407",
-            "name": "Chemie"
-        },
         "studyField": [
             {
-                "code": "2801T015",
-                "name": "Technologie organických látek a chemické speciality"
+                "aliases": None,
+                "date_of_accreditation_validity": "31.05.2016",
+                "degree_level": "Bakalářský",
+                "duration": "3",
+                "form_of_study": "P",
+                "grantor": [
+                    {
+                        "faculty": "Divadelní fakulta",
+                        "university": "Akademie múzických umění v Praze"
+                    }
+                ],
+                # "id": 64520,
+                "links": {
+                    "parent": "https://127.0.0.1:5000/api/taxonomies/studyfields/B8212/",
+                    "parent_tree": "https://127.0.0.1:5000/api/taxonomies/studyfields/B8212/?drilldown=True",
+                    "self": "https://127.0.0.1:5000/api/taxonomies/studyfields/B8212/8203R082/",
+                    "tree": "https://127.0.0.1:5000/api/taxonomies/studyfields/B8212/8203R082/?drilldown=True"
+                },
+                "path": "/B8212/8203R082",
+                "reference_number": "11137/2010",
+                "slug": "8203R082",
+                "title": [
+                    {
+                        "lang": "cze",
+                        "value": "Herectví alternativního divadla"
+                    }
+                ],
+                "type": "obor"
             }
         ],
         "degreeGrantor": [
             {
-                "university": {
-                    "name": [
-                        {
-                            "name": "Vysoká škola chemicko-technologická v Praze",
-                            "lang": "cze"
-                        }
-                    ],
-                    "faculties": [
-                        {
-                            "name": [
-                                {
-                                    "name": "Fakulta chemické technologie",
-                                    "lang": "cze"
-                                }
-                            ],
-                            "departments": [
-                                {
-                                    "name": "Ústav organické technologie",
-                                    "lang": "cze"
-                                }
-                            ]
-                        }
-                    ]
-                }
+                "IČO": "00216208",
+                "RID": "11000",
+                "address": "Ovocný trh 5  Staré Město  Praha 1, 116 36",
+                "data_box": "piyj9b4",
+                "deputy": "prof. MUDr. Tomáš Zima, DrSc., MBA",
+                # "descendants_count": 1046.0,
+                "form": "veřejná",
+                # "id": 45248,
+                "links": {
+                    "parent": "https://127.0.0.1:5000/api/taxonomies/universities/",
+                    "parent_tree": "https://127.0.0.1:5000/api/taxonomies/universities/?drilldown=True",
+                    "self": "https://127.0.0.1:5000/api/taxonomies/universities/00216208/",
+                    "tree": "https://127.0.0.1:5000/api/taxonomies/universities/00216208/?drilldown=True"
+                },
+                "path": "/00216208",
+                "region": "Praha",
+                "slug": "00216208",
+                "term_of_office_from": "2018-02-01",
+                "term_of_office_until": "2022-01-31",
+                "title": [
+                    {
+                        "lang": "cze",
+                        "value": "Univerzita Karlova"
+                    }
+                ],
+                "type": "univerzitní",
+                "url": "https://www.cuni.cz"
             }
         ]
     }
@@ -303,10 +336,7 @@ def load_metadata():
             }
         ],
         "doctype": {
-            "taxonomy": "NUSL",
-            "value": [
-                "vskp", "bakalarske_prace"
-            ]
+            '$ref': 'https://127.0.0.1:5000/api/taxonomies/doctype/diplomove_prace'
         },
         "id": "1276327",
         "subtitle": [
@@ -325,7 +355,7 @@ def load_metadata():
                 "lang": "cze"
             },
             {
-                "name": "Avallable at blabla",
+                "name": "Available at blabla",
                 "lang": "eng"
             }
         ],
@@ -335,42 +365,17 @@ def load_metadata():
                 "$ref": "https://127.0.0.1:5000/api/taxonomies/provider/edu/public_uni/vscht/",
             },
         "defended": True,
-        "studyProgramme": {
-            "code": "B1407",
-            "name": "Chemie"
-        },
         "studyField": [
             {
-                "code": "2801T015",
-                "name": "Technologie organických látek a chemické speciality"
+                '$ref': 'https://127.0.0.1:5000/api/taxonomies/studyfields/7503T094'
+            },
+            {
+                '$ref': 'https://127.0.0.1:5000/api/taxonomies/studyfields/7503T111'
             }
         ],
         "degreeGrantor": [
             {
-                "university": {
-                    "name": [
-                        {
-                            "name": "Vysoká škola chemicko-technologická v Praze",
-                            "lang": "cze"
-                        }
-                    ],
-                    "faculties": [
-                        {
-                            "name": [
-                                {
-                                    "name": "Fakulta chemické technologie",
-                                    "lang": "cze"
-                                }
-                            ],
-                            "departments": [
-                                {
-                                    "name": "Ústav organické technologie",
-                                    "lang": "cze"
-                                }
-                            ]
-                        }
-                    ]
-                }
+                '$ref': 'https://127.0.0.1:5000/api/taxonomies/universities/61384984'
             }
         ]
     }
@@ -408,7 +413,7 @@ def test_language_load_3(app, load_metadata):
 
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
-        result = schema.load(convert_dates(dump_metadata))
+        result = schema.load(convert_dates(load_metadata))
 
 
 ########################################################################
@@ -505,13 +510,13 @@ def test_dateaccepted_load_3(app, load_metadata):
 ########################################################################
 def test_modified_dump_1(app, dump_metadata):
     dump_metadata["modified"] = "blbost"
-    with pytest.raises(ValidationError):
+    with pytest.raises(AttributeError):
         schema = ThesisMetadataSchemaV1(strict=True)
-        result = schema.dump(load_metadata).data
+        convert_dates(dump_metadata) == schema.dump(dump_metadata).data
 
 
 def test_modified_load_1(app, load_metadata):
-    load_metadata["modified"] = "2014-12-22T03:12:58.019077+00:00"
+    load_metadata["modified"] = '2019-07-26T09:05:01'
 
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
@@ -590,44 +595,44 @@ def test_title_load_2(app, load_metadata):
 ########################################################################
 #                              extent                                  #
 ########################################################################
-def test_extent_dump_1(dump_metadata):
+def test_extent_dump_1(app, dump_metadata):
     dump_metadata["extent"] = "123 s."
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
 
 
-def test_extent_dump_2(dump_metadata):
+def test_extent_dump_2(app, dump_metadata):
     del dump_metadata["extent"]
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
 
 
-def test_extent_dump_3(dump_metadata):
+def test_extent_dump_3(app, dump_metadata):
     dump_metadata["extent"] = 123
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(dump_metadata) != convert_dates(schema.dump(dump_metadata).data)
 
 
-def test_extent_load_1(load_metadata):
-    dump_metadata["extent"] = "123 s."
+def test_extent_load_1(app, load_metadata):
+    load_metadata["extent"] = "123 s."
     schema = ThesisMetadataSchemaV1(strict=True)
     assert load_metadata == schema.load(convert_dates(load_metadata)).data
 
 
-def test_extent_load_2(load_metadata):
+def test_extent_load_2(app, load_metadata):
     del load_metadata["extent"]
     schema = ThesisMetadataSchemaV1(strict=True)
     assert load_metadata == schema.load(convert_dates(load_metadata)).data
 
 
-def test_extent_load_3(load_metadata):
+def test_extent_load_3(app, load_metadata):
     load_metadata["extent"] = 123
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
         schema.load(convert_dates(load_metadata))
 
 
-def test_extent_load_4(load_metadata):
+def test_extent_load_4(app, load_metadata):
     load_metadata["extent"] = ["123 s."]
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
@@ -660,7 +665,7 @@ def test_abstract_dump_3(dump_metadata):
     assert convert_dates(dump_metadata) != convert_dates(schema.dump(dump_metadata).data)
 
 
-def test_abstract_load_1(load_metadata):
+def test_abstract_load_1(app, load_metadata):
     load_metadata["abstract"] = [
         {
             "name": "Bakalářská práce je zaměřena na téma možností integrace pachatelů trestné činnosti zpět do společnosti. V rámci práce je na základě odborné literatury a získaných informací cílem seznámit zájemce, a to v teoretické části práce, s hlavními termíny a problematikou daného tématu. V praktické části je popsán průběh sběru dat až po výsledky kvalitativního výzkumu. Hlavním cílem bakalářské práce na téma Možnosti sociální integrace pachatelů trestné činnosti zpět do společnosti je objasnit okolnosti a podmínky integrace pachatele trestné činnosti zpět do společnosti po propuštění z výkonu trestu odnětí svobody. Ve vedlejším cíli je zjišťováno, zda potřeby propuštěných z výkonu trestu odnětí svobody při jejich zpětné integraci do společnosti odpovídají možnostem, které naše společnost poskytuje.",
@@ -671,20 +676,20 @@ def test_abstract_load_1(load_metadata):
     assert load_metadata == schema.load(convert_dates(load_metadata)).data
 
 
-def test_abstract_load_2(load_metadata):
+def test_abstract_load_2(app, load_metadata):
     del load_metadata["abstract"]
     schema = ThesisMetadataSchemaV1(strict=True)
     assert load_metadata == schema.load(convert_dates(load_metadata)).data
 
 
-def test_abstract_load_3(load_metadata):
+def test_abstract_load_3(app, load_metadata):
     load_metadata["abstract"] = "jiný datový typ"
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
         assert load_metadata == schema.load(convert_dates(load_metadata)).data
 
 
-def test_abstract_load_4(load_metadata):
+def test_abstract_load_4(app, load_metadata):
     load_metadata["abstract"] = [
         {
             "name": "Bakalářská práce je zaměřena na téma možností integrace pachatelů trestné činnosti zpět do společnosti. V rámci práce je na základě odborné literatury a získaných informací cílem seznámit zájemce, a to v teoretické části práce, s hlavními termíny a problematikou daného tématu. V praktické části je popsán průběh sběru dat až po výsledky kvalitativního výzkumu. Hlavním cílem bakalářské práce na téma Možnosti sociální integrace pachatelů trestné činnosti zpět do společnosti je objasnit okolnosti a podmínky integrace pachatele trestné činnosti zpět do společnosti po propuštění z výkonu trestu odnětí svobody. Ve vedlejším cíli je zjišťováno, zda potřeby propuštěných z výkonu trestu odnětí svobody při jejich zpětné integraci do společnosti odpovídají možnostem, které naše společnost poskytuje.",
@@ -697,7 +702,7 @@ def test_abstract_load_4(load_metadata):
     assert final_metadata == schema.load(convert_dates(load_metadata)).data
 
 
-def test_abstract_load_5(load_metadata):
+def test_abstract_load_5(app, load_metadata):
     load_metadata["abstract"] = [
         {
             "name": "Bakalářská práce je zaměřena na téma možností integrace pachatelů trestné činnosti zpět do společnosti. V rámci práce je na základě odborné literatury a získaných informací cílem seznámit zájemce, a to v teoretické části práce, s hlavními termíny a problematikou daného tématu. V praktické části je popsán průběh sběru dat až po výsledky kvalitativního výzkumu. Hlavním cílem bakalářské práce na téma Možnosti sociální integrace pachatelů trestné činnosti zpět do společnosti je objasnit okolnosti a podmínky integrace pachatele trestné činnosti zpět do společnosti po propuštění z výkonu trestu odnětí svobody. Ve vedlejším cíli je zjišťováno, zda potřeby propuštěných z výkonu trestu odnětí svobody při jejich zpětné integraci do společnosti odpovídají možnostem, které naše společnost poskytuje.",
@@ -743,7 +748,7 @@ def test_rights_dump_3(dump_metadata):
     assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
 
 
-def test_rights_load_1(load_metadata):
+def test_rights_load_1(app, load_metadata):
     load_metadata["rights"] = {
         "CC": {
             "code": "CC BY",
@@ -761,7 +766,7 @@ def test_rights_load_1(load_metadata):
     assert load_metadata == schema.load(convert_dates(load_metadata)).data
 
 
-def test_rights_load_2(load_metadata):
+def test_rights_load_2(app, load_metadata):
     load_metadata["rights"] = {
         "CC": {
             "code": "CC BY",
@@ -781,7 +786,7 @@ def test_rights_load_2(load_metadata):
     assert final_data == schema.load(convert_dates(load_metadata)).data
 
 
-def test_rights_load_3(load_metadata):
+def test_rights_load_3(app, load_metadata):
     load_metadata["rights"] = {
         "CC": {
             "code": "CC BY",
@@ -794,7 +799,7 @@ def test_rights_load_3(load_metadata):
     assert load_metadata == schema.load(convert_dates(load_metadata)).data
 
 
-def test_rights_load_4(load_metadata):
+def test_rights_load_4(app, load_metadata):
     del load_metadata["rights"]
     schema = ThesisMetadataSchemaV1(strict=True)
     assert load_metadata == schema.load(convert_dates(load_metadata)).data
@@ -841,7 +846,7 @@ def test_subject_dump_3(dump_metadata):
     assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
 
 
-def test_subject_load_1(load_metadata):
+def test_subject_load_1(app, load_metadata):
     load_metadata["subject"] = [
         {
             "name": [
@@ -867,7 +872,7 @@ def test_subject_load_1(load_metadata):
     assert load_metadata == schema.load(convert_dates(load_metadata)).data
 
 
-def test_subject_load_2(load_metadata):
+def test_subject_load_2(app, load_metadata):
     load_metadata["subject"] = [
         {
             "name": [
@@ -894,7 +899,7 @@ def test_subject_load_2(load_metadata):
         schema.load(convert_dates(load_metadata))
 
 
-def test_subject_load_3(load_metadata):
+def test_subject_load_3(app, load_metadata):
     load_metadata["subject"] = [
         {
             "name": [
@@ -922,7 +927,7 @@ def test_subject_load_3(load_metadata):
         schema.load(convert_dates(load_metadata))
 
 
-def test_subject_load_4(load_metadata):
+def test_subject_load_4(app, load_metadata):
     load_metadata["subject"] = [
         {
             "name": [
@@ -988,7 +993,7 @@ def test_creator_dump_4(dump_metadata):
     assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
 
 
-def test_creator_load_1(load_metadata):
+def test_creator_load_1(app, load_metadata):
     load_metadata["creator"] = [
         {
             "name": "Kopecký, Daniel",
@@ -1002,7 +1007,7 @@ def test_creator_load_1(load_metadata):
     assert load_metadata == schema.load(convert_dates(load_metadata)).data
 
 
-def test_creator_load_2(load_metadata):
+def test_creator_load_2(app, load_metadata):
     load_metadata["creator"] = [
         {
             "name": "Kopecký, Daniel"
@@ -1012,7 +1017,7 @@ def test_creator_load_2(load_metadata):
     assert load_metadata == schema.load(convert_dates(load_metadata)).data
 
 
-def test_creator_load_3(load_metadata):
+def test_creator_load_3(app, load_metadata):
     load_metadata["creator"] = [
         {
             "name": "Kopecký, Daniel",
@@ -1026,7 +1031,7 @@ def test_creator_load_3(load_metadata):
         schema.load(convert_dates(load_metadata))
 
 
-def test_creator_load_4(load_metadata):
+def test_creator_load_4(app, load_metadata):
     del load_metadata["creator"]
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
@@ -1063,7 +1068,7 @@ def test_contributor_dump_3(dump_metadata):
     assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
 
 
-def test_contributor_load_1(load_metadata):
+def test_contributor_load_1(app, load_metadata):
     load_metadata["contributor"] = [
         {
             "name": "Kopecký, Daniel",
@@ -1078,7 +1083,7 @@ def test_contributor_load_1(load_metadata):
     assert load_metadata == schema.load(convert_dates(load_metadata)).data
 
 
-def test_contributor_load_2(load_metadata):
+def test_contributor_load_2(app, load_metadata):
     load_metadata["contributor"] = [
         {
             "name": "Kopecký, Daniel",
@@ -1093,7 +1098,7 @@ def test_contributor_load_2(load_metadata):
         schema.load(convert_dates(load_metadata))
 
 
-def test_contributor_load_3(load_metadata):
+def test_contributor_load_3(app, load_metadata):
     load_metadata["contributor"] = [
         {
             "name": "Kopecký, Daniel",
@@ -1112,86 +1117,86 @@ def test_contributor_load_3(load_metadata):
 ########################################################################
 #                             doctype                                  #
 ########################################################################
-def test_doctype_dump_1(dump_metadata):
-    dump_metadata["doctype"] = {
-        "taxonomy": "NUSL",
-        "value": [
-            "vskp", "bakalarske_prace"
-        ]
-    }
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
-
-
-def test_doctype_dump_2(dump_metadata):
-    dump_metadata["doctype"] = {
-        "taxonomy": "NUSL",
-        "value": [
-            "studie", "anl_met_mat"
-        ]
-    }
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
-
-
-def test_doctype_dump_3(dump_metadata):
-    del dump_metadata["doctype"]
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
-
-
-def test_doctype_load_1(load_metadata):
-    load_metadata["doctype"] = {
-        "taxonomy": "NUSL",
-        "value": [
-            "vskp", "bakalarske_prace"
-        ]
-    }
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert load_metadata == schema.load(convert_dates(load_metadata)).data
-
-
-def test_doctype_load_2(load_metadata):
-    load_metadata["doctype"] = {
-        "taxonomy": "RIV",
-        "value": [
-            "polop", "Z"
-        ]
-    }
-    with pytest.raises(ValidationError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        schema.load(convert_dates(load_metadata)).data
-
-
-# def test_doctype_load_3(load_metadata):
+# def test_doctype_dump_1(dump_metadata):
+#     dump_metadata["doctype"] = {
+#         "taxonomy": "NUSL",
+#         "value": [
+#             "vskp", "bakalarske_prace"
+#         ]
+#     }
+#     schema = ThesisMetadataSchemaV1(strict=True)
+#     assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
+#
+#
+# def test_doctype_dump_2(dump_metadata):
+#     dump_metadata["doctype"] = {
+#         "taxonomy": "NUSL",
+#         "value": [
+#             "studie", "anl_met_mat"
+#         ]
+#     }
+#     schema = ThesisMetadataSchemaV1(strict=True)
+#     assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
+#
+#
+# def test_doctype_dump_3(dump_metadata):
+#     del dump_metadata["doctype"]
+#     schema = ThesisMetadataSchemaV1(strict=True)
+#     assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
+#
+#
+# def test_doctype_load_1(load_metadata):
 #     load_metadata["doctype"] = {
-#         "RIV": {"term": "polop",
-#                 "bterm": "Z"}
+#         "taxonomy": "NUSL",
+#         "value": [
+#             "vskp", "bakalarske_prace"
+#         ]
+#     }
+#     schema = ThesisMetadataSchemaV1(strict=True)
+#     assert load_metadata == schema.load(convert_dates(load_metadata)).data
+#
+#
+# def test_doctype_load_2(load_metadata):
+#     load_metadata["doctype"] = {
+#         "taxonomy": "RIV",
+#         "value": [
+#             "polop", "Z"
+#         ]
+#     }
+#     with pytest.raises(ValidationError):
+#         schema = ThesisMetadataSchemaV1(strict=True)
+#         schema.load(convert_dates(load_metadata)).data
+#
+#
+# # def test_doctype_load_3(load_metadata):
+# #     load_metadata["doctype"] = {
+# #         "RIV": {"term": "polop",
+# #                 "bterm": "Z"}
+# #     }
+# #     with pytest.raises(ValidationError):
+# #         schema = ThesisMetadataSchemaV1(strict=True)
+# #         schema.load(convert_dates(load_metadata))
+#
+#
+# def test_doctype_load_4(app, load_metadata):
+#     load_metadata["doctype"] = {
+#         "taxonomy": "NUSL",
+#         "value": ["vskp", "studie"]
 #     }
 #     with pytest.raises(ValidationError):
 #         schema = ThesisMetadataSchemaV1(strict=True)
 #         schema.load(convert_dates(load_metadata))
-
-
-def test_doctype_load_4(app, load_metadata):
-    load_metadata["doctype"] = {
-        "taxonomy": "NUSL",
-        "value": ["vskp", "studie"]
-    }
-    with pytest.raises(ValidationError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        schema.load(convert_dates(load_metadata))
-
-
-def test_doctype_load_5(app, load_metadata):
-    load_metadata["doctype"] = {
-        "taxonomy": "NUSL",
-        "value": [None, "studie"]
-    }
-
-    with pytest.raises(ValidationError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        schema.load(convert_dates(load_metadata)).data
+#
+#
+# def test_doctype_load_5(app, load_metadata):
+#     load_metadata["doctype"] = {
+#         "taxonomy": "NUSL",
+#         "value": [None, "studie"]
+#     }
+#
+#     with pytest.raises(ValidationError):
+#         schema = ThesisMetadataSchemaV1(strict=True)
+#         schema.load(convert_dates(load_metadata)).data
 
 
 ########################################################################
@@ -1215,20 +1220,20 @@ def test_id_dump_3(dump_metadata):
     assert convert_dates(dump_metadata) != convert_dates(schema.dump(dump_metadata).data)
 
 
-def test_id_load_1(load_metadata):
+def test_id_load_1(app, load_metadata):
     load_metadata["id"] = "2562727272"
     schema = ThesisMetadataSchemaV1(strict=True)
     assert load_metadata == schema.load(convert_dates(load_metadata)).data
 
 
-def test_id_load_2(load_metadata):
+def test_id_load_2(app, load_metadata):
     del load_metadata["id"]
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
         assert load_metadata == schema.load(convert_dates(load_metadata)).data
 
 
-def test_id_load_3(load_metadata):
+def test_id_load_3(app, load_metadata):
     load_metadata["id"] = 2562727272
     schema = ThesisMetadataSchemaV1(strict=True)
     final_metadata = dict(load_metadata)
@@ -1271,7 +1276,7 @@ def test_subtitle_dump_4(dump_metadata):
     assert convert_dates(dump_metadata) == schema.dump(dump_metadata).data
 
 
-def test_subtitle_load_1(load_metadata):
+def test_subtitle_load_1(app, load_metadata):
     load_metadata["subtitle"] = [
         {"name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku středověku.",
          "lang": "cze"
@@ -1281,7 +1286,7 @@ def test_subtitle_load_1(load_metadata):
     assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
 
 
-def test_subtitle_load_2(load_metadata):
+def test_subtitle_load_2(app, load_metadata):
     load_metadata["subtitle"] = [
         {"name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku středověku.",
          "lang": "cz"
@@ -1318,7 +1323,7 @@ def test_note_dump_3(dump_metadata):
     assert convert_dates(dump_metadata) != schema.dump(dump_metadata).data
 
 
-def test_note_load_1(load_metadata):
+def test_note_load_1(app, load_metadata):
     load_metadata["note"] = [
         "Poznámka 1",
         "Poznámka 2"
@@ -1328,14 +1333,14 @@ def test_note_load_1(load_metadata):
     assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
 
 
-def test_note_load_2(load_metadata):
+def test_note_load_2(app, load_metadata):
     del load_metadata["note"]
 
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
 
 
-def test_note_load_3(load_metadata):
+def test_note_load_3(app, load_metadata):
     load_metadata["note"] = "jiný datový typ"
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
@@ -1372,7 +1377,7 @@ def test_accessibility_dump_3(dump_metadata):
     assert convert_dates(dump_metadata) != schema.dump(dump_metadata).data
 
 
-def test_accessibility_load_1(load_metadata):
+def test_accessibility_load_1(app, load_metadata):
     load_metadata["accessibility"] = [
         {
             "name": "Dostupné kdesi blabla",
@@ -1388,7 +1393,7 @@ def test_accessibility_load_1(load_metadata):
     assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
 
 
-def test_accessibility_load_2(load_metadata):
+def test_accessibility_load_2(app, load_metadata):
     load_metadata["accessibility"] = [
         {
             "name": "Dostupné kdesi blabla",
@@ -1404,7 +1409,7 @@ def test_accessibility_load_2(load_metadata):
         convert_dates(schema.load(convert_dates(load_metadata)).data)
 
 
-def test_accessibility_load_3(load_metadata):
+def test_accessibility_load_3(app, load_metadata):
     del load_metadata["accessibility"]
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
@@ -1431,28 +1436,28 @@ def test_accessRights_dump_3(dump_metadata):
     assert convert_dates(dump_metadata) != schema.dump(dump_metadata).data
 
 
-def test_accessRights_load_1(load_metadata):
+def test_accessRights_load_1(app, load_metadata):
     load_metadata["accessRights"] = "open"
 
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
 
 
-def test_accessRights_load_2(load_metadata):
+def test_accessRights_load_2(app, load_metadata):
     load_metadata["accessRights"] = "blbost"
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
         convert_dates(schema.load(convert_dates(load_metadata)).data)
 
 
-def test_accessRights_load_3(load_metadata):
+def test_accessRights_load_3(app, load_metadata):
     del load_metadata["accessRights"]
 
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
 
 
-def test_accessRights_load_4(load_metadata):
+def test_accessRights_load_4(app, load_metadata):
     load_metadata["accessRights"] = None
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
@@ -1462,35 +1467,35 @@ def test_accessRights_load_4(load_metadata):
 ########################################################################
 #                           Provider                                   #
 ########################################################################
-def test_provider_dump_1(dump_metadata):
-    dump_metadata["provider"] = "univerzita_karlova"
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(dump_metadata) == schema.dump(dump_metadata).data
-
-
-def test_provider_dump_2(dump_metadata):
-    dump_metadata["provider"] = ["jiný datový typ"]
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(dump_metadata) != schema.dump(dump_metadata).data
-
-
-def test_provider_dump_3(dump_metadata):
-    del dump_metadata["provider"]
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(dump_metadata) == schema.dump(dump_metadata).data
-
-
-def test_provider_load_1(load_metadata):
-    load_metadata["provider"] = "univerzita_karlova"
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
-
-
-def test_provider_load_2(load_metadata):
-    del load_metadata["provider"]
-
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
+# def test_provider_dump_1(dump_metadata):
+#     dump_metadata["provider"] = "univerzita_karlova"
+#     schema = ThesisMetadataSchemaV1(strict=True)
+#     assert convert_dates(dump_metadata) == schema.dump(dump_metadata).data
+#
+#
+# def test_provider_dump_2(dump_metadata):
+#     dump_metadata["provider"] = ["jiný datový typ"]
+#     schema = ThesisMetadataSchemaV1(strict=True)
+#     assert convert_dates(dump_metadata) != schema.dump(dump_metadata).data
+#
+#
+# def test_provider_dump_3(dump_metadata):
+#     del dump_metadata["provider"]
+#     schema = ThesisMetadataSchemaV1(strict=True)
+#     assert convert_dates(dump_metadata) == schema.dump(dump_metadata).data
+#
+#
+# def test_provider_load_1(load_metadata):
+#     load_metadata["provider"] = "univerzita_karlova"
+#     schema = ThesisMetadataSchemaV1(strict=True)
+#     assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
+#
+#
+# def test_provider_load_2(load_metadata):
+#     del load_metadata["provider"]
+#
+#     schema = ThesisMetadataSchemaV1(strict=True)
+#     assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
 
 
 ########################################################################
@@ -1514,372 +1519,31 @@ def test_defended_dump_2(dump_metadata):
 #     assert convert_dates(load_metadata) == schema.dump(load_metadata).data
 
 
-def test_defended_load_1(load_metadata):
+def test_defended_load_1(app, load_metadata):
     load_metadata["defended"] = False
 
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
 
 
-def test_defended_load_2(load_metadata):
+def test_defended_load_2(app, load_metadata):
     del load_metadata["defended"]
 
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
 
 
-def test_defended_load_3(load_metadata):
+def test_defended_load_3(app, load_metadata):
     load_metadata["defended"] = "jiný datový typ"
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
         convert_dates(schema.load(convert_dates(load_metadata)).data)
 
-
-#######################################################################
-#                           Study Programme                           #
-#######################################################################
-def test_studyProgramme_dump_1(dump_metadata):
-    dump_metadata["studyProgramme"] = {
-        "code": "B1407",
-        "name": "Chemie"
-    }
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(dump_metadata) == schema.dump(dump_metadata).data
-
-
-def test_studyProgramme_dump_2(dump_metadata):
-    dump_metadata["studyProgramme"] = "jiný datový typ"
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(dump_metadata) != schema.dump(dump_metadata).data
-
-
-def test_studyProgramme_dump_3(dump_metadata):
-    del dump_metadata["studyProgramme"]
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(dump_metadata) == schema.dump(dump_metadata).data
-
-
-def test_studyProgramme_load_1(load_metadata):
-    load_metadata["studyProgramme"] = {
-        "code": "B1407",
-        "name": "Chemie"
-    }
-
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
-
-
-def test_studyProgramme_load_2(load_metadata):
-    load_metadata["studyProgramme"] = {
-        "code": "blbost",
-        "name": "Chemie"
-    }
-    with pytest.raises(ValidationError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        convert_dates(schema.load(convert_dates(load_metadata)).data)
-
-
-def test_studyProgramme_load_3(load_metadata):
-    del load_metadata["studyProgramme"]
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
-
-
-def test_studyProgramme_load_4(load_metadata):
-    load_metadata["studyProgramme"] = {
-        "code": "B1407",
-        "name": "Chemie (čtyřletá)"
-    }
-    with pytest.raises(ValidationError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        convert_dates(schema.load(convert_dates(load_metadata)).data)
-
-
-def test_studyProgramme_load_5(load_metadata):
-    load_metadata["studyProgramme"] = {
-        "name": "Chemie"
-    }
-
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
-
-
 #######################################################################
 #                           Study Field                               #
 #######################################################################
-def test_studyField_dump_1(dump_metadata):
-    dump_metadata["studyField"] = [
-        {
-            "code": "2801T015",
-            "name": "Technologie organických látek a chemické speciality"
-        }
-    ]
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(dump_metadata) == schema.dump(dump_metadata).data
-
-
-def test_studyField_dump_2(dump_metadata):
-    del dump_metadata["studyField"]
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(dump_metadata) == schema.dump(dump_metadata).data
-
-
-def test_studyField_dump_3(dump_metadata):
-    dump_metadata["studyField"] = "jiný datový typ"
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(dump_metadata) != schema.dump(dump_metadata).data
-
-
-def test_studyField_load_1(load_metadata):
-    load_metadata["studyField"] = [
-        {
-            "code": "2801T015",
-            "name": "Technologie organických látek a chemické speciality"
-        }
-    ]
-
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
-
-
-def test_studyField_load_2(load_metadata):
-    del load_metadata["studyField"]
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
-
-
-def test_studyField_load_3(app, load_metadata):
-    load_metadata["studyField"] = [
-        {
-            "code": "blbost",
-            "name": "Technologie organických látek a chemické speciality"
-        }
-    ]
-    with pytest.raises(ValidationError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        convert_dates(schema.load(convert_dates(load_metadata)).data)
-
-
-def test_studyField_load_4(load_metadata):
-    load_metadata["studyField"] = [
-        {
-            "code": "2801T015",
-            "name": "blbost"
-        }
-    ]
-    with pytest.raises(ValidationError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        convert_dates(schema.load(convert_dates(load_metadata)).data)
-
-
-def test_studyField_load_5(load_metadata):
-    load_metadata["studyField"] = [
-        {
-            "code": "2801T007",
-            "name": "Technologie organických látek a chemické speciality"
-        }
-    ]
-    with pytest.raises(ValidationError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        convert_dates(schema.load(convert_dates(load_metadata)).data)
 
 
 #######################################################################
 #                           Degree grantor                            #
 #######################################################################
-def test_degreeGrantor_dump_1(dump_metadata):
-    dump_metadata["degreeGrantor"] = [
-        {
-            "university": {
-                "name": [
-                    {
-                        "name": "Vysoká škola chemicko-technologická v Praze",
-                        "lang": "cze"
-                    }
-                ],
-                "faculties": [
-                    {
-                        "name": [
-                            {
-                                "name": "Fakulta chemické technologie",
-                                "lang": "cze"
-                            }
-                        ],
-                        "departments": [
-                            {
-                                "name": "Ústav organické technologie",
-                                "lang": "cze"
-                            }
-                        ]
-                    }
-                ]
-            }
-        }
-    ]
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(dump_metadata) == schema.dump(dump_metadata).data
-
-
-def test_degreeGrantor_dump_2(dump_metadata):
-    del dump_metadata["degreeGrantor"]
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(dump_metadata) == schema.dump(dump_metadata).data
-
-
-def test_degreeGrantor_dump_3(dump_metadata):
-    dump_metadata["degreeGrantor"] = "jiný datový typ"
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(dump_metadata) != schema.dump(dump_metadata).data
-
-
-def test_degreeGrantor_load_1(load_metadata):
-    load_metadata["degreeGrantor"] = [
-        {
-            "university": {
-                "name": [
-                    {
-                        "name": "Vysoká škola chemicko-technologická v Praze",
-                        "lang": "cze"
-                    }
-                ],
-                "faculties": [
-                    {
-                        "name": [
-                            {
-                                "name": "Fakulta chemické technologie",
-                                "lang": "cze"
-                            }
-                        ],
-                        "departments": [
-                            {
-                                "name": "Ústav organické technologie",
-                                "lang": "cze"
-                            }
-                        ]
-                    }
-                ]
-            }
-        }
-    ]
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
-
-
-def test_degreeGrantor_load_2(load_metadata):
-    load_metadata["degreeGrantor"] = [
-        {
-            "university": {
-                "name": [
-                    {
-                        "name": "blbost",
-                        "lang": "cze"
-                    }
-                ],
-                "faculties": [
-                    {
-                        "name": [
-                            {
-                                "name": "Fakulta chemické technologie",
-                                "lang": "cze"
-                            }
-                        ],
-                        "departments": [
-                            {
-                                "name": "Ústav organické technologie",
-                                "lang": "cze"
-                            }
-                        ]
-                    }
-                ]
-            }
-        }
-    ]
-    with pytest.raises(ValidationError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        convert_dates(schema.load(convert_dates(load_metadata)).data)
-
-
-def test_degreeGrantor_load_3(load_metadata):
-    load_metadata["degreeGrantor"] = [
-        {
-            "university": {
-                "name": [
-                    {
-                        "name": "Vysoká škola chemicko-technologická v Praze",
-                        "lang": "hjk"
-                    }
-                ],
-                "faculties": [
-                    {
-                        "name": [
-                            {
-                                "name": "Fakulta chemické technologie",
-                                "lang": "cze"
-                            }
-                        ],
-                        "departments": [
-                            {
-                                "name": "Ústav organické technologie",
-                                "lang": "cze"
-                            }
-                        ]
-                    }
-                ]
-            }
-        }
-    ]
-    with pytest.raises(ValidationError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        convert_dates(schema.load(convert_dates(load_metadata)).data)
-
-
-def test_degreeGrantor_load_4(load_metadata):
-    load_metadata["degreeGrantor"] = [
-        {
-            "university": {
-                "name": [
-                    {
-                        "name": "Vysoká škola chemicko-technologická v Praze",
-                        "lang": "cze"
-                    }
-                ],
-                "faculties": [
-                    {
-                        "name": [
-                            {
-                                "name": "Fakulta chemické technologie",
-                                "lang": "cze"
-                            }
-                        ]
-                    }
-                ]
-            }
-        }
-    ]
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
-
-
-def test_degreeGrantor_load_5(load_metadata):
-    load_metadata["degreeGrantor"] = [
-        {
-            "university": {
-                "name": [
-                    {
-                        "name": "Vysoká škola chemicko-technologická v Praze",
-                        "lang": "cze"
-                    }
-                ]
-            }
-        }
-    ]
-
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
-
-
-def test_degreeGrantor_load_6(load_metadata):
-    del load_metadata["degreeGrantor"]
-    with pytest.raises(ValidationError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        convert_dates(schema.load(convert_dates(load_metadata)).data)

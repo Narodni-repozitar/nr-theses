@@ -15,25 +15,8 @@
                     }
                 }
             },
-            "id": {
-                "type": "integer"
-            },
             "lib_url": {
                 "type": "keyword"
-            },
-
-            "name": {
-                "type": "nested",
-                "properties": {
-                    "name": {
-                        "type": "text",
-                        "fields": {
-                            "keyword": {
-                                "type": "keyword"
-                            }
-                        }
-                    }
-                }
             },
             "url": {
                 "type": "keyword"

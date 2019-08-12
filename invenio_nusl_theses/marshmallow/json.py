@@ -170,71 +170,51 @@ def createThesisMetadataSchemaV1():
     class ContributorSubSchemaV1(CreatorSubSchemaV1):
         role = SanitizedUnicode(required=True)
 
-    class ProgrammeSubSchemaV1(StagingMixin, StrictKeysMixin):
-        code = SanitizedUnicode(validate=validate_programme_code)
-        name = SanitizedUnicode(validate=validate_programme_name)
+    # class ProgrammeSubSchemaV1(StagingMixin, TaxonomySchemaV1):
+    #     name = fields.List(Nested(createMultilanguageSchemaV1()))
 
-        @pre_load()
-        def standardize_name(self, data):
-            STUDY_PROGRAMME = {
-                'Zootechnics': "Zootechnika",
-                'Hudebního umění': 'Hudební umění',
-                'Biochemistry': "Biochemie",
-                'Biology': "Biologie",
-                "Applied Informatics": "Aplikovaná informatika",
-                'Economics and Management': "Ekonomika a management",
-                'Teorie filmové a multimediální tvorby': 'Teorie a praxe audiovizuální tvorby',
-                'Botany': 'Botanika',
-                'Physiology and Immunology': 'Fyziologie a imunologie',
-                'Molecular and Cell Biology': "Molekulární a buněčná biologie",
-                "Finance a účetnictví": "Finance a účetnictví"
-            }
+    #
+    # class FacultySubSchemaV1(StagingMixin, StrictKeysMixin):
+    #     name = fields.List(Nested(createMultilanguageSchemaV1()))
+    #     departments = fields.List(Nested(createMultilanguageSchemaV1()), allow_none=True)
+    #
+    # class UniversitySubSchemaV1(StagingMixin, TaxonomySchemaV1):
+    #     name = fields.List(Nested(createMultilanguageSchemaV1()))
+    #     faculties = fields.List(Nested(FacultySubSchemaV1))
 
-            if "name" in data:
-                data["name"] = STUDY_PROGRAMME.get(data["name"], data["name"])
+    # @pre_load()
+    # def standardize_name(self, data):
+    #     FACULTIES = {
+    #         "Filmová a televizní fakulta AMU": "Filmová a televizní fakulta",
+    #         "Divadelní fakulta AMU": "Divadelní fakulta",
+    #         "Hudební a taneční fakulta AMU": "Hudební a taneční fakulta",
+    #         "Hudební fakulta AMU": "Hudební fakulta",
+    #         "Stavební fakulta": "Fakulta stavební"
+    #     }
+    #     if "faculties" in data:
+    #         faculties = []
+    #         for faculty in data["faculties"]:
+    #             names = []
+    #             for fac_name in faculty["name"]:
+    #                 fac_name["name"] = FACULTIES.get(fac_name["name"], fac_name["name"])
+    #                 names.append(fac_name)
+    #             faculty["name"] = names
+    #             faculties.append(faculty)
+    #         data["faculties"] = faculties
+    #     return data
 
-        @post_load()
-        def validate_code_name_fit(self, data):  # TODO: Dát do jednoho společného kódu
-            if data.get("code") and data.get("name"):
-                codes_names = import_csv("programme.csv", 0, 2)
-                programme_code = data["code"]
-                programme_name = data["name"]
-                code_index = codes_names[0].index(programme_code)
-                if not self.staging:
-                    if codes_names[1][code_index] != programme_name:
-                        raise ValidationError("The code does not match the program name.")
-
-    class FacultySubSchemaV1(StagingMixin, StrictKeysMixin):
-        name = fields.List(Nested(createMultilanguageSchemaV1()))
-        departments = fields.List(Nested(createMultilanguageSchemaV1()), allow_none=True)
-
-    class UniversitySubSchemaV1(StagingMixin, StrictKeysMixin):
-        name = fields.List(Nested(createMultilanguageSchemaV1()))
-        faculties = fields.List(Nested(FacultySubSchemaV1))
-
-        # @pre_load()
-        # def standardize_name(self, data):
-        #     FACULTIES = {
-        #         "Filmová a televizní fakulta AMU": "Filmová a televizní fakulta",
-        #         "Divadelní fakulta AMU": "Divadelní fakulta",
-        #         "Hudební a taneční fakulta AMU": "Hudební a taneční fakulta",
-        #         "Hudební fakulta AMU": "Hudební fakulta",
-        #         "Stavební fakulta": "Fakulta stavební"
-        #     }
-        #     if "faculties" in data:
-        #         faculties = []
-        #         for faculty in data["faculties"]:
-        #             names = []
-        #             for fac_name in faculty["name"]:
-        #                 fac_name["name"] = FACULTIES.get(fac_name["name"], fac_name["name"])
-        #                 names.append(fac_name)
-        #             faculty["name"] = names
-        #             faculties.append(faculty)
-        #         data["faculties"] = faculties
-        #     return data
-
-    class DegreeGrantorSubSchemaV1(StagingMixin, StrictKeysMixin):
-        university = Nested(UniversitySubSchemaV1, required=True)
+    class DegreeGrantorSubSchemaV1(StagingMixin, TaxonomySchemaV1):
+        ICO = SanitizedUnicode(required=False, dump_to='IČO', load_from='IČO', attribute="IČO")
+        RID = SanitizedUnicode(required=False)
+        address = SanitizedUnicode(required=False)
+        data_box = SanitizedUnicode(required=False)
+        deputy = SanitizedUnicode(required=False)
+        form = SanitizedUnicode(required=False)
+        region = SanitizedUnicode(required=False)
+        term_of_office_from = SanitizedUnicode(required=False)
+        term_of_office_until = SanitizedUnicode(required=False)
+        type = SanitizedUnicode()
+        url = fields.Url()
 
         # @pre_load()
         # def standardize_name(self, data):
@@ -274,30 +254,20 @@ def createThesisMetadataSchemaV1():
         #                         if fac_name["name"] not in imported_data:
         #                             raise ValidationError("The Faculty name is not valid")
 
-    class FieldSubSchemaV1(StagingMixin, StrictKeysMixin):
-        code = SanitizedUnicode(validate=validate_field_code)
-        name = SanitizedUnicode(validate=validate_field_name)
+    class FieldGrantorSubschemaV1(StagingMixin, StrictKeysMixin):
+        faculty = SanitizedUnicode(required=False)
+        university = SanitizedUnicode(required=False)
+        type = SanitizedUnicode(required=False)
 
-        @post_load()
-        def validate_code_name_fit(self, data):
-            try:
-                if ("name" in data) and ("code" not in data):
-                    codes_names = import_csv("field.csv", 0, 2)
-                    index = codes_names[1].index(data["name"])
-                    code = codes_names[0][index]
-                    data["code"] = code
-            except ValueError as e:
-                if not self.staging:
-                    raise
-
-            if not self.staging:
-                if data.get("code") and data.get("name"):
-                    codes_names = import_csv("field.csv", 0, 2)
-                    programme_code = data["code"]
-                    programme_name = data["name"]
-                    code_index = codes_names[0].index(programme_code)
-                    if codes_names[1][code_index] != programme_name:
-                        raise ValidationError("The code does not match the field name.")
+    class FieldSubSchemaV1(StagingMixin, TaxonomySchemaV1):
+        aliases = fields.List(SanitizedUnicode(), allow_none=True)
+        degree_level = SanitizedUnicode(required=False)
+        form_of_study = SanitizedUnicode(required=False)
+        grantor = fields.List(Nested(FieldGrantorSubschemaV1()))
+        date_of_accreditation_validity = SanitizedUnicode()
+        duration = SanitizedUnicode()
+        reference_number = SanitizedUnicode()
+        type = SanitizedUnicode()
 
     class ProviderSubSchemaV1(StagingMixin, TaxonomySchemaV1):
         name = fields.List(Nested(createMultilanguageSchemaV1()))
@@ -334,7 +304,6 @@ def createThesisMetadataSchemaV1():
         accessRights = SanitizedUnicode(validate=validate.OneOf(["open", "embargoed", "restricted", "metadata_only"]))
         provider = Nested(ProviderSubSchemaV1)
         defended = fields.Boolean()
-        studyProgramme = Nested(ProgrammeSubSchemaV1)
         studyField = fields.List(Nested(FieldSubSchemaV1))
         degreeGrantor = fields.List(Nested(DegreeGrantorSubSchemaV1), required=True)
 

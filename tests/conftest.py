@@ -126,10 +126,9 @@ def thesis_metadata():
             }
         ],
         "doctype": {
-            "NUSL": {"term": "studie",
-                     "bterm": "anl_met_mat"}
+            '$ref': 'https://127.0.0.1:5000/api/taxonomies/doctype/bakalarske_prace'
         },
-        "id": 1276327,
+        "id": "1276327",
         "subtitle": [
             {
                 "name": "Alternativní název",
@@ -152,48 +151,20 @@ def thesis_metadata():
         ],
         "accessRights": "open",
         "provider": {
-            "id": {
-                "value": "60461373",
-                "type": "IČO"},
-            "address": "Technická 1905/5, Dejvice, 160 00 Praha",
-            "contactPoint": "info@vscht.cz",
-            "name": {
-                "name": "Vysoká škola chemicko-technologická",
-                "lang": "cze"
-            },
-            "url": "https://www.vscht.cz/",
-            "provider": True,
-            "isPartOf": ["public_uni", "edu"]
+            '$ref': 'https://127.0.0.1:5000/api/taxonomies/provider/jihoceska_univerzita_v_ceskych_budejovicich'
         },
         "defended": True,
-        "studyProgramme": {
-            "code": "B1407",
-            "name": "Chemie"
-        },
-        "studyField": {
-            "code": "2801T015",
-            "name": "Technologie organických látek a chemické speciality"
-        },
+        "studyField": [
+            {
+                '$ref': 'https://127.0.0.1:5000/api/taxonomies/studyfields/7503T094'
+            },
+            {
+                '$ref': 'https://127.0.0.1:5000/api/taxonomies/studyfields/7503T111'
+            }
+        ],
         "degreeGrantor": [
             {
-                "university": [
-                    {
-                        "name": "Vysoká škola chemicko-technologická v Praze",
-                        "lang": "cze"
-                    }
-                ],
-                "faculty": [
-                    {
-                        "name": "Fakulta chemické technologie",
-                        "lang": "cze"
-                    }
-                ],
-                "department": [
-                    {
-                        "name": "UOT",
-                        "lang": "cze"
-                    }
-                ]
+                '$ref': 'https://127.0.0.1:5000/api/taxonomies/universities/60076658'
             }
         ]
     }

@@ -1,26 +1,29 @@
 {
     "UniversityType": {
-        "type": "nested",
+        "type": "taxonomy-v1.0.0.json#/Taxonomy",
         "properties": {
-            "Datová schránka": {
+            "data_box": {
                 "type": "keyword"
             },
-            "Forma VŠ": {
+            "form": {
                 "type": "keyword"
             },
-            "Funkční období do": {
+            "term_of_office_until": {
                 "type": "date"
             },
-            "Funkční období od": {
+            "term_of_office_from": {
                 "type": "date"
             },
             "IČO": {
                 "type": "keyword"
             },
-            "Kraj": {
+            "region": {
                 "type": "keyword"
             },
-            "Název": {
+            "RID": {
+                "type": "keyword"
+            },
+            "deputy": {
                 "type": "text",
                 "fields": {
                     "keyword": {
@@ -28,10 +31,7 @@
                     }
                 }
             },
-            "Resortní identifikátor (RID)": {
-                "type": "keyword"
-            },
-            "Statutární zástupce": {
+            "address": {
                 "type": "text",
                 "fields": {
                     "keyword": {
@@ -39,49 +39,11 @@
                     }
                 }
             },
-            "Sídlo": {
-                "type": "text",
-                "fields": {
-                    "keyword": {
-                        "type": "keyword"
-                    }
-                }
-            },
-            "Typ VŠ": {
+            "type": {
                 "type": "keyword"
             },
-            "Web": {
+            "url": {
                 "type": "keyword"
-            },
-            "id": {
-                "type": "integer"
-            },
-            "links": {
-                "type": "nested",
-                "properties": {
-                    "self": {
-                        "type": "keyword"
-                    }
-                }
-            },
-            "path": {
-                "type": "keyword"
-            },
-            "slug": {
-                "type": "keyword"
-            },
-            "title": {
-                "type": "nested",
-                "properties": {
-                    "name": {
-                        "type": "text",
-                        "fields": {
-                            "keyword": {
-                                "type": "keyword"
-                            }
-                        }
-                    }
-                }
             }
         }
     }

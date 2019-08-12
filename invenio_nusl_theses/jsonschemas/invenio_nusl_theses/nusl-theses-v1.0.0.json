@@ -187,23 +187,7 @@
             }
         },
         "doctype": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": [
-                "value",
-                "taxonomy"
-            ],
-            "properties": {
-                "taxonomy": {
-                    "type": "string"
-                },
-                "value": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                }
-            }
+            "$ref": "../taxonomy-v1.0.0.json#/definitions/taxonomy"
         },
         "id": {
             "type": "string"
@@ -242,9 +226,6 @@
                 },
                 {
                     "properties": {
-                        "name": {
-                            "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
-                        },
                         "address": {
                             "type": "string"
                         },
@@ -261,74 +242,99 @@
         "defended": {
             "type": "boolean"
         },
-        "studyProgramme": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "code": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                }
-            }
-        },
         "studyField": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                    "code": {
-                        "type": "string"
-                    },
-                    "name": {
-                        "type": "string"
-                    }
-                }
-            }
-        },
-        "degreeGrantor": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                    "university": {
-                        "type": "object",
-                        "aditionalProperties": false,
-                        "properties": {
-                            "name": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
-                                }
-                            },
-                            "faculties": {
-                                "type": "array",
-                                "items": {
-                                    "type": "object",
-                                    "additionalProperties": false,
-                                    "properties": {
-                                        "name": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
-                                            }
-                                        },
-                                        "departments": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
-                                            }
-                                        }
+            "allOf": [
+                {
+                    "$ref": "../taxonomy-v1.0.0.json#/definitions/taxonomy"
+                },
+                {
+                    "properties": {
+                        "aliases": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "degree_level": {
+                            "type": "string"
+                        },
+                        "form_of_study": {
+                            "type": "string"
+                        },
+                        "grantor": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "faculty": {
+                                        "type": "string"
+                                    },
+                                    "university": {
+                                        "type": "string"
                                     }
                                 }
                             }
+                        },
+                        "date_of_accreditation_validity": {
+                            "type": "string"
+                        },
+                        "duration": {
+                            "type": "string"
+                        },
+                        "reference_number": {
+                            "type": "string"
+                        },
+                        "type": {
+                            "type": "string"
                         }
                     }
                 }
-            }
+            ]
+        },
+        "degreeGrantor": {
+            "allOf": [
+                {
+                    "$ref": "../taxonomy-v1.0.0.json#/definitions/taxonomy"
+                },
+                {
+                    "properties": {
+                        "ICO": {
+                            "type": "string"
+                        },
+                        "RID": {
+                            "type": "string"
+                        },
+                        "address": {
+                            "type": "string"
+                        },
+                        "data_box": {
+                            "type": "string"
+                        },
+                        "deputy": {
+                            "type": "string"
+                        },
+                        "form": {
+                            "type": "string"
+                        },
+                        "region": {
+                            "type": "string"
+                        },
+                        "term_of_office_from": {
+                            "type": "string"
+                        },
+                        "term_of_office_until": {
+                            "type": "string"
+                        },
+                        "type": {
+                            "type": "string"
+                        },
+                        "url": {
+                            "type": "string"
+                        }
+                    }
+                }
+            ]
         }
     },
     "definitions": {
