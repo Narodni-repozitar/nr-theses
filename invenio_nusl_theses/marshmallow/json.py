@@ -19,8 +19,6 @@ from marshmallow import fields, validate, ValidationError, pre_load, post_load
 from pycountry import languages, countries
 from flask_taxonomies.marshmallow import TaxonomySchemaV1
 
-from invenio_nusl_theses.api import ThesisRecord
-
 
 ########################################################################
 #                 VALIDATION MODELS                                    #
@@ -155,12 +153,10 @@ class ProviderSubSchemaV1(TaxonomySchemaV1):
 #########################################################################
 #                     Main schema                                       #
 #########################################################################
-class ThesisMetadataSchemaV1(DraftEnabledSchema, SchemaEnforcingMixin, StrictKeysMixin):  # modifikace
+class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
     """Schema for the record metadata."""
 
-    ALLOWED_SCHEMAS = ThesisRecord.ALLOWED_SCHEMAS
-    PREFERRED_SCHEMA = ThesisRecord.PREFERRED_SCHEMA
-
+    schema = fields.String(attribute='$schema', load_from='$schema', dump_to='$schema', required=False)
     id = SanitizedUnicode(required=True)
     language = fields.List(SanitizedUnicode(required=True,
                                             validate=validate_language), required=True)
@@ -190,7 +186,7 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, SchemaEnforcingMixin, StrictKey
             data["id"] = str(data.get("id"))
 
 
-class ThesisRecordSchemaV1(StrictKeysMixin):  # get - zobrazit
+class ThesisRecordSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # get - zobrazit
     """Record schema."""
 
     metadata = fields.Nested(ThesisMetadataSchemaV1())

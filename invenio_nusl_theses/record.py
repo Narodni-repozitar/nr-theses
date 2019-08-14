@@ -4,13 +4,13 @@ from invenio_records_draft.record import DraftEnabledRecordMixin, MarshmallowVal
 from invenio_records.api import Record
 
 
-class PublishedRecord(DraftEnabledRecordMixin, Record):
+class PublishedThesisRecord(DraftEnabledRecordMixin, Record):
     def validate(self, **kwargs):
         self['$schema'] = current_jsonschemas.path_to_url('invenio_nusl_theses/nusl-theses-v1.0.0.json')
         return super().validate(**kwargs)
 
 
-class DraftRecord(DraftEnabledRecordMixin, Record):
+class DraftThesisRecord(DraftEnabledRecordMixin, Record):
 
     draft_validator = MarshmallowValidator(
         'invenio_nusl_theses.marshmallow:ThesisMetadataSchemaV1',  # marshmallow of the published version
@@ -18,5 +18,5 @@ class DraftRecord(DraftEnabledRecordMixin, Record):
     )
 
     def validate(self, **kwargs):
-        self['$schema'] = current_jsonschemas.path_to_url('draft/nusl-theses-v1.0.0.json')
+        self['$schema'] = current_jsonschemas.path_to_url('draft/invenio_nusl_theses/nusl-theses-v1.0.0.json')
         return super().validate(**kwargs)

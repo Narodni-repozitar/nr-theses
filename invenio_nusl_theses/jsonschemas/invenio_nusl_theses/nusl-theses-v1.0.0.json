@@ -117,10 +117,7 @@
                     "name": {
                         "type": "array",
                         "items": {
-                            "type": "object",
-                            "properties": {
-                                "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
-                            }
+                            "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
                         }
                     },
                     "taxonomy": {
@@ -187,7 +184,7 @@
             }
         },
         "doctype": {
-            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTerm"
+            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTermOrReference"
         },
         "id": {
             "type": "string"
@@ -293,48 +290,63 @@
             ]
         },
         "degreeGrantor": {
-            "allOf": [
-                {
-                    "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTerm"
-                },
-                {
-                    "properties": {
-                        "ICO": {
-                            "type": "string"
-                        },
-                        "RID": {
-                            "type": "string"
-                        },
-                        "address": {
-                            "type": "string"
-                        },
-                        "data_box": {
-                            "type": "string"
-                        },
-                        "deputy": {
-                            "type": "string"
-                        },
-                        "form": {
-                            "type": "string"
-                        },
-                        "region": {
-                            "type": "string"
-                        },
-                        "term_of_office_from": {
-                            "type": "string"
-                        },
-                        "term_of_office_until": {
-                            "type": "string"
-                        },
-                        "type": {
-                            "type": "string"
-                        },
-                        "url": {
-                            "type": "string"
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "allOf": [
+                            {
+                                "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTerm"
+                            },
+                            {
+                                "properties": {
+                                    "ICO": {
+                                        "type": "string"
+                                    },
+                                    "RID": {
+                                        "type": "string"
+                                    },
+                                    "address": {
+                                        "type": "string"
+                                    },
+                                    "data_box": {
+                                        "type": "string"
+                                    },
+                                    "deputy": {
+                                        "type": "string"
+                                    },
+                                    "form": {
+                                        "type": "string"
+                                    },
+                                    "region": {
+                                        "type": "string"
+                                    },
+                                    "term_of_office_from": {
+                                        "type": "string"
+                                    },
+                                    "term_of_office_until": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "url": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "$ref": {
+                                "type": "string"
+                            }
                         }
                     }
-                }
-            ]
+                ]
+            }
         }
     },
     "definitions": {
