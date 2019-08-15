@@ -2,30 +2,27 @@
     "FieldType": {
         "type": "nested",
         "properties": {
-            "code": {
+            "aliases": {
+                "type": "text"
+            },
+            "degree_level": {
                 "type": "keyword"
             },
-            "id": {
-                "type": "integer"
+            "form_of_study": {
+                "type": "keyword"
             },
-            "links": {
+            "grantor": {
                 "type": "nested",
                 "properties": {
-                    "self": {
-                        "type": "keyword"
-                    }
-                }
-            },
-            "path": {
-                "type": "keyword"
-            },
-            "slug": {
-                "type": "keyword"
-            },
-            "title": {
-                "type": "nested",
-                "properties": {
-                    "name": {
+                    "faculty": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "university": {
                         "type": "text",
                         "fields": {
                             "keyword": {
@@ -34,6 +31,18 @@
                         }
                     }
                 }
+            },
+            "date_of_accreditation_validity": {
+                "type": "date"
+            },
+            "duration": {
+                "type": "keyword"
+            },
+            "reference_number": {
+                "type": "keyword"
+            },
+            "type": {
+                "type": "keyword"
             }
         }
     }

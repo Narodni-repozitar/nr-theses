@@ -16,7 +16,7 @@ from invenio_explicit_acls.utils import convert_relative_schema_to_absolute
 import jsonschema
 from marshmallow import ValidationError
 
-from invenio_nusl_theses.api import ThesisAPI, ThesisRecord
+from invenio_nusl_theses.api import ThesisAPI
 from invenio_nusl_theses.marshmallow import ThesisMetadataSchemaV1
 from invenio_nusl_theses.proxies import nusl_theses
 from . import config
@@ -36,19 +36,18 @@ class InvenioNUSLTheses(object):
 
     def init_app(self, app):
         """Flask application initialization."""
-        from invenio_records.signals import before_record_update, before_record_insert
         self.init_config(app)
         app.extensions['invenio-nusl-theses'] = ThesisAPI(app)
-        before_record_update.connect(validate_thesis)
-        before_record_insert.connect(validate_thesis)
+
 
     def init_config(self, app):
         """Initialize configuration.
 
         Override configuration variables with the values in this package.
         """
-
-        app.config.setdefault('RECORDS_REST_ENDPOINTS', {}).update(getattr(config, 'RECORDS_REST_ENDPOINTS'))
+        app.config.setdefault('INVENIO_RECORD_DRAFT_SCHEMAS', []).extend(config.INVENIO_RECORD_DRAFT_SCHEMAS)
+        app.config.setdefault('DRAFT_ENABLED_RECORDS_REST_ENDPOINTS', {}).update(
+            config.DRAFT_ENABLED_RECORDS_REST_ENDPOINTS)
 
         app.config.setdefault('RECORDS_REST_FACETS', {}).update(config.RECORDS_REST_FACETS)
 
@@ -57,51 +56,3 @@ class InvenioNUSLTheses(object):
         app.config.setdefault('RECORDS_REST_DEFAULT_SORT', {}).update(config.RECORDS_REST_DEFAULT_SORT)
 
 
-def validate_thesis(*args, record=None, **kwargs):
-    if not isinstance(record, ThesisRecord):
-        return
-    schema = record._convert_and_get_schema(record)
-    if schema != convert_relative_schema_to_absolute(ThesisRecord.STAGING_SCHEMA):
-        return
-    marshmallow_schema = ThesisMetadataSchemaV1(strict=True)
-    try:
-        nusl_theses.validate(marshmallow_schema, record,
-                             "https://nusl.cz/schemas/invenio_nusl_theses/nusl-theses-v1.0.0.json")
-        record["$schema"] = "https://nusl.cz/schemas/invenio_nusl_theses/nusl-theses-v1.0.0.json"
-
-    except ValidationError as e:
-        record["validations"] = {
-            "valid": False,
-            "extra": {
-                "reason": "ValidationError",
-                "message": str(e)
-            }
-        }
-
-    except ValueError as e:
-        record["validations"] = {
-            "valid": False,
-            "extra": {
-                "reason": "ValueError",
-                "message": str(e)
-            }
-        }
-
-    except jsonschema.ValidationError as e:
-        record["validations"] = {
-            "valid": False,
-            "extra": {
-                "reason": "JSON-schema validation",
-                "message": re.sub(r'[\W_]+', ' ', e.message).strip()
-            }
-        }
-
-    except Exception as e:
-        log.exception('Unhandled exception in import. Please add exception handler for %s', type(e))
-        record["validations"] = {
-            "valid": False,
-            "extra": {
-                "reason": "Unhandled exception in validation",
-                "message": str(e)
-            }
-        }

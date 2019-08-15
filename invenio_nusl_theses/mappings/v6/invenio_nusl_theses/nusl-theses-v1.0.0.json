@@ -104,15 +104,7 @@
                     }
                 },
                 "doctype": {
-                    "type": "nested",
-                    "properties": {
-                        "taxonomy": {
-                            "type": "keyword"
-                        },
-                        "value": {
-                            "type": "nusl-taxonomies-doctype-v1.0.0.json#/DocType"
-                        }
-                    }
+                    "type": "taxonomy-v1.0.0.json#/TaxonomyTerm"
                 },
                 "id": {
                     "type": "keyword"
@@ -135,41 +127,11 @@
                 "defended": {
                     "type": "boolean"
                 },
-                "studyProgramme": {
-                    "type": "nusl-taxonomies-studyprogramme-v1.0.0.json#/ProgrammeType"
-                },
                 "studyField": {
                     "type": "nusl-taxonomies-studyfields-v1.0.0.json#/FieldType"
                 },
                 "degreeGrantor": {
-                    "type": "nested",
-                    "properties": {
-                        "university": {
-                            "type": "nested",
-                            "properties": {
-                                "name": {
-                                    "type": "nusl-common-v1.0.0.json#/multilanguage"
-                                },
-                                "extra_data": {
-                                    "type": "nusl-taxonomies-university-v1.0.0.json#/UniversityType"
-                                },
-                                "faculties": {
-                                    "type": "nested",
-                                    "properties": {
-                                        "name": {
-                                            "type": "nusl-common-v1.0.0.json#/multilanguage"
-                                        },
-                                        "extra_data": {
-                                            "type": "nusl-taxonomies-faculty-v1.0.0.json#/FacultyType"
-                                        },
-                                        "departments": {
-                                            "type": "nusl-common-v1.0.0.json#/multilanguage"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    "type": "nusl-taxonomies-university-v1.0.0.json#/UniversityType"
                 }
             }
         }
