@@ -79,27 +79,6 @@ class RightsMetadataSchemaV1(StrictKeysMixin):
 
 class SubjectMetadataSchemaV1(TaxonomySchemaV1, StrictKeysMixin):
     url = fields.Url()
-    taxonomy = SanitizedUnicode(validate=validate.OneOf(["czenas",
-                                                         "mesh",
-                                                         "czmesh",
-                                                         "eurovoc",
-                                                         "psh",
-                                                         "ctt",
-                                                         "pedag",
-                                                         "agroterm",
-                                                         "agrovoc",
-                                                         "mednas",
-                                                         "phffuk",
-                                                         "ph",
-                                                         "lcsh"]))
-    id = SanitizedUnicode()  # TODO: Dodělat MEDNAS: http://www.medvik.cz/link/nlk20040148348; http://www.medvik.cz/link/ + id z nušl
-
-    @pre_load()
-    def lower_taxonomy(self, data):
-        if "taxonomy" in data:
-            taxonomy = data["taxonomy"]
-            data["taxonomy"] = taxonomy.lower()
-            return data
 
 
 class CreatorSubSchemaV1(DraftEnabledSchema, StrictKeysMixin):
