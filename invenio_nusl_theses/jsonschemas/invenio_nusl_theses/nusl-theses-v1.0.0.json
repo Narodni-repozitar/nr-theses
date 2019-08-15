@@ -217,19 +217,32 @@
             ]
         },
         "provider": {
-            "allOf": [
+            "anyOf": [
                 {
-                    "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTerm"
+                    "allOf": [
+                        {
+                            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTerm"
+                        },
+                        {
+                            "properties": {
+                                "address": {
+                                    "type": "string"
+                                },
+                                "url": {
+                                    "type": "string"
+                                },
+                                "lib_url": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    ]
                 },
                 {
+                    "type": "object",
+                    "aditionaProperties": false,
                     "properties": {
-                        "address": {
-                            "type": "string"
-                        },
-                        "url": {
-                            "type": "string"
-                        },
-                        "lib_url": {
+                        "$ref": {
                             "type": "string"
                         }
                     }
@@ -240,54 +253,70 @@
             "type": "boolean"
         },
         "studyField": {
-            "allOf": [
-                {
-                    "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTerm"
-                },
-                {
-                    "properties": {
-                        "aliases": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "degree_level": {
-                            "type": "string"
-                        },
-                        "form_of_study": {
-                            "type": "string"
-                        },
-                        "grantor": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "additionalProperties": false,
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "allOf": [
+                            {
+                                "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTerm"
+                            },
+                            {
                                 "properties": {
-                                    "faculty": {
+                                    "aliases": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "degree_level": {
                                         "type": "string"
                                     },
-                                    "university": {
+                                    "form_of_study": {
+                                        "type": "string"
+                                    },
+                                    "grantor": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "faculty": {
+                                                    "type": "string"
+                                                },
+                                                "university": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "date_of_accreditation_validity": {
+                                        "type": "string"
+                                    },
+                                    "duration": {
+                                        "type": "string"
+                                    },
+                                    "reference_number": {
+                                        "type": "string"
+                                    },
+                                    "type": {
                                         "type": "string"
                                     }
                                 }
                             }
-                        },
-                        "date_of_accreditation_validity": {
-                            "type": "string"
-                        },
-                        "duration": {
-                            "type": "string"
-                        },
-                        "reference_number": {
-                            "type": "string"
-                        },
-                        "type": {
-                            "type": "string"
+                        ]
+                    },
+                    {
+                        "type": "object",
+                        "aditionaProperties": false,
+                        "properties": {
+                            "$ref": {
+                                "type": "string"
+                            }
                         }
                     }
-                }
-            ]
+                ]
+            }
         },
         "degreeGrantor": {
             "type": "array",
@@ -339,6 +368,7 @@
                     },
                     {
                         "type": "object",
+                        "additionalProperties": false,
                         "properties": {
                             "$ref": {
                                 "type": "string"
