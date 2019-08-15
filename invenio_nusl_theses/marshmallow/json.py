@@ -77,8 +77,8 @@ class RightsMetadataSchemaV1(StrictKeysMixin):
     copyright = fields.List(Nested(MultilanguageSchemaV1()))
 
 
-class SubjectMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):
-    name = fields.List(Nested(MultilanguageSchemaV1()))
+class SubjectMetadataSchemaV1(TaxonomySchemaV1, StrictKeysMixin):
+    url = fields.Url()
     taxonomy = SanitizedUnicode(validate=validate.OneOf(["czenas",
                                                          "mesh",
                                                          "czmesh",
