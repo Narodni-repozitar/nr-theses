@@ -108,46 +108,37 @@
         "subject": {
             "type": "array",
             "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "required": [
-                    "name"
-                ],
-                "properties": {
-                    "name": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
+                "anyOf": [
+                    {
+                        "allOf": [
+                            {
+                                "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTerm"
+                            },
+                            {
+                                "properties": {
+                                    "url": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "object",
+                        "aditionaProperties": false,
+                        "properties": {
+                            "$ref": {
+                                "type": "string"
+                            }
                         }
-                    },
-                    "taxonomy": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
-                        "enum": [
-                            "czenas",
-                            "mesh",
-                            "czmesh",
-                            "eurovoc",
-                            "psh",
-                            "ctt",
-                            "pedag",
-                            "agroterm",
-                            "agrovoc",
-                            "mednas",
-                            "phffuk",
-                            "ph",
-                            "lcsh"
-                        ]
-                    },
-                    "id": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
                     }
-                }
+                ]
+            }
+        },
+        "keywords": {
+            "type": "array",
+            "items": {
+                "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
             }
         },
         "creator": {

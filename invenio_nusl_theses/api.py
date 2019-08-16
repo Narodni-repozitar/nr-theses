@@ -1,11 +1,9 @@
 from invenio_db import db
-from invenio_explicit_acls.record import SchemaEnforcingRecord
 from invenio_indexer.api import RecordIndexer
 from invenio_pidstore.errors import PIDDoesNotExistError
 from invenio_pidstore.models import PersistentIdentifier
 from invenio_search import RecordsSearch
 from sqlalchemy.orm.exc import NoResultFound
-from invenio_records.api import _records_state
 
 from invenio_nusl_theses.record import DraftThesisRecord
 

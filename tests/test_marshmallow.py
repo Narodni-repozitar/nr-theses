@@ -58,23 +58,46 @@ def dump_metadata():
         },
         "subject": [
             {
-                "name": [
-                    {
-                        "name": "koza",
-                        "lang": "cze"
-                    }
-                ]
-
+                "$ref": "https://localhost/api/taxonomies/subject/nlk20040148348"
             },
             {
-                "name": [
-                    {
-                        "name": "anorganická chemie",
-                        "lang": "cze"
-                    }
-                ],
-                "taxonomy": "psh",
-                "id": "http://psh.techlib.cz/skos/PSH5740"
+                "$ref": "https://localhost/api/taxonomies/subject/nlk20040147252"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/D002626"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/D002620"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/D004304"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/ph120179"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/ph114722"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/ph135174"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/ph116084"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/ph121510"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/ph114295"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/ph116680"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/PSH11857"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/PSH13081"
             }
         ],
         "creator": [
@@ -282,23 +305,46 @@ def load_metadata():
         },
         "subject": [
             {
-                "name": [
-                    {
-                        "name": "koza",
-                        "lang": "cze"
-                    }
-                ]
-
+                "$ref": "https://localhost/api/taxonomies/subject/nlk20040148348"
             },
             {
-                "name": [
-                    {
-                        "name": "anorganická chemie",
-                        "lang": "cze"
-                    }
-                ],
-                "taxonomy": "psh",
-                "id": "http://psh.techlib.cz/skos/PSH5740"
+                "$ref": "https://localhost/api/taxonomies/subject/nlk20040147252"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/D002626"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/D002620"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/D004304"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/ph120179"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/ph114722"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/ph135174"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/ph116084"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/ph121510"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/ph114295"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/ph116680"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/PSH11857"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/PSH13081"
             }
         ],
         "creator": [
@@ -808,89 +854,50 @@ def test_rights_load_4(app, load_metadata):
 ########################################################################
 #                              subject                                 #
 ########################################################################
-def test_subject_dump_1(dump_metadata):
-    dump_metadata["subject"] = [
+def test_keywords_dump_1(dump_metadata):
+    dump_metadata["keywords"] = [
         {
-            "name": [
-                {
-                    "name": "koza",
-                    "lang": "cze"
-                }
-            ]
-
+            "name": "koza",
+            "lang": "cze"
         },
         {
-            "name": [
-                {
-                    "name": "anorganická chemie",
-                    "lang": "cze"
-                }
-            ],
-            "taxonomy": "psh",
-            "id": "http://psh.techlib.cz/skos/PSH5740"
+            "name": "anorganická chemie",
+            "lang": "cze"
         }
     ]
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
 
 
-def test_subject_dump_2(dump_metadata):
-    dump_metadata["subject"] = "jiný datový typ"
+def test_keywords_dump_2(dump_metadata):
+    dump_metadata["keywords"] = "jiný datový typ"
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(dump_metadata) != convert_dates(schema.dump(dump_metadata).data)
 
 
-def test_subject_dump_3(dump_metadata):
-    del dump_metadata["subject"]
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
-
-
-def test_subject_load_1(app, load_metadata):
-    load_metadata["subject"] = [
+def test_keywords_load_1(app, load_metadata):
+    load_metadata["keywords"] = [
         {
-            "name": [
-                {
-                    "name": "koza",
-                    "lang": "cze"
-                }
-            ]
-
+            "name": "koza",
+            "lang": "cze"
         },
         {
-            "name": [
-                {
-                    "name": "anorganická chemie",
-                    "lang": "cze"
-                }
-            ],
-            "taxonomy": "psh",
-            "id": "http://psh.techlib.cz/skos/PSH5740"
+            "name": "anorganická chemie",
+            "lang": "cze"
         }
     ]
     schema = ThesisMetadataSchemaV1(strict=True)
     assert load_metadata == schema.load(convert_dates(load_metadata)).data
 
 
-def test_subject_load_2(app, load_metadata):
-    load_metadata["subject"] = [
+def test_keywords_load_2(app, load_metadata):
+    load_metadata["keywords"] = [
         {
-            "name": [
-                {
-                    "name": "koza",
-                }
-            ]
-
+            "name": "koza",
         },
         {
-            "name": [
-                {
-                    "name": "anorganická chemie",
-                    "lang": "cze"
-                }
-            ],
-            "taxonomy": "psh",
-            "id": "http://psh.techlib.cz/skos/PSH5740"
+            "name": "anorganická chemie",
+            "lang": "cze"
         }
     ]
 
@@ -899,54 +906,15 @@ def test_subject_load_2(app, load_metadata):
         schema.load(convert_dates(load_metadata))
 
 
-def test_subject_load_3(app, load_metadata):
-    load_metadata["subject"] = [
+def test_keywords_load_3(app, load_metadata):
+    load_metadata["keywords"] = [
         {
-            "name": [
-                {
-                    "name": "koza",
-                    "lang": "cze"
-                }
-            ]
-
+            "name": "koza",
+            "lang": "cze"
         },
         {
-            "name": [
-                {
-                    "name": "anorganická chemie",
-                    "lang": "cze"
-                }
-            ],
-            "taxonomy": "unknown",
-            "id": "http://psh.techlib.cz/skos/PSH5740"
-        }
-    ]
-
-    with pytest.raises(ValidationError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        schema.load(convert_dates(load_metadata))
-
-
-def test_subject_load_4(app, load_metadata):
-    load_metadata["subject"] = [
-        {
-            "name": [
-                {
-                    "name": "koza",
-                    "lang": "cze"
-                }
-            ]
-
-        },
-        {
-            "name": [
-                {
-                    "name": "anorganická chemie",
-                    "lang": "cze"
-                }
-            ],
-            "taxonomy": "psh",
-            "id": "http://blboist.cz"
+            "name": "anorganická chemie",
+            "lang": "cze"
         }
     ]
     schema = ThesisMetadataSchemaV1(strict=True)

@@ -9,15 +9,14 @@
 
 from __future__ import absolute_import, print_function
 
-from invenio_explicit_acls.marshmallow import SchemaEnforcingMixin
-
-from invenio_nusl_common.marshmallow.json import MultilanguageSchemaV1, ValueTypeSchemaV1, DoctypeSubSchemaV1
-from invenio_records_draft.marshmallow import DraftEnabledSchema, always, published_only, draft_allowed
 from invenio_records_rest.schemas import Nested, StrictKeysMixin
 from invenio_records_rest.schemas.fields import PersistentIdentifier, SanitizedUnicode
-from marshmallow import fields, validate, ValidationError, pre_load, post_load
+from marshmallow import fields, validate, ValidationError, pre_load
 from pycountry import languages, countries
+
 from flask_taxonomies.marshmallow import TaxonomySchemaV1
+from invenio_nusl_common.marshmallow.json import MultilanguageSchemaV1, ValueTypeSchemaV1, DoctypeSubSchemaV1
+from invenio_records_draft.marshmallow import DraftEnabledSchema
 
 
 ########################################################################
@@ -77,29 +76,8 @@ class RightsMetadataSchemaV1(StrictKeysMixin):
     copyright = fields.List(Nested(MultilanguageSchemaV1()))
 
 
-class SubjectMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):
-    name = fields.List(Nested(MultilanguageSchemaV1()))
-    taxonomy = SanitizedUnicode(validate=validate.OneOf(["czenas",
-                                                         "mesh",
-                                                         "czmesh",
-                                                         "eurovoc",
-                                                         "psh",
-                                                         "ctt",
-                                                         "pedag",
-                                                         "agroterm",
-                                                         "agrovoc",
-                                                         "mednas",
-                                                         "phffuk",
-                                                         "ph",
-                                                         "lcsh"]))
-    id = SanitizedUnicode()  # TODO: Dodělat MEDNAS: http://www.medvik.cz/link/nlk20040148348; http://www.medvik.cz/link/ + id z nušl
-
-    @pre_load()
-    def lower_taxonomy(self, data):
-        if "taxonomy" in data:
-            taxonomy = data["taxonomy"]
-            data["taxonomy"] = taxonomy.lower()
-            return data
+class SubjectMetadataSchemaV1(TaxonomySchemaV1, StrictKeysMixin):
+    url = fields.Url()
 
 
 class CreatorSubSchemaV1(DraftEnabledSchema, StrictKeysMixin):
@@ -167,7 +145,8 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
     extent = SanitizedUnicode()
     abstract = fields.List(Nested(MultilanguageSchemaV1()))
     rights = fields.Nested(RightsMetadataSchemaV1)
-    subject = fields.List(Nested(SubjectMetadataSchemaV1))  # TODO: udělat required
+    subject = fields.List(Nested(SubjectMetadataSchemaV1), required=True)
+    keywords = fields.List(Nested(MultilanguageSchemaV1()))
     creator = fields.List(Nested(CreatorSubSchemaV1), required=True)
     contributor = fields.List(Nested(ContributorSubSchemaV1))
     doctype = Nested((DoctypeSubSchemaV1()), required=True)

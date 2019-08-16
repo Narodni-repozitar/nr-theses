@@ -1,0 +1,10 @@
+{
+    "subject": {
+        "type": "nested",
+        "properties": {
+            "url": {
+                "type": "keyword"
+            }
+        }
+    }
+}
