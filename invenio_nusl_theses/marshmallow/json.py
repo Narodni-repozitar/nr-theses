@@ -146,6 +146,7 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
     abstract = fields.List(Nested(MultilanguageSchemaV1()))
     rights = fields.Nested(RightsMetadataSchemaV1)
     subject = fields.List(Nested(SubjectMetadataSchemaV1), required=True)
+    keywords = fields.List(Nested(MultilanguageSchemaV1()))
     creator = fields.List(Nested(CreatorSubSchemaV1), required=True)
     contributor = fields.List(Nested(ContributorSubSchemaV1))
     doctype = Nested((DoctypeSubSchemaV1()), required=True)

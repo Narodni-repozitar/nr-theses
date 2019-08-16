@@ -135,6 +135,12 @@
                 ]
             }
         },
+        "keywords": {
+            "type": "array",
+            "items": {
+                "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
+            }
+        },
         "creator": {
             "type": "array",
             "items": {
