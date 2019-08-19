@@ -39,13 +39,13 @@ class InvenioNUSLTheses(object):
         self.init_config(app)
         app.extensions['invenio-nusl-theses'] = ThesisAPI(app)
 
-
     def init_config(self, app):
         """Initialize configuration.
 
         Override configuration variables with the values in this package.
         """
         app.config.setdefault('INVENIO_RECORD_DRAFT_SCHEMAS', []).extend(config.INVENIO_RECORD_DRAFT_SCHEMAS)
+        app.config.setdefault('INVENIO_OAREPO_UI_COLLECTIONS', {}).update(config.INVENIO_OAREPO_UI_COLLECTIONS)
         app.config.setdefault('DRAFT_ENABLED_RECORDS_REST_ENDPOINTS', {}).update(
             config.DRAFT_ENABLED_RECORDS_REST_ENDPOINTS)
 
@@ -54,5 +54,3 @@ class InvenioNUSLTheses(object):
         app.config.setdefault('RECORDS_REST_SORT_OPTIONS', {}).update(config.RECORDS_REST_SORT_OPTIONS)
 
         app.config.setdefault('RECORDS_REST_DEFAULT_SORT', {}).update(config.RECORDS_REST_DEFAULT_SORT)
-
-
