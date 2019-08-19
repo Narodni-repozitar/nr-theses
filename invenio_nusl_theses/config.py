@@ -48,6 +48,25 @@ DRAFT_ENABLED_RECORDS_REST_ENDPOINTS = {
     }
 }
 
+INVENIO_OAREPO_UI_COLLECTIONS = {
+    "theses": {
+        "title": {
+            "cs-cz": "Vysokoškolské práce",
+            "en-us": "Theses"
+        },
+        "description": {
+            "cs-cz": """
+
+""",
+            "en-us": """
+
+"""
+        },
+        "rest": "/api/drafts/theses/",
+        "facet_filters": list()
+    },
+}
+
 INVENIO_RECORD_DRAFT_SCHEMAS = [
     'invenio_nusl_theses/nusl-theses-v1.0.0.json',
 ]

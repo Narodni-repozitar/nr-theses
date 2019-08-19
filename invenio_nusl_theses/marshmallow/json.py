@@ -139,8 +139,8 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
     language = fields.List(SanitizedUnicode(required=True,
                                             validate=validate_language), required=True)
     identifier = fields.List(Nested(ValueTypeSchemaV1()), required=True)  # TODO: Dodělat validaci na type
-    dateAccepted = fields.Date(required=True)
-    modified = fields.DateTime(format="%Y-%m-%dT%H:%M:%S")
+    dateAccepted = fields.String() #fields.Date(required=True)
+    modified = fields.String() #fields.DateTime(format="%Y-%m-%dT%H:%M:%S")
     title = fields.List(Nested(MultilanguageSchemaV1()), required=True)
     extent = SanitizedUnicode()
     abstract = fields.List(Nested(MultilanguageSchemaV1()))
