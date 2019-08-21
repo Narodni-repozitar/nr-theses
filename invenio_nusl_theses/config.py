@@ -9,6 +9,8 @@
 
 from __future__ import absolute_import, print_function
 
+from elasticsearch_dsl import Q
+from invenio_records_rest.facets import terms_filter
 from invenio_records_rest.utils import deny_all, check_elasticsearch, allow_all
 from invenio_search import RecordsSearch
 
@@ -71,7 +73,125 @@ INVENIO_RECORD_DRAFT_SCHEMAS = [
     'invenio_nusl_theses/nusl-theses-v1.0.0.json',
 ]
 
+
+def nested_terms_filter(prefix, field, field_query=None):
+    """Create a term filter.
+
+    :param field: Field name.
+    :returns: Function that returns the Terms query.
+    """
+
+    field = prefix + '.' + field
+
+    def inner(values):
+        if field_query:
+            query = field_query(field)(values)
+        else:
+            query = Q('terms', **{field: values})
+        return Q('nested', path=prefix, query=query)
+
+    return inner
+
+
+def year_filter(field):
+    """Create a term filter.
+
+    :param field: Field name.
+    :returns: Function that returns the Terms query.
+    """
+
+    def inner(values):
+        queries = []
+        print(values)
+        for value in values:
+            queries.append(
+                Q('range', **{
+                    field: {
+                        "gte": value,
+                        "lt": int(value) + 1,
+                        "format": "yyyy"
+                    }
+                })
+            )
+        return Q('bool', should=queries, minimum_should_match=1)
+
+    return inner
+
+
+FILTERS = {
+    'yearAccepted': year_filter('dateAccepted'),
+    'language': terms_filter('language'),
+    'defended': terms_filter('defended')
+    # 'stylePeriod.title.value.keyword': terms_filter('stylePeriod.title.value.keyword'),
+    # 'itemType.title.value.keyword': terms_filter('itemType.title.value.keyword'),
+    # 'parts.material.materialType.title.value.keyword':
+    #     nested_terms_filter('parts', 'material.materialType.title.value.keyword'),
+    # 'parts.material.fabricationTechnology.title.value.keyword':
+    #     nested_terms_filter('parts', 'material.fabricationTechnology.title.value.keyword'),
+    # 'parts.material.color.title.value.keyword':
+    #     nested_terms_filter('parts', 'material.color.title.value.keyword'),
+    # 'parts.restorationMethods.title.value.keyword':
+    #     nested_terms_filter('parts', 'restorationMethods.title.value.keyword'),
+}
+
 RECORDS_REST_FACETS = {
+    'draft-invenio_nusl_theses-nusl-theses-v1.0.0': {
+        'aggs': {  # agregace
+            'yearAccepted': {
+                "date_histogram": {
+                    "field": "dateAccepted",
+                    "interval": "1y",
+                    "format": "yyyy",
+                    "min_doc_count": 1,
+                    "order": {
+                        "_count": "desc"
+                    }
+
+                }
+            },
+            'language': {
+                'terms': {
+                    'field': 'language',
+                    'size': 10
+                }
+            },
+            'defended': {
+                'terms': {
+                    'field': 'defended'
+                }
+            }
+            # 'restorationRequestor.title.value.keyword': {
+            #     'terms': {'field': 'restorationRequestor.title.value.keyword', 'size': 100, "order": {"_term": "asc"}}},
+            # 'stylePeriod.title.value.keyword': {
+            #     'terms': {'field': 'stylePeriod.title.value.keyword', 'size': 100, "order": {"_term": "desc"}}},
+            # 'itemType.title.value.keyword': {
+            #     'terms': {'field': 'itemType.title.value.keyword', 'size': 100, "order": {"_term": "desc"}}},
+            # 'parts': {  # if nested
+            #     "nested": {
+            #         "path": "parts"
+            #     },
+            #     "aggs": {
+            #         "parts.materialType.title.value.keyword": {
+            #             'terms': {'field': 'parts.materialType.title.value.keyword', 'size': 100,
+            #                       "order": {"_term": "desc"}}
+            #         },
+            #         "parts.fabricationTechnology.title.value.keyword": {
+            #             'terms': {'field': 'parts.fabricationTechnology.title.value.keyword', 'size': 100,
+            #                       "order": {"_term": "desc"}}
+            #         },
+            #         "parts.color.title.value.keyword": {
+            #             'terms': {'field': 'parts.color.title.value.keyword', 'size': 100,
+            #                       "order": {"_term": "desc"}}
+            #         },
+            #         "parts.restorationMethods.title.value.keyword": {
+            #             'terms': {'field': 'parts.restorationMethods.title.value.keyword', 'size': 100,
+            #                       "order": {"_term": "desc"}}
+            #         }
+            #     }
+            # },
+        },
+        'filters': FILTERS
+    }
 }
 
 RECORDS_REST_SORT_OPTIONS = {
