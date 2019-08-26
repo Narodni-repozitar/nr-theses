@@ -121,7 +121,8 @@ def year_filter(field):
 FILTERS = {
     'yearAccepted': year_filter('dateAccepted'),
     'language': terms_filter('language'),
-    'defended': terms_filter('defended')
+    'defended': terms_filter('defended'),
+    'doctype.slug': terms_filter('doctype.slug')
     # 'stylePeriod.title.value.keyword': terms_filter('stylePeriod.title.value.keyword'),
     # 'itemType.title.value.keyword': terms_filter('itemType.title.value.keyword'),
     # 'parts.material.materialType.title.value.keyword':
@@ -144,7 +145,7 @@ RECORDS_REST_FACETS = {
                     "format": "yyyy",
                     "min_doc_count": 1,
                     "order": {
-                        "_count": "desc"
+                        "_key": "desc"
                     }
 
                 }
@@ -158,6 +159,11 @@ RECORDS_REST_FACETS = {
             'defended': {
                 'terms': {
                     'field': 'defended'
+                }
+            },
+            'doctype.slug': {
+                'terms': {
+                    'field': 'doctype.slug'
                 }
             }
             # 'restorationRequestor.title.value.keyword': {

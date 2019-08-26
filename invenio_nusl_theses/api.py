@@ -1,3 +1,5 @@
+import uuid
+
 from invenio_db import db
 from invenio_indexer.api import RecordIndexer
 from invenio_pidstore.errors import PIDDoesNotExistError
@@ -5,7 +7,9 @@ from invenio_pidstore.models import PersistentIdentifier
 from invenio_search import RecordsSearch
 from sqlalchemy.orm.exc import NoResultFound
 
+from invenio_nusl_common.minters import nusl_id_minter
 from invenio_nusl_theses.record import DraftThesisRecord
+from invenio_pidstore.models import PIDStatus
 
 
 class ThesisSearch(RecordsSearch):
@@ -32,7 +36,7 @@ class ThesisAPI:
 
         return marshmallowed
 
-    def import_record(self, record):
+    def import_old_nusl_record(self, record):
         # validate json schema and save
         with db.session.begin_nested():
             existing_record = None
@@ -50,7 +54,16 @@ class ThesisAPI:
                 pass
 
             if not existing_record:
-                db_record = DraftThesisRecord.create(record)  # Zde dochází i k validaci přes signály z ext
+                id = uuid.uuid4()
+                pid = PersistentIdentifier.create(
+                    "dnusl",
+                    record["id"],
+                    pid_provider=None,
+                    object_type="rec",
+                    object_uuid=id,
+                    status=PIDStatus.REGISTERED,
+                )
+                db_record = DraftThesisRecord.create(record, id_=id)  # Zde dochází i k validaci přes signály z ext
             else:
                 # remove everything from the record except of id and pid - keep them
                 previous_id = existing_record['id']
