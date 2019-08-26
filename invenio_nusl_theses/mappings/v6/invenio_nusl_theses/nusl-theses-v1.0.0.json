@@ -71,6 +71,7 @@
                     "type": "nusl-common-v1.0.0.json#/multilanguage"
                 },
                 "creator": {
+                    "copy_to": "person",
                     "type": "nested",
                     "properties": {
                         "name": {
@@ -82,6 +83,21 @@
                     }
                 },
                 "contributor": {
+                    "copy_to": "person",
+                    "type": "nested",
+                    "properties": {
+                        "name": {
+                            "type": "text"
+                        },
+                        "id": {
+                            "type": "nusl-common-v1.0.0.json#/valueType"
+                        },
+                        "role": {
+                            "type": "text"
+                        }
+                    }
+                },
+                "person": {
                     "type": "nested",
                     "properties": {
                         "name": {
