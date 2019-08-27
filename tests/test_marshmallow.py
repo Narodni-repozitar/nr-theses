@@ -20,8 +20,8 @@ def dump_metadata():
             "value": "151515",
             "type": "nusl"
         }],
-        "dateAccepted": date(2019, 5, 19),
-        "modified": datetime(2014, 12, 22, 3, 12, 58),
+        "dateAccepted": "2019-05-19", #date(2019, 5, 19),
+        "modified": "2014-12-22T03:12:58", #datetime(2014, 12, 22, 3, 12, 58),
         "title": [
             {
                 "name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku středověku.",
@@ -267,8 +267,8 @@ def load_metadata():
             "value": "151515",
             "type": "nusl"
         }],
-        "dateAccepted": date(2019, 5, 19),
-        "modified": datetime(2014, 12, 22, 3, 12, 58),
+        "dateAccepted": "2019-05-19", #date(2019, 5, 19),
+        "modified": "2014-12-22T03:12:58", #datetime(2014, 12, 22, 3, 12, 58),
         "title": [
             {
                 "name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku středověku.",
@@ -441,7 +441,7 @@ def test_language_load_1(app, db, load_metadata):
         "CZE", "GER"
     ]
     schema = ThesisMetadataSchemaV1(strict=True)
-    assert load_metadata == schema.load(convert_dates(load_metadata)).data
+    assert convert_dates(load_metadata) == schema.load(convert_dates(load_metadata)).data
 
 
 def test_language_load_2(app, load_metadata):
@@ -511,7 +511,7 @@ def test_identifier_load_3(app, load_metadata):
 #                           dateAccepted                               #
 ########################################################################
 def test_dateaccepted_dump_1(app, dump_metadata):
-    dump_metadata["dateAccepted"] = date(2019, 5, 19)
+    dump_metadata["dateAccepted"] = "2019-05-19" #date(2019, 5, 19)
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(dump_metadata) == schema.dump(dump_metadata).data
 
@@ -558,7 +558,7 @@ def test_modified_dump_1(app, dump_metadata):
     dump_metadata["modified"] = "blbost"
     with pytest.raises(AttributeError):
         schema = ThesisMetadataSchemaV1(strict=True)
-        convert_dates(dump_metadata) == schema.dump(dump_metadata).data
+        schema.dump(dump_metadata).data
 
 
 def test_modified_load_1(app, load_metadata):
