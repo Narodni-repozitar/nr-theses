@@ -20,8 +20,8 @@ def dump_metadata():
             "value": "151515",
             "type": "nusl"
         }],
-        "dateAccepted": "2019-05-19", #date(2019, 5, 19),
-        "modified": "2014-12-22T03:12:58", #datetime(2014, 12, 22, 3, 12, 58),
+        "dateAccepted": "2019-05-19",  # date(2019, 5, 19),
+        "modified": "2014-12-22T03:12:58",  # datetime(2014, 12, 22, 3, 12, 58),
         "title": [
             {
                 "name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku středověku.",
@@ -267,8 +267,8 @@ def load_metadata():
             "value": "151515",
             "type": "nusl"
         }],
-        "dateAccepted": "2019-05-19", #date(2019, 5, 19),
-        "modified": "2014-12-22T03:12:58", #datetime(2014, 12, 22, 3, 12, 58),
+        "dateAccepted": "2019-05-19",  # date(2019, 5, 19),
+        "modified": "2014-12-22T03:12:58",  # datetime(2014, 12, 22, 3, 12, 58),
         "title": [
             {
                 "name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku středověku.",
@@ -511,7 +511,7 @@ def test_identifier_load_3(app, load_metadata):
 #                           dateAccepted                               #
 ########################################################################
 def test_dateaccepted_dump_1(app, dump_metadata):
-    dump_metadata["dateAccepted"] = "2019-05-19" #date(2019, 5, 19)
+    dump_metadata["dateAccepted"] = "2019-05-19"  # date(2019, 5, 19)
     schema = ThesisMetadataSchemaV1(strict=True)
     assert convert_dates(dump_metadata) == schema.dump(dump_metadata).data
 
@@ -1507,6 +1507,7 @@ def test_defended_load_3(app, load_metadata):
         schema = ThesisMetadataSchemaV1(strict=True)
         convert_dates(schema.load(convert_dates(load_metadata)).data)
 
+
 #######################################################################
 #                           Study Field                               #
 #######################################################################
@@ -1515,3 +1516,47 @@ def test_defended_load_3(app, load_metadata):
 #######################################################################
 #                           Degree grantor                            #
 #######################################################################
+
+
+#######################################################################
+#                           Subject - Keywords                        #
+#######################################################################
+def test_subject_keywords_load_1(app, load_metadata):
+    del load_metadata["subject"]
+    schema = ThesisMetadataSchemaV1(strict=True)
+
+    with pytest.raises(ValidationError):
+        convert_dates(schema.load(convert_dates(load_metadata)).data)
+
+
+def test_subject_keywords_load_2(app, load_metadata):
+    del load_metadata["subject"]
+    load_metadata["keywords"] = [
+        {
+            "name": "něco1",
+            "lang": "cze"
+        },
+        {
+            "name": "něco2",
+            "lang": "cze"
+        }
+    ]
+    schema = ThesisMetadataSchemaV1(strict=True)
+
+    with pytest.raises(ValidationError):
+        convert_dates(schema.load(convert_dates(load_metadata)).data)
+
+
+def test_subject_keywords_load_3(app, load_metadata):
+    load_metadata["subject"] = [
+        {
+            "$ref": "https://localhost/api/taxonomies/subject/nlk20040148348"
+        },
+        {
+            "$ref": "https://localhost/api/taxonomies/subject/nlk20040147252"
+        }
+    ]
+    schema = ThesisMetadataSchemaV1(strict=True)
+
+    with pytest.raises(ValidationError):
+        convert_dates(schema.load(convert_dates(load_metadata)).data)
