@@ -86,13 +86,7 @@
                     "properties": {
                         "name": {
                             "type": "text",
-                            "copy_to": "subjectKeywords",
-                            "fields": {
-                                "keyword": {
-                                    "type": "keyword",
-                                    "ignore_above": 100
-                                }
-                            }
+                            "copy_to": "subjectKeywords"
                         },
                         "lang": {
                             "type": "keyword",
