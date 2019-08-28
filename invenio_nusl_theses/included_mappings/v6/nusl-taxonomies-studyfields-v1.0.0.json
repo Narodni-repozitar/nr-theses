@@ -1,6 +1,6 @@
 {
     "FieldType": {
-        "type": "nested",
+        "type": "taxonomy-v1.0.0.json#/TaxonomyTerm",
         "properties": {
             "aliases": {
                 "type": "text"
@@ -33,7 +33,7 @@
                 }
             },
             "date_of_accreditation_validity": {
-                "type": "date"
+                "type": "text"
             },
             "duration": {
                 "type": "keyword"

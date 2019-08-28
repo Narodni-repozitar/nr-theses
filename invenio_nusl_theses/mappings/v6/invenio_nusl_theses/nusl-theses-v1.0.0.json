@@ -65,17 +65,50 @@
                     }
                 },
                 "subject": {
-                    "type": "nusl-taxonomies-subject-v1.0.0.json#/subject"
+                    "type": "nusl-taxonomies-subject-v1.0.0.json#/subject",
+                    "properties": {
+                        "title": {
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "text",
+                                    "copy_to": "subjectKeywords"
+                                },
+                                "lang": {
+                                    "type": "text"
+                                }
+                            }
+                        }
+                    }
                 },
                 "keywords": {
-                    "type": "nusl-common-v1.0.0.json#/multilanguage"
+                    "type": "nusl-common-v1.0.0.json#/multilanguage",
+                    "properties": {
+                        "name": {
+                            "type": "text",
+                            "copy_to": "subjectKeywords",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword",
+                                    "ignore_above": 100
+                                }
+                            }
+                        },
+                        "lang": {
+                            "type": "keyword",
+                            "ignore_above": 3
+                        }
+                    }
+                },
+                "subjectKeywords": {
+                    "type": "text"
                 },
                 "creator": {
-                    "copy_to": "person",
                     "type": "nested",
                     "properties": {
                         "name": {
-                            "type": "text"
+                            "type": "text",
+                            "copy_to": "person"
                         },
                         "id": {
                             "type": "nusl-common-v1.0.0.json#/valueType"
@@ -83,11 +116,11 @@
                     }
                 },
                 "contributor": {
-                    "copy_to": "person",
                     "type": "nested",
                     "properties": {
                         "name": {
-                            "type": "text"
+                            "type": "text",
+                            "copy_to": "person"
                         },
                         "id": {
                             "type": "nusl-common-v1.0.0.json#/valueType"
@@ -98,18 +131,7 @@
                     }
                 },
                 "person": {
-                    "type": "nested",
-                    "properties": {
-                        "name": {
-                            "type": "text"
-                        },
-                        "id": {
-                            "type": "nusl-common-v1.0.0.json#/valueType"
-                        },
-                        "role": {
-                            "type": "text"
-                        }
-                    }
+                    "type": "text"
                 },
                 "doctype": {
                     "type": "taxonomy-v1.0.0.json#/TaxonomyTerm"
