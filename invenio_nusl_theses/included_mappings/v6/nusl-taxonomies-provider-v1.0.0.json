@@ -3,17 +3,13 @@
         "type": "taxonomy-v1.0.0.json#/TaxonomyTerm",
         "properties": {
             "address": {
-                "type": "nested",
-                "properties": {
-                    "name": {
-                        "type": "text",
-                        "fields": {
+                "type": "text",
+                "fields": {
                             "keyword": {
-                                "type": "keyword"
+                                "type": "keyword",
+                                "ignore_above": 100
                             }
                         }
-                    }
-                }
             },
             "lib_url": {
                 "type": "keyword"
