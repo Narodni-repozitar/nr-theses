@@ -95,7 +95,7 @@
                     }
                 },
                 "subjectKeywords": {
-                    "type": "text"
+                    "type": "keyword"
                 },
                 "creator": {
                     "type": "nested",
@@ -125,7 +125,13 @@
                     }
                 },
                 "person": {
-                    "type": "text"
+                    "type": "text",
+                    "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "store": true
+                            }
+                        }
                 },
                 "doctype": {
                     "type": "taxonomy-v1.0.0.json#/TaxonomyTerm"

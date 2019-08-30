@@ -102,7 +102,6 @@ def year_filter(field):
 
     def inner(values):
         queries = []
-        print(values)
         for value in values:
             queries.append(
                 Q('range', **{
@@ -122,7 +121,10 @@ FILTERS = {
     'yearAccepted': year_filter('dateAccepted'),
     'language': terms_filter('language'),
     'defended': terms_filter('defended'),
-    'doctype.slug': terms_filter('doctype.slug')
+    'doctype.slug': terms_filter('doctype.slug'),
+    'person.keyword': terms_filter('person.keyword'),
+    'subjectKeywords': terms_filter('subjectKeywords'),
+    'accessRights': terms_filter('accessRights')
     # 'stylePeriod.title.value.keyword': terms_filter('stylePeriod.title.value.keyword'),
     # 'itemType.title.value.keyword': terms_filter('itemType.title.value.keyword'),
     # 'parts.material.materialType.title.value.keyword':
@@ -165,13 +167,42 @@ RECORDS_REST_FACETS = {
                 'terms': {
                     'field': 'doctype.slug'
                 }
-            }
+            },
+            'person': {
+                'terms': {
+                    'field': 'person.keyword'
+                }
+            },
+            'subjectKeywords': {
+                'terms': {
+                    'field': 'subjectKeywords'
+                }
+            },
+            'accessRights': {
+                'terms': {
+                    'field': 'accessRights'
+                }
+            },
+            # 'degreeGrantor': {
+            #     'nested': {
+            #
+            #     }
+            # }
             # 'restorationRequestor.title.value.keyword': {
-            #     'terms': {'field': 'restorationRequestor.title.value.keyword', 'size': 100, "order": {"_term": "asc"}}},
+            #     'terms': {
+            #       'field': 'restorationRequestor.title.value.keyword',
+            #       'size': 100,
+            #       "order": {"_term": "asc"}}},
             # 'stylePeriod.title.value.keyword': {
-            #     'terms': {'field': 'stylePeriod.title.value.keyword', 'size': 100, "order": {"_term": "desc"}}},
+            #     'terms': {
+            #       'field': 'stylePeriod.title.value.keyword',
+            #       'size': 100,
+            #       "order": {"_term": "desc"}}},
             # 'itemType.title.value.keyword': {
-            #     'terms': {'field': 'itemType.title.value.keyword', 'size': 100, "order": {"_term": "desc"}}},
+            #     'terms': {
+            #       'field': 'itemType.title.value.keyword',
+            #       'size': 100,
+            #       "order": {"_term": "desc"}}},
             # 'parts': {  # if nested
             #     "nested": {
             #         "path": "parts"
