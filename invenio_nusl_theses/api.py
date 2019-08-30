@@ -41,7 +41,7 @@ class ThesisAPI:
         with db.session.begin_nested():
             existing_record = None
             try:
-                existing_pid = PersistentIdentifier.get('nusl', record['id'])
+                existing_pid = PersistentIdentifier.get('dnusl', record['id'])
                 try:
                     existing_record = DraftThesisRecord.get_record(id_=existing_pid.object_uuid)
                 except NoResultFound:
@@ -63,7 +63,7 @@ class ThesisAPI:
                     object_uuid=id,
                     status=PIDStatus.REGISTERED,
                 )
-                db_record = DraftThesisRecord.create(record, id_=id)  # Zde dochází i k validaci přes signály z ext
+                db_record = DraftThesisRecord.create(record, id_=id)
             else:
                 # remove everything from the record except of id and pid - keep them
                 previous_id = existing_record['id']

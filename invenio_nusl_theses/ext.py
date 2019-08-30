@@ -9,19 +9,10 @@
 
 from __future__ import absolute_import, print_function
 
-import re
-
-from flask import Blueprint
-from invenio_explicit_acls.utils import convert_relative_schema_to_absolute
-import jsonschema
-from marshmallow import ValidationError
+import logging
 
 from invenio_nusl_theses.api import ThesisAPI
-from invenio_nusl_theses.marshmallow import ThesisMetadataSchemaV1
-from invenio_nusl_theses.proxies import nusl_theses
 from . import config
-
-import logging
 
 log = logging.getLogger('nusl-theses')
 
