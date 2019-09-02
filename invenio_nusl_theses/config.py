@@ -117,12 +117,35 @@ def year_filter(field):
     return inner
 
 
+def person_filter(field):
+    """Create a term filter.
+
+    :param field: Field name.
+    :returns: Function that returns the Terms query.
+    """
+
+    def inner(values):
+        queries = []
+        for value in values:
+            queries.append(
+                # Q({"term": {
+                #     "person.keyword": "Svoboda, Petr"
+                # }})
+                Q('term', **{
+                    field: value
+                })
+            )
+        return Q('bool', should=queries, minimum_should_match=1)
+
+    return inner
+
+
 FILTERS = {
     'yearAccepted': year_filter('dateAccepted'),
     'language': terms_filter('language'),
     'defended': terms_filter('defended'),
     'doctype.slug': terms_filter('doctype.slug'),
-    'person.keyword': terms_filter('person.keyword'),
+    'person': person_filter('person.keyword'),
     'subjectKeywords': terms_filter('subjectKeywords'),
     'accessRights': terms_filter('accessRights')
     # 'stylePeriod.title.value.keyword': terms_filter('stylePeriod.title.value.keyword'),

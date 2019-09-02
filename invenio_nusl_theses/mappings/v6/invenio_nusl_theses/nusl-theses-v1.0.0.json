@@ -128,8 +128,7 @@
                     "type": "text",
                     "fields": {
                             "keyword": {
-                                "type": "keyword",
-                                "store": true
+                                "type": "keyword"
                             }
                         }
                 },
