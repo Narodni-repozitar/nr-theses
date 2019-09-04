@@ -77,7 +77,9 @@ INVENIO_RECORD_DRAFT_SCHEMAS = [
 def nested_terms_filter(prefix, field, field_query=None):
     """Create a term filter.
 
+    :param prefix
     :param field: Field name.
+    :param field_query
     :returns: Function that returns the Terms query.
     """
 
@@ -128,9 +130,6 @@ def person_filter(field):
         queries = []
         for value in values:
             queries.append(
-                # Q({"term": {
-                #     "person.keyword": "Svoboda, Petr"
-                # }})
                 Q('term', **{
                     field: value
                 })
@@ -206,11 +205,59 @@ RECORDS_REST_FACETS = {
                     'field': 'accessRights'
                 }
             },
+            "studyField": {
+                "nested": {
+                    "path": "studyField.title"
+                },
+                "aggs": {
+                    "studyField": {
+                        "terms": {
+                            "field": "studyField.title.value.keyword"
+                        }
+                    }
+                }
+            },
+            "degreeGrantor": {
+                "nested": {
+                    "path": "degreeGrantor.ancestors"
+                },
+                "aggs": {
+                    "faculty": {
+                        "filter": {
+                            "term": {
+                                "degreeGrantor.ancestors.level": 2
+                            }
+                        },
+                        "aggs": {
+                            "title": {
+                                "nested": {
+                                    "path": "degreeGrantor.ancestors.title"
+                                },
+                                "aggs": {
+                                    "faculty": {
+                                        "terms": {
+                                            "field": "degreeGrantor.ancestors.title.value.keyword"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             # 'degreeGrantor': {
             #     'nested': {
-            #
+            #         'path': "degreeGrantor"
+            #     },
+            #     "aggs": {
+            #         "degreeGrantor.title.value": {
+            #             "terms": {
+            #                 "field": "degreeGrantor.title.value"
+            #             }
+            #         }
             #     }
             # }
+
             # 'restorationRequestor.title.value.keyword': {
             #     'terms': {
             #       'field': 'restorationRequestor.title.value.keyword',
@@ -232,12 +279,18 @@ RECORDS_REST_FACETS = {
             #     },
             #     "aggs": {
             #         "parts.materialType.title.value.keyword": {
-            #             'terms': {'field': 'parts.materialType.title.value.keyword', 'size': 100,
-            #                       "order": {"_term": "desc"}}
+            #             'terms': {
+            #               'field': 'parts.materialType.title.value.keyword',
+            #               'size': 100,
+            #               "order": {"_term": "desc"}}
             #         },
             #         "parts.fabricationTechnology.title.value.keyword": {
-            #             'terms': {'field': 'parts.fabricationTechnology.title.value.keyword', 'size': 100,
-            #                       "order": {"_term": "desc"}}
+            #             'terms':
+            #               {
+            #                   'field': 'parts.fabricationTechnology.title.value.keyword',
+            #                   'size': 100,
+            #                   "order": {"_term": "desc"}
+            #               }
             #         },
             #         "parts.color.title.value.keyword": {
             #             'terms': {'field': 'parts.color.title.value.keyword', 'size': 100,
