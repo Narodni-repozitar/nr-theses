@@ -1511,6 +1511,16 @@ def test_defended_load_3(app, load_metadata):
 #######################################################################
 #                           Study Field                               #
 #######################################################################
+def test_studyfield_load_1(app, load_metadata):
+    load_metadata["studyField"] = [
+        {
+            "$ref": "https://localhost/api/taxonomies/studyfields/no_valid_fcc50779-a5d7-4359-b9f8-2660d0e738f1"
+        }
+    ]
+
+    schema = ThesisMetadataSchemaV1(strict=True)
+    with pytest.raises(ValidationError):
+        convert_dates(schema.load(convert_dates(load_metadata)).data)
 
 
 #######################################################################

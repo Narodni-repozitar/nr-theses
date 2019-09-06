@@ -74,6 +74,20 @@ INVENIO_RECORD_DRAFT_SCHEMAS = [
 ]
 
 
+def degree_grantor_filter(field, path=None):
+    def inner(values):
+        return Q('nested',
+                 path="degreeGrantor.ancestors",
+                 query=Q("nested",
+                         path="degreeGrantor.ancestors.title",
+                         query=Q('terms',
+                                 **{field: values}
+                                 ))
+                 )
+
+    return inner
+
+
 def nested_terms_filter(prefix, field, field_query=None):
     """Create a term filter.
 
@@ -92,6 +106,7 @@ def nested_terms_filter(prefix, field, field_query=None):
             query = Q('terms', **{field: values})
         return Q('nested', path=prefix, query=query)
 
+    print(inner)
     return inner
 
 
@@ -146,7 +161,10 @@ FILTERS = {
     'doctype.slug': terms_filter('doctype.slug'),
     'person': person_filter('person.keyword'),
     'subjectKeywords': terms_filter('subjectKeywords'),
-    'accessRights': terms_filter('accessRights')
+    'accessRights': terms_filter('accessRights'),
+    'studyField': nested_terms_filter('studyField.title', 'value.keyword'),
+    'university': degree_grantor_filter('degreeGrantor.ancestors.title.value.keyword'),
+    'faculty': degree_grantor_filter('degreeGrantor.ancestors.title.value.keyword')
     # 'stylePeriod.title.value.keyword': terms_filter('stylePeriod.title.value.keyword'),
     # 'itemType.title.value.keyword': terms_filter('itemType.title.value.keyword'),
     # 'parts.material.materialType.title.value.keyword':
@@ -197,7 +215,8 @@ RECORDS_REST_FACETS = {
             },
             'subjectKeywords': {
                 'terms': {
-                    'field': 'subjectKeywords'
+                    'field': 'subjectKeywords',
+                    'size': 100
                 }
             },
             'accessRights': {
@@ -212,7 +231,8 @@ RECORDS_REST_FACETS = {
                 "aggs": {
                     "studyField": {
                         "terms": {
-                            "field": "studyField.title.value.keyword"
+                            "field": "studyField.title.value.keyword",
+                            "size": 100
                         }
                     }
                 }
@@ -222,10 +242,19 @@ RECORDS_REST_FACETS = {
                     "path": "degreeGrantor.ancestors"
                 },
                 "aggs": {
-                    "faculty": {
-                        "filter": {
-                            "term": {
-                                "degreeGrantor.ancestors.level": 2
+                    "degreeGrantor": {
+                        "filters": {
+                            "filters": {
+                                "faculty": {
+                                    "term": {
+                                        "degreeGrantor.ancestors.level": 2
+                                    }
+                                },
+                                "university": {
+                                    "term": {
+                                        "degreeGrantor.ancestors.level": 1
+                                    }
+                                }
                             }
                         },
                         "aggs": {
@@ -234,9 +263,10 @@ RECORDS_REST_FACETS = {
                                     "path": "degreeGrantor.ancestors.title"
                                 },
                                 "aggs": {
-                                    "faculty": {
+                                    "degreeGrantor": {
                                         "terms": {
-                                            "field": "degreeGrantor.ancestors.title.value.keyword"
+                                            "field": "degreeGrantor.ancestors.title.value.keyword",
+                                            "size": 100
                                         }
                                     }
                                 }

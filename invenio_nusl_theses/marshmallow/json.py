@@ -9,6 +9,8 @@
 
 from __future__ import absolute_import, print_function
 
+from urllib.parse import urlparse
+
 from invenio_records_rest.schemas import Nested, StrictKeysMixin
 from invenio_records_rest.schemas.fields import PersistentIdentifier, SanitizedUnicode
 from marshmallow import fields, validate, ValidationError, pre_load, post_load
@@ -139,8 +141,8 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
     language = fields.List(SanitizedUnicode(required=True,
                                             validate=validate_language), required=True)
     identifier = fields.List(Nested(ValueTypeSchemaV1()), required=True)  # TODO: Dodělat validaci na type
-    dateAccepted = fields.String() #fields.Date(required=True)
-    modified = fields.String() #fields.DateTime(format="%Y-%m-%dT%H:%M:%S")
+    dateAccepted = fields.String()  # fields.Date(required=True)
+    modified = fields.String()  # fields.DateTime(format="%Y-%m-%dT%H:%M:%S")
     title = fields.List(Nested(MultilanguageSchemaV1()), required=True)
     extent = SanitizedUnicode()
     abstract = fields.List(Nested(MultilanguageSchemaV1()))
@@ -170,6 +172,21 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
             raise ValidationError("Keywords or subjects are required!")
         if len(data.get("keywords", [])) < 3 and len(data.get("subject", [])) < 3:
             raise ValidationError("Number of keywords or subject have to be minimal three!")
+
+    @post_load()
+    def validate_study_field(self, data):
+        print(data)
+        study_fields = data.get("studyField")
+        if study_fields is not None:
+            for field in study_fields:
+                if "$ref" in field:
+                    url = urlparse(field["$ref"])
+                    path = url.path
+                    path_components = path.split("/")
+                    last = path_components[-1]
+                    if "no_valid_" in last:
+                        raise ValidationError(f"Studyfield is not valid. Please check it in taxonomy. Slug is: {last}")
+
 
 class ThesisRecordSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # get - zobrazit
     """Record schema."""
