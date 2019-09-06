@@ -164,7 +164,12 @@ FILTERS = {
     'accessRights': terms_filter('accessRights'),
     'studyField': nested_terms_filter('studyField.title', 'value.keyword'),
     'university': degree_grantor_filter('degreeGrantor.ancestors.title.value.keyword'),
-    'faculty': degree_grantor_filter('degreeGrantor.ancestors.title.value.keyword')
+    'faculty': degree_grantor_filter('degreeGrantor.ancestors.title.value.keyword'),
+    'valid': terms_filter("invenio_draft_validation.valid"),
+    'marshmallow.field': terms_filter("invenio_draft_validation.errors.marshmallow.field"),
+    'marshmallow.message': terms_filter("invenio_draft_validation.errors.marshmallow.message.keyword"),
+    'jsonschema.field': terms_filter("invenio_draft_validation.errors.jsonschema.field"),
+    'jsonschema.message': terms_filter("invenio_draft_validation.errors.jsonschema.message.keyword")
     # 'stylePeriod.title.value.keyword': terms_filter('stylePeriod.title.value.keyword'),
     # 'itemType.title.value.keyword': terms_filter('itemType.title.value.keyword'),
     # 'parts.material.materialType.title.value.keyword':
@@ -273,6 +278,31 @@ RECORDS_REST_FACETS = {
                             }
                         }
                     }
+                }
+            },
+            "valid": {
+                'terms': {
+                    'field': "invenio_draft_validation.valid"
+                }
+            },
+            "marshmallow.field": {
+                "terms": {
+                    "field": "invenio_draft_validation.errors.marshmallow.field"
+                }
+            },
+            "marshmallow.message": {
+                "terms": {
+                    "field": "invenio_draft_validation.errors.marshmallow.message.keyword"
+                }
+            },
+            "jsonschema.field": {
+                "terms": {
+                    "field": "invenio_draft_validation.errors.jsonschema.field"
+                }
+            },
+            "jsonschema.message": {
+                "terms": {
+                    "field": "invenio_draft_validation.errors.jsonschema.message.keyword"
                 }
             }
             # 'degreeGrantor': {
