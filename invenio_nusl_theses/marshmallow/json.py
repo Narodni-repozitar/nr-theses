@@ -141,7 +141,7 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
     language = fields.List(SanitizedUnicode(required=True,
                                             validate=validate_language), required=True)
     identifier = fields.List(Nested(ValueTypeSchemaV1()), required=True)  # TODO: Dodělat validaci na type
-    dateAccepted = fields.String()  # fields.Date(required=True)
+    dateAccepted = fields.String(required=True)  # fields.Date(required=True)
     modified = fields.String()  # fields.DateTime(format="%Y-%m-%dT%H:%M:%S")
     title = fields.List(Nested(MultilanguageSchemaV1()), required=True)
     extent = SanitizedUnicode()
@@ -171,7 +171,8 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
         if "keywords" not in data and "subject" not in data:
             raise ValidationError("Keywords or subjects are required!")
         if len(data.get("keywords", [])) < 3 and len(data.get("subject", [])) < 3:
-            raise ValidationError("Number of keywords or subject have to be minimal three!")
+            raise ValidationError("Number of keywords or subject have to be minimal three!",
+                                  field_names=["subject", "keywords"])
 
     @post_load()
     def validate_study_field(self, data):
@@ -185,7 +186,9 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
                     path_components = path.split("/")
                     last = path_components[-1]
                     if "no_valid_" in last:
-                        raise ValidationError(f"Studyfield is not valid. Please check it in taxonomy. Slug is: {last}")
+                        raise ValidationError(
+                            f"Studyfield is not valid. Please check it in taxonomy. Slug is: {last}",
+                            field_names=["studyField"])
 
 
 class ThesisRecordSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # get - zobrazit

@@ -158,7 +158,6 @@ FILTERS = {
     'yearAccepted': year_filter('dateAccepted'),
     'language': terms_filter('language'),
     'defended': terms_filter('defended'),
-    'doctype.slug': terms_filter('doctype.slug'),
     'person': person_filter('person.keyword'),
     'subjectKeywords': terms_filter('subjectKeywords'),
     'accessRights': terms_filter('accessRights'),
@@ -180,6 +179,10 @@ FILTERS = {
     #     nested_terms_filter('parts', 'material.color.title.value.keyword'),
     # 'parts.restorationMethods.title.value.keyword':
     #     nested_terms_filter('parts', 'restorationMethods.title.value.keyword'),
+}
+
+POST_FILTERS = {
+    'doctype.slug': terms_filter('doctype.slug'),
 }
 
 RECORDS_REST_FACETS = {
@@ -363,7 +366,8 @@ RECORDS_REST_FACETS = {
             #     }
             # },
         },
-        'filters': FILTERS
+        'filters': FILTERS,
+        'post_filters': POST_FILTERS
     }
 }
 
