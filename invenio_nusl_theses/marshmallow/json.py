@@ -8,6 +8,7 @@
 """JSON Schemas."""
 
 from __future__ import absolute_import, print_function
+from invenio_records_rest.schemas.fields.datetime import DateString
 
 from urllib.parse import urlparse
 
@@ -130,6 +131,10 @@ class ProviderSubSchemaV1(TaxonomySchemaV1):
     lib_url = fields.Url()
 
 
+class LanguageSubSchemaV1(TaxonomySchemaV1):
+    pass
+
+
 #########################################################################
 #                     Main schema                                       #
 #########################################################################
@@ -138,10 +143,9 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
 
     schema = fields.String(attribute='$schema', load_from='$schema', dump_to='$schema', required=False)
     id = SanitizedUnicode(required=True)
-    language = fields.List(SanitizedUnicode(required=True,
-                                            validate=validate_language), required=True)
+    language = fields.List(Nested(LanguageSubSchemaV1), required=True, validate=validate.Length(min=1))
     identifier = fields.List(Nested(ValueTypeSchemaV1()), required=True)  # TODO: Dodělat validaci na type
-    dateAccepted = fields.String(required=True)  # fields.Date(required=True)
+    dateAccepted = DateString(required=True)  # fields.Date(required=True)
     modified = fields.String()  # fields.DateTime(format="%Y-%m-%dT%H:%M:%S")
     title = fields.List(Nested(MultilanguageSchemaV1()), required=True)
     extent = SanitizedUnicode()

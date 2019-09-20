@@ -14,7 +14,7 @@ def dump_metadata():
     return {
         '$schema': 'https://nusl.cz/schemas/invenio_nusl_theses/nusl-theses-v1.0.0.json',
         "language": [
-            "CZE"
+            {'$ref': 'https://localhost/api/taxonomies/languages/cze'}
         ],
         "identifier": [{
             "value": "151515",
@@ -260,8 +260,8 @@ def dump_metadata():
 def load_metadata():
     return {
         '$schema': 'https://nusl.cz/schemas/invenio_nusl_theses/nusl-theses-v1.0.0.json',
-        "language": [
-            "CZE"
+        'language': [
+            {'$ref': 'https://localhost/api/taxonomies/languages/cze'}
         ],
         "identifier": [{
             "value": "151515",
@@ -430,36 +430,28 @@ def load_metadata():
 ########################################################################
 #                           Language                                   #
 ########################################################################
-def test_language_dump_1(app, dump_metadata):
-    dump_metadata["language"] = ["CZE", "GER"]
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
+def test_language_load_1(app, load_metadata):
+    load_metadata["language"] = None
 
-
-def test_language_load_1(app, db, load_metadata):
-    load_metadata["language"] = [
-        "CZE", "GER"
-    ]
-    schema = ThesisMetadataSchemaV1(strict=True)
-    assert convert_dates(load_metadata) == schema.load(convert_dates(load_metadata)).data
+    with pytest.raises(ValidationError):
+        schema = ThesisMetadataSchemaV1(strict=True)
+        schema.load(convert_dates(load_metadata))
 
 
 def test_language_load_2(app, load_metadata):
-    load_metadata["language"] = [
-        "CZE", "blbost"
-    ]
+    load_metadata["language"] = []
 
     with pytest.raises(ValidationError):
         schema = ThesisMetadataSchemaV1(strict=True)
-        result = schema.load(convert_dates(load_metadata))
+        schema.load(convert_dates(load_metadata))
 
 
-def test_language_load_3(app, load_metadata):
-    load_metadata["language"] = "CZE"
-
-    with pytest.raises(ValidationError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        result = schema.load(convert_dates(load_metadata))
+# def test_language_load_3(app, load_metadata):
+#     load_metadata["language"] = "CZE"
+#
+#     with pytest.raises(ValidationError):
+#         schema = ThesisMetadataSchemaV1(strict=True)
+#         result = schema.load(convert_dates(load_metadata))
 
 
 ########################################################################
@@ -524,9 +516,8 @@ def test_dateaccepted_dump_2(app, dump_metadata):
 
 def test_dateaccepted_dump_3(app, dump_metadata):
     dump_metadata["dateAccepted"] = "blbost"
-    with pytest.raises(ValidationError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        schema.dump(dump_metadata)
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert dump_metadata != schema.dump(dump_metadata)
 
 
 def test_dateaccepted_load_1(app, load_metadata):
@@ -536,11 +527,11 @@ def test_dateaccepted_load_1(app, load_metadata):
     assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
 
 
-# def test_dateaccepted_load_2(load_metadata): #TODO: dořešit
-#     load_metadata["dateAccepted"] = "20190519"
-#
-#     schema = ThesisMetadataSchemaV1(strict=True)
-#     assert convert_dates(load_metadata) == convert_dates(schema.load(convert_dates(load_metadata)).data)
+def test_dateaccepted_load_2(app, load_metadata):
+    load_metadata["dateAccepted"] = "20190519"
+
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert convert_dates(load_metadata) != convert_dates(schema.load(convert_dates(load_metadata)).data)
 
 
 def test_dateaccepted_load_3(app, load_metadata):
@@ -556,9 +547,8 @@ def test_dateaccepted_load_3(app, load_metadata):
 ########################################################################
 def test_modified_dump_1(app, dump_metadata):
     dump_metadata["modified"] = "blbost"
-    with pytest.raises(AttributeError):
-        schema = ThesisMetadataSchemaV1(strict=True)
-        schema.dump(dump_metadata).data
+    schema = ThesisMetadataSchemaV1(strict=True)
+    assert dump_metadata == schema.dump(dump_metadata).data
 
 
 def test_modified_load_1(app, load_metadata):
