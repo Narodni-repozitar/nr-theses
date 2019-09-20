@@ -11,10 +11,8 @@ from __future__ import absolute_import, print_function
 
 from elasticsearch_dsl import Q
 from invenio_records_rest.facets import terms_filter
-from invenio_records_rest.utils import deny_all, check_elasticsearch, allow_all
-from invenio_search import RecordsSearch
+from invenio_records_rest.utils import allow_all
 
-from invenio_nusl_theses.api import ThesisSearch
 from invenio_nusl_theses.marshmallow import ThesisRecordSchemaV1, ThesisMetadataSchemaV1
 from invenio_nusl_theses.record import PublishedThesisRecord, DraftThesisRecord
 
@@ -106,7 +104,6 @@ def nested_terms_filter(prefix, field, field_query=None):
             query = Q('terms', **{field: values})
         return Q('nested', path=prefix, query=query)
 
-    print(inner)
     return inner
 
 
@@ -203,7 +200,7 @@ RECORDS_REST_FACETS = {
             'language': {
                 'terms': {
                     'field': 'language',
-                    'size': 10
+                    'size': 50
                 }
             },
             'defended': {
