@@ -176,7 +176,6 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
 
     @post_load()
     def validate_study_field(self, data):
-        print(data)
         study_fields = data.get("studyField")
         if study_fields is not None:
             for field in study_fields:
@@ -187,7 +186,7 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
                     last = path_components[-1]
                     if "no_valid_" in last:
                         raise ValidationError(
-                            f"Studyfield is not valid. Please check it in taxonomy. Slug is: {last}",
+                            f"Studyfield is not valid.",
                             field_names=["studyField"])
 
 
