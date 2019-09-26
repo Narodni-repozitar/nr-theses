@@ -9,10 +9,7 @@
             "type": "string"
         },
         "language": {
-            "type": "array",
-            "items": {
-                "type": "string"
-            },
+            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTermArray",
             "minItems": 1
         },
         "identifier": {

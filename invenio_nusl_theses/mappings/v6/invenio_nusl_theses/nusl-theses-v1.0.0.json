@@ -10,7 +10,7 @@
                     "index": true
                 },
                 "language": {
-                    "type": "keyword"
+                    "type": "taxonomy-v1.0.0.json#/TaxonomyTerm"
                 },
                 "identifier": {
                     "type": "nested",

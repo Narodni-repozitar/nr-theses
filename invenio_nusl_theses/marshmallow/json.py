@@ -173,7 +173,8 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
     @post_load()
     def subject_or_keyword_required(self, data):
         if "keywords" not in data and "subject" not in data:
-            raise ValidationError("Keywords or subjects are required!")
+            raise ValidationError("Keywords or subjects are required!",
+                                  field_names=["subject", "keywords"])
         if len(data.get("keywords", [])) < 3 and len(data.get("subject", [])) < 3:
             raise ValidationError("Number of keywords or subject have to be minimal three!",
                                   field_names=["subject", "keywords"])
