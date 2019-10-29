@@ -199,8 +199,7 @@ RECORDS_REST_FACETS = {
             },
             'language': {
                 'terms': {
-                    'field': 'language',
-                    'size': 50
+                    'field': 'language'
                 }
             },
             'defended': {
