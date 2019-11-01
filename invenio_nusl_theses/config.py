@@ -166,16 +166,6 @@ FILTERS = {
     'marshmallow.message': terms_filter("invenio_draft_validation.errors.marshmallow.message.keyword"),
     'jsonschema.field': terms_filter("invenio_draft_validation.errors.jsonschema.field"),
     'jsonschema.message': terms_filter("invenio_draft_validation.errors.jsonschema.message.keyword")
-    # 'stylePeriod.title.value.keyword': terms_filter('stylePeriod.title.value.keyword'),
-    # 'itemType.title.value.keyword': terms_filter('itemType.title.value.keyword'),
-    # 'parts.material.materialType.title.value.keyword':
-    #     nested_terms_filter('parts', 'material.materialType.title.value.keyword'),
-    # 'parts.material.fabricationTechnology.title.value.keyword':
-    #     nested_terms_filter('parts', 'material.fabricationTechnology.title.value.keyword'),
-    # 'parts.material.color.title.value.keyword':
-    #     nested_terms_filter('parts', 'material.color.title.value.keyword'),
-    # 'parts.restorationMethods.title.value.keyword':
-    #     nested_terms_filter('parts', 'restorationMethods.title.value.keyword'),
 }
 
 POST_FILTERS = {
@@ -199,7 +189,7 @@ RECORDS_REST_FACETS = {
             },
             'language': {
                 'terms': {
-                    'field': 'language'
+                    'field': 'language.slug'
                 }
             },
             'defended': {
@@ -304,63 +294,6 @@ RECORDS_REST_FACETS = {
                     "field": "invenio_draft_validation.errors.jsonschema.message.keyword"
                 }
             }
-            # 'degreeGrantor': {
-            #     'nested': {
-            #         'path': "degreeGrantor"
-            #     },
-            #     "aggs": {
-            #         "degreeGrantor.title.value": {
-            #             "terms": {
-            #                 "field": "degreeGrantor.title.value"
-            #             }
-            #         }
-            #     }
-            # }
-
-            # 'restorationRequestor.title.value.keyword': {
-            #     'terms': {
-            #       'field': 'restorationRequestor.title.value.keyword',
-            #       'size': 100,
-            #       "order": {"_term": "asc"}}},
-            # 'stylePeriod.title.value.keyword': {
-            #     'terms': {
-            #       'field': 'stylePeriod.title.value.keyword',
-            #       'size': 100,
-            #       "order": {"_term": "desc"}}},
-            # 'itemType.title.value.keyword': {
-            #     'terms': {
-            #       'field': 'itemType.title.value.keyword',
-            #       'size': 100,
-            #       "order": {"_term": "desc"}}},
-            # 'parts': {  # if nested
-            #     "nested": {
-            #         "path": "parts"
-            #     },
-            #     "aggs": {
-            #         "parts.materialType.title.value.keyword": {
-            #             'terms': {
-            #               'field': 'parts.materialType.title.value.keyword',
-            #               'size': 100,
-            #               "order": {"_term": "desc"}}
-            #         },
-            #         "parts.fabricationTechnology.title.value.keyword": {
-            #             'terms':
-            #               {
-            #                   'field': 'parts.fabricationTechnology.title.value.keyword',
-            #                   'size': 100,
-            #                   "order": {"_term": "desc"}
-            #               }
-            #         },
-            #         "parts.color.title.value.keyword": {
-            #             'terms': {'field': 'parts.color.title.value.keyword', 'size': 100,
-            #                       "order": {"_term": "desc"}}
-            #         },
-            #         "parts.restorationMethods.title.value.keyword": {
-            #             'terms': {'field': 'parts.restorationMethods.title.value.keyword', 'size': 100,
-            #                       "order": {"_term": "desc"}}
-            #         }
-            #     }
-            # },
         },
         'filters': FILTERS,
         'post_filters': POST_FILTERS
