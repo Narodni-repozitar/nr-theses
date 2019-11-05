@@ -14,6 +14,7 @@ from invenio_records_rest.facets import terms_filter
 from invenio_records_rest.utils import allow_all
 
 from invenio_nusl_theses.marshmallow import ThesisRecordSchemaV1, ThesisMetadataSchemaV1
+from invenio_nusl_theses.permissions import thesis_write_permission_factory
 from invenio_nusl_theses.record import PublishedThesisRecord, DraftThesisRecord
 
 THESES_SEARCH_INDEX = 'invenio_nusl_theses-nusl-theses-v1.0.0'
@@ -41,6 +42,8 @@ DRAFT_ENABLED_RECORDS_REST_ENDPOINTS = {
         'publish_permission_factory': allow_all,
         'unpublish_permission_factory': allow_all,
         'edit_permission_factory': allow_all,
+        'draft_modify_permission_factory': thesis_write_permission_factory,
+
 
         # 'search_class': DebugACLRecordsSearch,
         # 'indexer_class': CommitingRecordIndexer,
