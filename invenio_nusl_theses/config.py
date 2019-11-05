@@ -39,10 +39,11 @@ DRAFT_ENABLED_RECORDS_REST_ENDPOINTS = {
         'draft_record_class': DraftThesisRecord,
         'published_record_class': PublishedThesisRecord,
 
-        'publish_permission_factory': allow_all,
-        'unpublish_permission_factory': allow_all,
-        'edit_permission_factory': allow_all,
+        'publish_permission_factory': thesis_write_permission_factory,
+        'unpublish_permission_factory': thesis_write_permission_factory,
+        'edit_permission_factory': thesis_write_permission_factory,
         'draft_modify_permission_factory': thesis_write_permission_factory,
+        'draft_read_permission_factory': thesis_write_permission_factory,
 
 
         # 'search_class': DebugACLRecordsSearch,
