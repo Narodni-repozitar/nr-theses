@@ -46,7 +46,8 @@ class ThesisAPI:
                     existing_record = DraftThesisRecord.get_record(id_=existing_pid.object_uuid)
                 except NoResultFound:
                     # check it if has not been deleted and salvage if so
-                    existing_record = DraftThesisRecord.get_record(id_=existing_pid.object_uuid, with_deleted=True)
+                    existing_record = DraftThesisRecord.get_record(id_=existing_pid.object_uuid,
+                                                                   with_deleted=True)
                     existing_record = existing_record.revert(-1)
             except PIDDoesNotExistError:
                 pass

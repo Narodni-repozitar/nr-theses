@@ -41,7 +41,8 @@ setup_requires = [
 ]
 
 install_requires = [
-    'invenio-oarepo>=1.0.0'
+    'invenio-oarepo>=1.0.0',
+    'sqlalchemy'
 ]
 
 packages = find_packages()
