@@ -20,7 +20,8 @@ from invenio_nusl_theses.record import PublishedThesisRecord, DraftThesisRecord
 THESES_SEARCH_INDEX = 'invenio_nusl_theses-nusl-theses-v1.0.0'
 THESES_STAGING_SEARCH_INDEX = 'invenio_nusl_theses-nusl-theses-staging-v1.0.0'
 THESES_PID = 'pid(nusl,record_class="invenio_nusl_theses.api:ThesisRecord")'
-THESES_STAGING_JSON_SCHEMA = "https://nusl.cz/schemas/invenio_nusl_theses/nusl-theses-staging-v1.0.0.json"
+THESES_STAGING_JSON_SCHEMA = "https://nusl.cz/schemas/invenio_nusl_theses/nusl-theses-staging-v1" \
+                             ".0.0.json"
 
 DRAFT_ENABLED_RECORDS_REST_ENDPOINTS = {
     'theses': {
@@ -44,7 +45,6 @@ DRAFT_ENABLED_RECORDS_REST_ENDPOINTS = {
         'edit_permission_factory': thesis_write_permission_factory,
         'draft_modify_permission_factory': thesis_write_permission_factory,
         'draft_read_permission_factory': thesis_write_permission_factory,
-
 
         # 'search_class': DebugACLRecordsSearch,
         # 'indexer_class': CommitingRecordIndexer,
@@ -167,7 +167,8 @@ FILTERS = {
     'faculty': degree_grantor_filter('degreeGrantor.ancestors.title.value.keyword'),
     'valid': terms_filter("invenio_draft_validation.valid"),
     'marshmallow.field': terms_filter("invenio_draft_validation.errors.marshmallow.field"),
-    'marshmallow.message': terms_filter("invenio_draft_validation.errors.marshmallow.message.keyword"),
+    'marshmallow.message': terms_filter(
+        "invenio_draft_validation.errors.marshmallow.message.keyword"),
     'jsonschema.field': terms_filter("invenio_draft_validation.errors.jsonschema.field"),
     'jsonschema.message': terms_filter("invenio_draft_validation.errors.jsonschema.message.keyword")
 }

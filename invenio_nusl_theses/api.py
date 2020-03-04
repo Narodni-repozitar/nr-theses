@@ -7,7 +7,7 @@ from invenio_pidstore.models import PersistentIdentifier
 from invenio_search import RecordsSearch
 from sqlalchemy.orm.exc import NoResultFound
 
-from invenio_nusl_common.minters import nusl_id_minter
+# from invenio_nusl_common.minters import nusl_id_minter
 from invenio_nusl_theses.record import DraftThesisRecord
 from invenio_pidstore.models import PIDStatus
 

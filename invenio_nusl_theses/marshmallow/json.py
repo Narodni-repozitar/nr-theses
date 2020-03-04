@@ -18,7 +18,8 @@ from marshmallow import fields, validate, ValidationError, pre_load, post_load
 from pycountry import languages, countries
 
 from flask_taxonomies.marshmallow import TaxonomySchemaV1
-from invenio_nusl_common.marshmallow.json import MultilanguageSchemaV1, ValueTypeSchemaV1, DoctypeSubSchemaV1
+from invenio_nusl_common.marshmallow.json import MultilanguageSchemaV1, ValueTypeSchemaV1, \
+    DoctypeSubSchemaV1
 from invenio_records_draft.marshmallow import DraftEnabledSchema
 
 
@@ -56,7 +57,7 @@ class CCMetadataSchemaV1(StrictKeysMixin):
     country = SanitizedUnicode(required=True, validate=validate_country)
 
     @pre_load
-    def country_code(self, data):
+    def country_code(self, data, **kwargs):
         if "country" in data:
             country = data["country"]
             if countries.get(alpha_3=country.upper()):
@@ -95,7 +96,7 @@ class ContributorSubSchemaV1(DraftEnabledSchema):
 
 
 class DegreeGrantorSubSchemaV1(TaxonomySchemaV1):
-    ICO = SanitizedUnicode(required=False, dump_to='IČO', load_from='IČO', attribute="IČO")
+    ICO = SanitizedUnicode(required=False, attribute='ICO', data_key='ICO')
     RID = SanitizedUnicode(required=False)
     address = SanitizedUnicode(required=False)
     data_box = SanitizedUnicode(required=False)
@@ -141,12 +142,13 @@ class LanguageSubSchemaV1(TaxonomySchemaV1):
 class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
     """Schema for the record metadata."""
 
-    schema = fields.String(attribute='$schema', load_from='$schema', dump_to='$schema', required=False)
+    schema = fields.String(attribute='$schema', data_key='$schema', required=False)
     id = SanitizedUnicode(required=True)
-    language = fields.List(Nested(LanguageSubSchemaV1), required=True, validate=validate.Length(min=1))
-    identifier = fields.List(Nested(ValueTypeSchemaV1()), required=True)  # TODO: Dodělat validaci na type
+    language = fields.List(Nested(LanguageSubSchemaV1), required=True,
+                           validate=validate.Length(min=1))
+    identifier = fields.List(Nested(ValueTypeSchemaV1()),
+                             required=True)  # TODO: Dodělat validaci na type
     dateAccepted = DateString(required=True)  # fields.Date(required=True)
-    modified = fields.String()  # fields.DateTime(format="%Y-%m-%dT%H:%M:%S")
     title = fields.List(Nested(MultilanguageSchemaV1()), required=True)
     extent = SanitizedUnicode()
     abstract = fields.List(Nested(MultilanguageSchemaV1()))
@@ -159,28 +161,31 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
     subtitle = fields.List(Nested(MultilanguageSchemaV1()))
     note = fields.List(SanitizedUnicode())
     accessibility = fields.List(Nested(MultilanguageSchemaV1()))
-    accessRights = SanitizedUnicode(validate=validate.OneOf(["open", "embargoed", "restricted", "metadata_only"]))
+    accessRights = SanitizedUnicode(
+        validate=validate.OneOf(["open", "embargoed", "restricted", "metadata_only"]))
     provider = Nested(ProviderSubSchemaV1)
     defended = fields.Boolean()
     studyField = fields.List(Nested(FieldSubSchemaV1))
     degreeGrantor = fields.List(Nested(DegreeGrantorSubSchemaV1), required=True)
 
     @pre_load()
-    def id_to_str(self, data):
+    def id_to_str(self, data, **kwargs):
         if "id" in data:
             data["id"] = str(data.get("id"))
+        return data
 
     @post_load()
-    def subject_or_keyword_required(self, data):
+    def subject_or_keyword_required(self, data, **kwargs):
         if "keywords" not in data and "subject" not in data:
             raise ValidationError("Keywords or subjects are required!",
                                   field_names=["subject", "keywords"])
         if len(data.get("keywords", [])) < 3 and len(data.get("subject", [])) < 3:
             raise ValidationError("Number of keywords or subject have to be minimal three!",
                                   field_names=["subject", "keywords"])
+        return data
 
     @post_load()
-    def validate_study_field(self, data):
+    def validate_study_field(self, data, **kwargs):
         study_fields = data.get("studyField")
         if study_fields is not None:
             for field in study_fields:
@@ -193,6 +198,7 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
                         raise ValidationError(
                             f"Studyfield is not valid.",
                             field_names=["studyField"])
+        return data
 
 
 class ThesisRecordSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # get - zobrazit

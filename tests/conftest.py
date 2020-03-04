@@ -36,33 +36,56 @@ def create_app():
 @pytest.fixture
 def thesis_metadata():
     return {
-        "language": [
-            "CZE"
+        '$schema': 'https://nusl.cz/schemas/invenio_nusl_theses/nusl-theses-v1.0.0.json',
+        'language': [
+            {'$ref': 'https://localhost/api/taxonomies/languages/cze'}
         ],
         "identifier": [{
             "value": "151515",
             "type": "nusl"
         }],
-        "dateAccepted": "2019-05-19",
-        "modified": "2014-12-22T03:12:58.19077",
+        "dateAccepted": "2019-05-19",  # date(2019, 5, 19),
         "title": [
             {
-                "name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku středověku.",
+                "name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do "
+                        "sklonku středověku.",
                 "lang": "cze"
             },
             {
-                "name": "Historical landscape of the Bohemian-Moravian Highlands. Settlement from prehistoric to late medieval times",
+                "name": "Historical landscape of the Bohemian-Moravian Highlands. Settlement from "
+                        "prehistoric to late medieval times",
                 "lang": "eng"
             }
         ],
         "extent": "123s",
         "abstract": [
             {
-                "name": "Bakalářská práce je zaměřena na téma možností integrace pachatelů trestné činnosti zpět do společnosti. V rámci práce je na základě odborné literatury a získaných informací cílem seznámit zájemce, a to v teoretické části práce, s hlavními termíny a problematikou daného tématu. V praktické části je popsán průběh sběru dat až po výsledky kvalitativního výzkumu. Hlavním cílem bakalářské práce na téma Možnosti sociální integrace pachatelů trestné činnosti zpět do společnosti je objasnit okolnosti a podmínky integrace pachatele trestné činnosti zpět do společnosti po propuštění z výkonu trestu odnětí svobody. Ve vedlejším cíli je zjišťováno, zda potřeby propuštěných z výkonu trestu odnětí svobody při jejich zpětné integraci do společnosti odpovídají možnostem, které naše společnost poskytuje.",
+                "name": "Bakalářská práce je zaměřena na téma možností integrace pachatelů "
+                        "trestné činnosti zpět do společnosti. V rámci práce je na základě "
+                        "odborné literatury a získaných informací cílem seznámit zájemce, "
+                        "a to v teoretické části práce, s hlavními termíny a problematikou daného "
+                        "tématu. V praktické části je popsán průběh sběru dat až po výsledky "
+                        "kvalitativního výzkumu. Hlavním cílem bakalářské práce na téma Možnosti "
+                        "sociální integrace pachatelů trestné činnosti zpět do společnosti je "
+                        "objasnit okolnosti a podmínky integrace pachatele trestné činnosti zpět "
+                        "do společnosti po propuštění z výkonu trestu odnětí svobody. Ve "
+                        "vedlejším cíli je zjišťováno, zda potřeby propuštěných z výkonu trestu "
+                        "odnětí svobody při jejich zpětné integraci do společnosti odpovídají "
+                        "možnostem, které naše společnost poskytuje.",
                 "lang": "cze"
             },
             {
-                "name": "The bachelor thesis is focused on the possibility of integrating criminals back into society. In the theoretical part are introduced the main terms and issues to layman, thanks to the literature and acquired information. In the practical part will be described the process of data collection up to the results of the research. The main aim of the bachelor thesis on 'Possibilities of social integration of criminals back into society'is to clarify the integration of the perpetrator of criminal activity back into society after release from imprisonment. In a secondary goal will be found out whether the needs of released prisoners, when they are reintegrated into society, correspond to the possibilities provided by our society.",
+                "name": "The bachelor thesis is focused on the possibility of integrating "
+                        "criminals back into society. In the theoretical part are introduced the "
+                        "main terms and issues to layman, thanks to the literature and acquired "
+                        "information. In the practical part will be described the process of data "
+                        "collection up to the results of the research. The main aim of the "
+                        "bachelor thesis on 'Possibilities of social integration of criminals "
+                        "back into society'is to clarify the integration of the perpetrator of "
+                        "criminal activity back into society after release from imprisonment. In "
+                        "a secondary goal will be found out whether the needs of released "
+                        "prisoners, when they are reintegrated into society, correspond to the "
+                        "possibilities provided by our society.",
                 "lang": "eng"
             }
         ],
@@ -80,15 +103,47 @@ def thesis_metadata():
             ]
         },
         "subject": [
+            # {
+            #     "$ref": "https://localhost/api/taxonomies/subject/nlk20040148348"
+            # },
+            # {
+            #     "$ref": "https://localhost/api/taxonomies/subject/nlk20040147252"
+            # },
             {
-                "name": "koza",
-                "lang": "cze"
+                "$ref": "https://localhost/api/taxonomies/subject/czmesh/D002626"
             },
             {
-                "name": "anorganická chemie",
-                "lang": "cze",
-                "taxonomy": "psh",
-                "id": "http://psh.techlib.cz/skos/PSH5740"
+                "$ref": "https://localhost/api/taxonomies/subject/czmesh/D002620"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/czmesh/D004304"
+            },
+            # {
+            #     "$ref": "https://localhost/api/taxonomies/subject/ph120179"
+            # },
+            # {
+            #     "$ref": "https://localhost/api/taxonomies/subject/ph114722"
+            # },
+            # {
+            #     "$ref": "https://localhost/api/taxonomies/subject/ph135174"
+            # },
+            # {
+            #     "$ref": "https://localhost/api/taxonomies/subject/ph116084"
+            # },
+            # {
+            #     "$ref": "https://localhost/api/taxonomies/subject/ph121510"
+            # },
+            # {
+            #     "$ref": "https://localhost/api/taxonomies/subject/ph114295"
+            # },
+            # {
+            #     "$ref": "https://localhost/api/taxonomies/subject/ph116680"
+            # },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/PSH11857"
+            },
+            {
+                "$ref": "https://localhost/api/taxonomies/subject/PSH13081"
             }
         ],
         "creator": [
@@ -126,7 +181,7 @@ def thesis_metadata():
             }
         ],
         "doctype": {
-            '$ref': 'https://127.0.0.1:5000/api/taxonomies/doctype/bakalarske_prace'
+            '$ref': 'https://127.0.0.1:5000/api/taxonomies/doctype/diplomove_prace'
         },
         "id": "1276327",
         "subtitle": [
@@ -150,9 +205,10 @@ def thesis_metadata():
             }
         ],
         "accessRights": "open",
-        "provider": {
-            '$ref': 'https://127.0.0.1:5000/api/taxonomies/provider/jihoceska_univerzita_v_ceskych_budejovicich'
-        },
+        "provider":
+            {
+                "$ref": "https://127.0.0.1:5000/api/taxonomies/provider/edu/public_uni/vscht/",
+            },
         "defended": True,
         "studyField": [
             {
@@ -164,7 +220,7 @@ def thesis_metadata():
         ],
         "degreeGrantor": [
             {
-                '$ref': 'https://127.0.0.1:5000/api/taxonomies/universities/60076658'
+                '$ref': 'https://127.0.0.1:5000/api/taxonomies/universities/61384984'
             }
         ]
     }

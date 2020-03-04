@@ -45,11 +45,6 @@
             "format": "date",
             "$comment": "datum obhajoby"
         },
-        "modified": {
-            "type": "string",
-            "format": "date-time",
-            "$comment": "datum modifikace metadat i dat u nas v NUSLU"
-        },
         "title": {
             "description": "Title of the work and is allowed to insert title in multiple languages",
             "type": "array",

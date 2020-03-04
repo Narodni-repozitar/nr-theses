@@ -1,0 +1,10 @@
+{
+    "subject": {
+        "type": "taxonomy-v1.0.0.json#/TaxonomyTerm",
+        "properties": {
+            "url": {
+                "type": "keyword"
+            }
+        }
+    }
+}

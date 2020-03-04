@@ -42,7 +42,8 @@ setup_requires = [
 
 install_requires = [
     'invenio-oarepo>=1.0.0',
-    'sqlalchemy'
+    'invenio-oarepo-mapping-includes>=1.3.0',
+    'invenio-oarepo-multilingual>=1.1.1'
 ]
 
 packages = find_packages()
