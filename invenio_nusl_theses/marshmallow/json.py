@@ -176,6 +176,8 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
 
     @post_load()
     def subject_or_keyword_required(self, data, **kwargs):
+        if self.context.get("draft"):
+            return data
         if "keywords" not in data and "subject" not in data:
             raise ValidationError("Keywords or subjects are required!",
                                   field_names=["subject", "keywords"])
@@ -186,6 +188,8 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
 
     @post_load()
     def validate_study_field(self, data, **kwargs):
+        if self.context.get("draft"):
+            return data
         study_fields = data.get("studyField")
         if study_fields is not None:
             for field in study_fields:
