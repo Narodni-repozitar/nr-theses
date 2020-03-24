@@ -1,3 +1,5 @@
+from pprint import pprint
+
 import pytest
 from marshmallow.exceptions import ValidationError
 
@@ -191,23 +193,7 @@ def dump_metadata():
         "accessRights": "open",
         "provider":
             {
-                "address": "Technická 5, 166 28 Praha 6",
-                # "id": 7803,
-                "lib_url": "http://www.vscht.cz/",
-                "links": {
-                    "self": "https://127.0.0.1:5000/api/taxonomies/provider/edu/public_uni/vscht/",
-                    "tree": "https://127.0.0.1:5000/api/taxonomies/provider/edu/public_uni/vscht"
-                            "/?drilldown=True"
-                },
-                "name": [
-                    {
-                        "lang": "cze",
-                        "name": "Vysoká škola chemicko-technologická v Praze"
-                    }
-                ],
-                "path": "/edu/public_uni/vscht",
-                "slug": "vscht",
-                "url": "http://www.vscht.cz/"
+                "$ref": "https://127.0.0.1:5000/api/taxonomies/provider/edu/public_uni/vscht/",
             },
         "defended": True,
         "studyField": [
@@ -1318,37 +1304,24 @@ def test_accessRights_load_4(app, thesis_metadata):
 ########################################################################
 #                           Provider                                   #
 ########################################################################
-# def test_provider_dump_1(dump_metadata):
-#     dump_metadata["provider"] = "univerzita_karlova"
-#     schema = ThesisMetadataSchemaV1()
-#     assert convert_dates(dump_metadata) == schema.dump(dump_metadata).data
-#
-#
-# def test_provider_dump_2(dump_metadata):
-#     dump_metadata["provider"] = ["jiný datový typ"]
-#     schema = ThesisMetadataSchemaV1()
-#     assert convert_dates(dump_metadata) != schema.dump(dump_metadata).data
-#
-#
-# def test_provider_dump_3(dump_metadata):
-#     del dump_metadata["provider"]
-#     schema = ThesisMetadataSchemaV1()
-#     assert convert_dates(dump_metadata) == schema.dump(dump_metadata).data
-#
-#
-# def test_provider_load_1(thesis_metadata):
-#     thesis_metadata["provider"] = "univerzita_karlova"
-#     schema = ThesisMetadataSchemaV1()
-#     assert convert_dates(thesis_metadata) == convert_dates(schema.load(convert_dates(
-#     thesis_metadata)).data)
-#
-#
-# def test_provider_load_2(thesis_metadata):
-#     del thesis_metadata["provider"]
-#
-#     schema = ThesisMetadataSchemaV1()
-#     assert convert_dates(thesis_metadata) == convert_dates(schema.load(convert_dates(
-#     thesis_metadata)).data)
+def test_provider_1(app, thesis_metadata):
+    thesis_metadata["provider"] = None
+
+    with pytest.raises(ValidationError):
+        schema = ThesisMetadataSchemaV1()
+        schema.load(convert_dates(thesis_metadata))
+
+# TODO: neměl by projít prázdný dict
+def test_provider_2(app, thesis_metadata):
+    thesis_metadata["provider"] = {}
+
+    schema = ThesisMetadataSchemaV1()
+    schema.load(convert_dates(thesis_metadata))
+    assert convert_dates(thesis_metadata) == convert_dates(
+        schema.load(convert_dates(thesis_metadata)).data)
+    pprint(convert_dates(
+        schema.load(convert_dates(thesis_metadata)).data))
+
 
 
 ########################################################################

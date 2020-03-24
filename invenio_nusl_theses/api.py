@@ -29,12 +29,12 @@ class ThesisAPI:
 
     def validate(self, schema, transformed):
         schema = schema()
-        marshmallowed = schema.load(transformed).data
-        marshmallowed = schema.dump(marshmallowed).data
-        draft_thesis_record = DraftThesisRecord(marshmallowed)
+        # marshmallowed = schema.load(transformed).data
+        # marshmallowed = schema.dump(marshmallowed).data
+        draft_thesis_record = DraftThesisRecord(transformed)
         draft_thesis_record.validate()
 
-        return marshmallowed
+        return transformed
 
     def import_old_nusl_record(self, record):
         # validate json schema and save

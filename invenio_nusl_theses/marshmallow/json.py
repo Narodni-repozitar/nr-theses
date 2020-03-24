@@ -126,7 +126,6 @@ class FieldSubSchemaV1(TaxonomySchemaV1):
 
 
 class ProviderSubSchemaV1(TaxonomySchemaV1):
-    name = fields.List(Nested(MultilanguageSchemaV1()))
     address = SanitizedUnicode()
     url = fields.Url()
     lib_url = fields.Url()
