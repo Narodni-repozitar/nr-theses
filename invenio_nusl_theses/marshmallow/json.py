@@ -107,8 +107,8 @@ class InstitutionsSubClass(ApprovedTaxonomySchema):
     aliases = fields.List(SanitizedUnicode())
     ico = SanitizedUnicode()
     url = fields.Url()
-    lib_url = fields.Url()
-
+    provider = fields.Boolean(missing=False)
+    formerNames = fields.List(SanitizedUnicode())
 
 
 
