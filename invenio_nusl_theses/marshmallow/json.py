@@ -82,7 +82,7 @@ class CreatorSubSchemaV1(DraftEnabledSchema, StrictKeysMixin):
 class ContributorSubSchemaV1(DraftEnabledSchema):
     name = SanitizedUnicode(required=True)
     id = Nested(ValueTypeSchemaV1())
-    role = SanitizedUnicode(required=True)
+    role = Nested(ContributorTaxonomySchema())
 
 
 class DegreeGrantorSubSchemaV1(TaxonomySchemaV1):
