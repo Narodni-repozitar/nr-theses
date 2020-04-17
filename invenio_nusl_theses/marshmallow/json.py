@@ -74,6 +74,11 @@ class RightsMetadataSchemaV1(ApprovedTaxonomySchema):
     related = fields.List(Nested(ValueTypeSchemaV1()))
 
 
+class ContributorTaxonomySchema(ApprovedTaxonomySchema):
+    dataCiteCode = SanitizedUnicode()
+    marcCode = SanitizedUnicode()
+
+
 class CreatorSubSchemaV1(DraftEnabledSchema, StrictKeysMixin):
     name = SanitizedUnicode(required=True)
     id = Nested(ValueTypeSchemaV1())
