@@ -52,6 +52,12 @@ class PSHSchema:
     altLabel = fields.List(Nested(MultilanguageSchemaV1))
 
 
+class CZMeshSchema:
+    relatedURI = fields.List(Nested(ValueTypeSchemaV1()))
+    DateCreated = fields.Date()
+    DateRevised = fields.Date()
+    DateEstablished = fields.Date()
+    TreeNumberList = fields.List(SanitizedUnicode())
 
 class RightsMetadataSchemaV1(StrictKeysMixin):
     CC = fields.Nested(CCMetadataSchemaV1)
