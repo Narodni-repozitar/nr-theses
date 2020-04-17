@@ -110,8 +110,6 @@ class InstitutionsSubClass(ApprovedTaxonomySchema):
     lib_url = fields.Url()
 
 
-class LanguageSubSchemaV1(TaxonomySchemaV1):
-    pass
 
 
 #########################################################################
