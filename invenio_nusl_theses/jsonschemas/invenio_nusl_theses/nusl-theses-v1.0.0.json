@@ -9,7 +9,7 @@
             "type": "string"
         },
         "language": {
-            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTermArray",
+            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTermOrReferenceArray",
             "minItems": 1
         },
         "identifier": {
@@ -62,70 +62,10 @@
             }
         },
         "rights": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "CC": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "properties": {
-                        "code": {
-                            "type": "string",
-                            "enum": [
-                                "CC BY",
-                                "CC BY-NC",
-                                "CC BY-SA",
-                                "CC BY-ND",
-                                "CC BY-NC-SA",
-                                "CC BY-NC-ND"
-                            ]
-                        },
-                        "version": {
-                            "type": "string"
-                        },
-                        "country": {
-                            "type": "string",
-                            "maxLength": 2
-                        }
-                    }
-                },
-                "copyright": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
-                    }
-                }
-            }
+            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTermOrReferenceArray"
         },
         "subject": {
-            "type": "array",
-            "items": {
-                "anyOf": [
-                    {
-                        "allOf": [
-                            {
-                                "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTerm"
-                            },
-                            {
-                                "properties": {
-                                    "url": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "type": "object",
-                        "aditionaProperties": false,
-                        "properties": {
-                            "$ref": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ]
-            }
+            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTermOrReferenceArray"
         },
         "keywords": {
             "type": "array",
@@ -161,7 +101,7 @@
                         "$ref": "../nusl-common-v1.0.0.json#/definitions/valueType"
                     },
                     "role": {
-                        "type": "string"
+                        "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTermOrReference"
                     }
                 }
             }
@@ -191,175 +131,19 @@
             }
         },
         "accessRights": {
-            "type": "string",
-            "enum": [
-                "open",
-                "embargoed",
-                "restricted",
-                "metadata_only"
-            ]
+            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTermOrReference"
         },
         "provider": {
-            "anyOf": [
-                {
-                    "allOf": [
-                        {
-                            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTerm"
-                        },
-                        {
-                            "properties": {
-                                "address": {
-                                    "type": "string"
-                                },
-                                "url": {
-                                    "type": "string"
-                                },
-                                "lib_url": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "type": "object",
-                    "aditionaProperties": false,
-                    "properties": {
-                        "$ref": {
-                            "type": "string"
-                        }
-                    }
-                }
-            ]
+            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTermOrReference"
         },
         "defended": {
             "type": "boolean"
         },
         "studyField": {
-            "type": "array",
-            "items": {
-                "anyOf": [
-                    {
-                        "allOf": [
-                            {
-                                "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTerm"
-                            },
-                            {
-                                "properties": {
-                                    "aliases": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "degree_level": {
-                                        "type": "string"
-                                    },
-                                    "form_of_study": {
-                                        "type": "string"
-                                    },
-                                    "grantor": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "object",
-                                            "additionalProperties": false,
-                                            "properties": {
-                                                "faculty": {
-                                                    "type": "string"
-                                                },
-                                                "university": {
-                                                    "type": "string"
-                                                }
-                                            }
-                                        }
-                                    },
-                                    "date_of_accreditation_validity": {
-                                        "type": "string"
-                                    },
-                                    "duration": {
-                                        "type": "string"
-                                    },
-                                    "reference_number": {
-                                        "type": "string"
-                                    },
-                                    "type": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "type": "object",
-                        "aditionaProperties": false,
-                        "properties": {
-                            "$ref": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ]
-            }
+            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTermOrReferenceArray"
         },
         "degreeGrantor": {
-            "type": "array",
-            "items": {
-                "anyOf": [
-                    {
-                        "allOf": [
-                            {
-                                "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTerm"
-                            },
-                            {
-                                "properties": {
-                                    "ICO": {
-                                        "type": "string"
-                                    },
-                                    "RID": {
-                                        "type": "string"
-                                    },
-                                    "address": {
-                                        "type": "string"
-                                    },
-                                    "data_box": {
-                                        "type": "string"
-                                    },
-                                    "deputy": {
-                                        "type": "string"
-                                    },
-                                    "form": {
-                                        "type": "string"
-                                    },
-                                    "region": {
-                                        "type": "string"
-                                    },
-                                    "term_of_office_from": {
-                                        "type": "string"
-                                    },
-                                    "term_of_office_until": {
-                                        "type": "string"
-                                    },
-                                    "type": {
-                                        "type": "string"
-                                    },
-                                    "url": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "type": "object",
-                        "additionalProperties": false,
-                        "properties": {
-                            "$ref": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ]
-            }
+            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTermOrReferenceArray"
         }
     },
     "definitions": {

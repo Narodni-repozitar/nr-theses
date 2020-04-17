@@ -9,8 +9,6 @@
 
 from __future__ import absolute_import, print_function
 
-from urllib.parse import urlparse
-
 from invenio_records_draft.marshmallow import DraftEnabledSchema
 from invenio_records_rest.schemas import Nested, StrictKeysMixin
 from invenio_records_rest.schemas.fields import PersistentIdentifier, SanitizedUnicode

@@ -22,6 +22,8 @@ from invenio_db import InvenioDB
 from invenio_db import db as db_
 from invenio_search import InvenioSearch, current_search_client
 from sqlalchemy_utils import create_database, database_exists
+from invenio_jsonschemas.ext import InvenioJSONSchemas
+from invenio_records.ext import InvenioRecords
 
 # @pytest.yield_fixture()
 # def app():
@@ -55,7 +57,7 @@ def app():
     _app = Flask('testapp', instance_path=instance_path)
 
     _app.config.update(
-
+        JSONSCHEMAS_HOST="nusl.cz",
         SQLALCHEMY_TRACK_MODIFICATIONS=True,
         TAXONOMY_ELASTICSEARCH_INDEX="test_taxonomies_es",
         SQLALCHEMY_DATABASE_URI=os.environ.get(
@@ -66,6 +68,8 @@ def app():
         SERVER_NAME='localhost',
     )
     InvenioDB(_app)
+    InvenioJSONSchemas(_app)
+    InvenioRecords(_app)
     InvenioSearch(_app)
     FlaskTaxonomies(_app)
     FlaskTaxonomiesES(_app)
