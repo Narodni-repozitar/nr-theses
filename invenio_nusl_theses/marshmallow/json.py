@@ -60,6 +60,8 @@ class CZMeshSchema:
     TreeNumberList = fields.List(SanitizedUnicode())
 
 
+class MedvikSchema:
+    relatedURI = fields.List(Nested(ValueTypeSchemaV1()))
 
 class SubjectMetadataSchemaV1(TaxonomySchemaV1, StrictKeysMixin):
     url = fields.Url()
