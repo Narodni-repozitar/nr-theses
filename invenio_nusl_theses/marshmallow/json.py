@@ -85,23 +85,12 @@ class ContributorSubSchemaV1(DraftEnabledSchema):
     role = Nested(ContributorTaxonomySchema())
 
 
-class DegreeGrantorSubSchemaV1(TaxonomySchemaV1):
-    ICO = SanitizedUnicode(required=False, attribute='ICO', data_key='ICO')
-    RID = SanitizedUnicode(required=False)
-    address = SanitizedUnicode(required=False)
-    data_box = SanitizedUnicode(required=False)
-    deputy = SanitizedUnicode(required=False)
-    form = SanitizedUnicode(required=False)
-    region = SanitizedUnicode(required=False)
-    term_of_office_from = SanitizedUnicode(required=False)
-    term_of_office_until = SanitizedUnicode(required=False)
-    type = SanitizedUnicode()
-    url = fields.Url()
+class FieldSubSchemaV1(ApprovedTaxonomySchema):
+    pass
 
 
-class FieldGrantorSubschemaV1(DraftEnabledSchema, StrictKeysMixin):
-    faculty = SanitizedUnicode(required=False)
-    university = SanitizedUnicode(required=False)
+class LanguageSubSchemaV1(ApprovedTaxonomySchema):
+    pass
 
 
 class FieldSubSchemaV1(TaxonomySchemaV1):
