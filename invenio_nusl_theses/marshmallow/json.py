@@ -102,8 +102,10 @@ class AccessRightsSubSchema(ApprovedTaxonomySchema):
     relatedURI = fields.List(Nested(ValueTypeSchemaV1()))
 
 
-class ProviderSubSchemaV1(TaxonomySchemaV1):
-    address = SanitizedUnicode()
+class InstitutionsSubClass(ApprovedTaxonomySchema):
+    relatedID = fields.List(Nested(ValueTypeSchemaV1()))
+    aliases = fields.List(SanitizedUnicode())
+    ico = SanitizedUnicode()
     url = fields.Url()
     lib_url = fields.Url()
 
