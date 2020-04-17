@@ -98,15 +98,8 @@ class LanguageSubSchemaV1(ApprovedTaxonomySchema):
     pass
 
 
-class FieldSubSchemaV1(TaxonomySchemaV1):
-    aliases = fields.List(SanitizedUnicode(), allow_none=True)
-    degree_level = SanitizedUnicode(required=False)
-    form_of_study = SanitizedUnicode(required=False)
-    grantor = fields.List(Nested(FieldGrantorSubschemaV1()))
-    date_of_accreditation_validity = SanitizedUnicode()
-    duration = SanitizedUnicode()
-    reference_number = SanitizedUnicode()
-    type = SanitizedUnicode()
+class AccessRightsSubSchema(ApprovedTaxonomySchema):
+    relatedURI = fields.List(Nested(ValueTypeSchemaV1()))
 
 
 class ProviderSubSchemaV1(TaxonomySchemaV1):
