@@ -8,19 +8,18 @@
 """JSON Schemas."""
 
 from __future__ import absolute_import, print_function
-from invenio_records_rest.schemas.fields.datetime import DateString
 
 from urllib.parse import urlparse
 
+from invenio_records_draft.marshmallow import DraftEnabledSchema
 from invenio_records_rest.schemas import Nested, StrictKeysMixin
 from invenio_records_rest.schemas.fields import PersistentIdentifier, SanitizedUnicode
+from invenio_records_rest.schemas.fields.datetime import DateString
 from marshmallow import fields, validate, ValidationError, pre_load, post_load
 from pycountry import languages, countries
 
-from flask_taxonomies.marshmallow import TaxonomySchemaV1
 from invenio_nusl_common.marshmallow.json import MultilanguageSchemaV1, ValueTypeSchemaV1, \
-    DoctypeSubSchemaV1
-from invenio_records_draft.marshmallow import DraftEnabledSchema
+    DoctypeSubSchemaV1, ApprovedTaxonomySchema
 
 
 ########################################################################
@@ -111,7 +110,6 @@ class InstitutionsSubClass(ApprovedTaxonomySchema):
     formerNames = fields.List(SanitizedUnicode())
 
 
-
 #########################################################################
 #                     Main schema                                       #
 #########################################################################
@@ -137,12 +135,11 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
     subtitle = fields.List(Nested(MultilanguageSchemaV1()))
     note = fields.List(SanitizedUnicode())
     accessibility = fields.List(Nested(MultilanguageSchemaV1()))
-    accessRights = SanitizedUnicode(
-        validate=validate.OneOf(["open", "embargoed", "restricted", "metadata_only"]))
-    provider = Nested(ProviderSubSchemaV1)
+    accessRights = Nested(AccessRightsSubSchema())
+    provider = Nested(InstitutionsSubClass())
     defended = fields.Boolean()
     studyField = fields.List(Nested(FieldSubSchemaV1))
-    degreeGrantor = fields.List(Nested(DegreeGrantorSubSchemaV1), required=True)
+    degreeGrantor = fields.List(Nested(InstitutionsSubClass()), required=True)
 
     @pre_load()
     def id_to_str(self, data, **kwargs):
