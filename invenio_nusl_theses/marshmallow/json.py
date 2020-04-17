@@ -64,6 +64,15 @@ class MedvikSchema:
     relatedURI = fields.List(Nested(ValueTypeSchemaV1()))
 
 
+class SubjectMetadataSchemaV1(ApprovedTaxonomySchema, PSHSchema, MedvikSchema, CZMeshSchema,
+                              StrictKeysMixin):
+    pass
+
+
+class RightsMetadataSchemaV1(ApprovedTaxonomySchema):
+    icon = fields.Url()
+    related = fields.List(Nested(ValueTypeSchemaV1()))
+
 
 class CreatorSubSchemaV1(DraftEnabledSchema, StrictKeysMixin):
     name = SanitizedUnicode(required=True)
