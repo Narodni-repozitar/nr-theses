@@ -46,33 +46,11 @@ def validate_country(country):
 #########################################################################
 
 
-class CCMetadataSchemaV1(StrictKeysMixin):
-    code = SanitizedUnicode(required=True, validate=validate.OneOf(["CC BY",
-                                                                    "CC BY-NC",
-                                                                    "CC BY-SA",
-                                                                    "CC BY-ND",
-                                                                    "CC BY-NC-SA",
-                                                                    "CC BY-NC-ND"]))
-    version = SanitizedUnicode(required=True, validate=validate.Regexp(r"\d.\d"))
-    country = SanitizedUnicode(required=True, validate=validate_country)
+class PSHSchema:
+    modified = fields.DateTime()
+    uri = fields.Url()
+    altLabel = fields.List(Nested(MultilanguageSchemaV1))
 
-    @pre_load
-    def country_code(self, data, **kwargs):
-        if "country" in data:
-            country = data["country"]
-            if countries.get(alpha_3=country.upper()):
-                country = countries.get(alpha_3=country.upper())
-            elif countries.get(alpha_2=country.upper()):
-                country = countries.get(alpha_2=country.upper())
-            elif countries.get(name=country):
-                country = countries.get(name=country)
-            elif countries.get(official_name=country):
-                country = countries.get(official_name=country)
-            else:
-                country = None
-            if country is not None:
-                data["country"] = country.alpha_2
-        return data
 
 
 class RightsMetadataSchemaV1(StrictKeysMixin):
