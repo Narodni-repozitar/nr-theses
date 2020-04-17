@@ -86,7 +86,7 @@ class CreatorSubSchemaV1(DraftEnabledSchema, StrictKeysMixin):
 class ContributorSubSchemaV1(DraftEnabledSchema):
     name = SanitizedUnicode(required=True)
     id = Nested(ValueTypeSchemaV1())
-    role = Nested(ContributorTaxonomySchema())
+    role = Nested(ContributorTaxonomySchema(), required=True)
 
 
 class FieldSubSchemaV1(ApprovedTaxonomySchema):
@@ -126,7 +126,7 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
     title = fields.List(Nested(MultilanguageSchemaV1()), required=True)
     extent = SanitizedUnicode()
     abstract = fields.List(Nested(MultilanguageSchemaV1()))
-    rights = fields.Nested(RightsMetadataSchemaV1)
+    rights = fields.List(Nested(RightsMetadataSchemaV1))
     subject = fields.List(Nested(SubjectMetadataSchemaV1))
     keywords = fields.List(Nested(MultilanguageSchemaV1()))
     creator = fields.List(Nested(CreatorSubSchemaV1), required=True)
