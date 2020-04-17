@@ -164,24 +164,6 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
                                   field_names=["subject", "keywords"])
         return data
 
-    @post_load()
-    def validate_study_field(self, data, **kwargs):
-        if self.context.get("draft"):
-            return data
-        study_fields = data.get("studyField")
-        if study_fields is not None:
-            for field in study_fields:
-                if "$ref" in field:
-                    url = urlparse(field["$ref"])
-                    path = url.path
-                    path_components = path.split("/")
-                    last = path_components[-1]
-                    if "no_valid_" in last:
-                        raise ValidationError(
-                            f"Studyfield is not valid.",
-                            field_names=["studyField"])
-        return data
-
 
 class ThesisRecordSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # get - zobrazit
     """Record schema."""
