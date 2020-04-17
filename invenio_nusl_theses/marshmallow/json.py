@@ -59,9 +59,6 @@ class CZMeshSchema:
     DateEstablished = fields.Date()
     TreeNumberList = fields.List(SanitizedUnicode())
 
-class RightsMetadataSchemaV1(StrictKeysMixin):
-    CC = fields.Nested(CCMetadataSchemaV1)
-    copyright = fields.List(Nested(MultilanguageSchemaV1()))
 
 
 class SubjectMetadataSchemaV1(TaxonomySchemaV1, StrictKeysMixin):
