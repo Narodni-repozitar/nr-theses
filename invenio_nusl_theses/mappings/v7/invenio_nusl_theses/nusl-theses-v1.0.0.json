@@ -37,29 +37,9 @@
                 "type": "nusl-common-v1.0.0.json#/multilanguage"
             },
             "rights": {
-                "type": "object",
-                "properties": {
-                    "CC": {
-                        "type": "object",
-                        "properties": {
-                            "code": {
-                                "type": "keyword",
-                                "ignore_above": 11
-                            },
-                            "version": {
-                                "type": "keyword"
-                            },
-                            "country": {
-                                "type": "keyword"
-                            }
-                        }
-                    },
-                    "copyright": {
-                        "type": "nusl-common-v1.0.0.json#/multilanguage"
-                    }
-                }
+                "type": "nusl-taxonomies-rights-v1.0.0.json#/rights"
             },
-            "subject": {
+             "subject": {
                 "type": "nusl-taxonomies-subject-v1.0.0.json#/subject",
                 "properties": {
                     "title": {
@@ -115,7 +95,7 @@
                         "type": "nusl-common-v1.0.0.json#/valueType"
                     },
                     "role": {
-                        "type": "text"
+                        "type": "nusl-taxonomies-contributor-v1.0.0.json#/contributor"
                     }
                 }
             },
@@ -143,19 +123,19 @@
                 "type": "nusl-common-v1.0.0.json#/multilanguage"
             },
             "accessRights": {
-                "type": "keyword"
+                "type": "nusl-taxonomies-accessRights-v1.0.0.json#/accessRights"
             },
             "provider": {
-                "type": "nusl-taxonomies-provider-v1.0.0.json#/ProviderType"
+                "type": "nusl-taxonomies-institution-v1.0.0.json#/Institution"
             },
             "defended": {
                 "type": "boolean"
             },
             "studyField": {
-                "type": "nusl-taxonomies-studyfields-v1.0.0.json#/FieldType"
+                "type": "taxonomy-v1.0.0.json#/TaxonomyTerm"
             },
             "degreeGrantor": {
-                "type": "nusl-taxonomies-university-v1.0.0.json#/UniversityType"
+                "type": "nusl-taxonomies-institution-v1.0.0.json#/Institution"
             }
         }
     }

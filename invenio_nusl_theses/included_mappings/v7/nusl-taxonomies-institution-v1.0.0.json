@@ -1,8 +1,8 @@
 {
-    "subject": {
+    "Institution": {
         "type": "taxonomy-v1.0.0.json#/TaxonomyTerm",
         "properties": {
-            "relatedURI": {
+            "relatedID": {
                 "properties": {
                     "type": {
                         "type": "text",
@@ -24,16 +24,7 @@
                     }
                 }
             },
-            "DateCreated": {
-                "type": "date"
-            },
-            "DateEstablished": {
-                "type": "date"
-            },
-            "DateRevised": {
-                "type": "date"
-            },
-            "TreeNumberList": {
+            "aliases": {
                 "type": "text",
                 "fields": {
                     "keyword": {
@@ -42,25 +33,21 @@
                     }
                 }
             },
-            "uri": {
+            "ico": {
                 "type": "keyword"
             },
-            "modified": {
-                "type": "date"
+            "url": {
+                "type": "keyword"
             },
-            "altLabel": {
-                "properties": {
-                    "lang": {
-                        "type": "keyword"
-                    },
-                    "value": {
-                        "type": "text",
-                        "fields": {
-                            "keyword": {
-                                "type": "keyword",
-                                "ignore_above": 256
-                            }
-                        }
+            "provider": {
+                "type": "boolean"
+            },
+            "formerNames": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword",
+                        "ignore_above": 256
                     }
                 }
             }
