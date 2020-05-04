@@ -1,3 +1,4 @@
+from copy import deepcopy
 from pprint import pprint
 
 import pytest
@@ -14,10 +15,12 @@ def dump_metadata():
         "language": [
             {'$ref': 'https://localhost/api/taxonomies/languages/cze'}
         ],
-        "identifier": [{
-            "value": "151515",
-            "type": "nusl"
-        }],
+        "identifier": [
+            {
+                "value": "151515",
+                "type": "nusl"
+            }
+        ],
         "dateAccepted": "2019-05-19",  # date(2019, 5, 19),
         "title": [
             {
@@ -63,61 +66,32 @@ def dump_metadata():
                 "lang": "eng"
             }
         ],
-        "rights": {
-            "CC": {
-                "code": "CC BY",
-                "version": "3.0",
-                "country": "CZ"
-            },
-            "copyright": [
-                {
-                    "name": "Dílo je chráněno podle autorského zákona č. 121/2000 Sb.",
-                    "lang": "cze"
-                }
-            ]
-        },
+        "rights": [
+            {
+                "$ref": "http://127.0.0.1:5000/api/taxonomies/licenses/CC/1.0/"
+            }
+        ],
         "subject": [
             {
-                "$ref": "https://localhost/api/taxonomies/subject/nlk20040148348"
+                "$ref": "https://localhost/api/taxonomies/subjects/nlk20040148348"
             },
             {
-                "$ref": "https://localhost/api/taxonomies/subject/nlk20040147252"
+                "$ref": "https://localhost/api/taxonomies/subjects/nlk20040147252"
             },
             {
-                "$ref": "https://localhost/api/taxonomies/subject/D002626"
+                "$ref": "https://localhost/api/taxonomies/subjects/D002626"
             },
             {
-                "$ref": "https://localhost/api/taxonomies/subject/D002620"
+                "$ref": "https://localhost/api/taxonomies/subjects/D002620"
             },
             {
-                "$ref": "https://localhost/api/taxonomies/subject/D004304"
+                "$ref": "https://localhost/api/taxonomies/subjects/D004304"
             },
             {
-                "$ref": "https://localhost/api/taxonomies/subject/ph120179"
+                "$ref": "https://localhost/api/taxonomies/subjects/PSH11857"
             },
             {
-                "$ref": "https://localhost/api/taxonomies/subject/ph114722"
-            },
-            {
-                "$ref": "https://localhost/api/taxonomies/subject/ph135174"
-            },
-            {
-                "$ref": "https://localhost/api/taxonomies/subject/ph116084"
-            },
-            {
-                "$ref": "https://localhost/api/taxonomies/subject/ph121510"
-            },
-            {
-                "$ref": "https://localhost/api/taxonomies/subject/ph114295"
-            },
-            {
-                "$ref": "https://localhost/api/taxonomies/subject/ph116680"
-            },
-            {
-                "$ref": "https://localhost/api/taxonomies/subject/PSH11857"
-            },
-            {
-                "$ref": "https://localhost/api/taxonomies/subject/PSH13081"
+                "$ref": "https://localhost/api/taxonomies/subjects/PSH13081"
             }
         ],
         "creator": [
@@ -143,7 +117,9 @@ def dump_metadata():
                     "value": "21454545",
                     "type": "ORCID"
                 },
-                "role": "Referee"
+                "role": {
+                    "$ref": "http://127.0.0.1:5000/api/taxonomies/contributor-type/referee/"
+                }
             },
             {
                 "name": "Novák, Jiří",
@@ -151,23 +127,13 @@ def dump_metadata():
                     "value": "21448754745",
                     "type": "ORCID"
                 },
-                "role": "Referee"
+                "role": {
+                    "$ref": "http://127.0.0.1:5000/api/taxonomies/contributor-type/referee/"
+                }
             }
         ],
         "doctype": {
-            "links": {
-                "self": "https://127.0.0.1:5000/api/taxonomies/doctype/vskp/diplomove_prace/",
-                "tree": "https://127.0.0.1:5000/api/taxonomies/doctype/vskp/diplomove_prace"
-                        "/?drilldown=True"
-            },
-            "title": [
-                {
-                    "lang": "cze",
-                    "value": "Diplomové práce"
-                }
-            ],
-            "path": "/vskp/diplomove_prace",
-            "slug": "diplomove_prace"
+            "$ref": "http://127.0.0.1:5000/api/taxonomies/doctypes/analyzy/"
         },
         "id": "1276327",
         "subtitle": [
@@ -186,81 +152,28 @@ def dump_metadata():
                 "lang": "cze"
             },
             {
-                "name": "Avallable at blabla",
+                "name": "Available at blabla",
                 "lang": "eng"
             }
         ],
-        "accessRights": "open",
+        "accessRights": {
+            "$ref": "http://127.0.0.1:5000/api/taxonomies/accessRights/c_14cb/",
+        },
         "provider":
             {
-                "$ref": "https://127.0.0.1:5000/api/taxonomies/provider/edu/public_uni/vscht/",
+                "$ref": "http://127.0.0.1:5000/api/taxonomies/institutions/60461373/",
             },
         "defended": True,
         "studyField": [
             {
-                "aliases": None,
-                "date_of_accreditation_validity": "31.05.2016",
-                "degree_level": "Bakalářský",
-                "duration": "3",
-                "form_of_study": "P",
-                "grantor": [
-                    {
-                        "faculty": "Divadelní fakulta",
-                        "university": "Akademie múzických umění v Praze"
-                    }
-                ],
-                # "id": 64520,
-                "links": {
-                    "parent": "https://127.0.0.1:5000/api/taxonomies/studyfields/B8212/",
-                    "parent_tree": "https://127.0.0.1:5000/api/taxonomies/studyfields/B8212"
-                                   "/?drilldown=True",
-                    "self": "https://127.0.0.1:5000/api/taxonomies/studyfields/B8212/8203R082/",
-                    "tree": "https://127.0.0.1:5000/api/taxonomies/studyfields/B8212/8203R082"
-                            "/?drilldown=True"
-                },
-                "path": "/B8212/8203R082",
-                "reference_number": "11137/2010",
-                "slug": "8203R082",
-                "title": [
-                    {
-                        "lang": "cze",
-                        "value": "Herectví alternativního divadla"
-                    }
-                ],
-                "type": "obor"
+                '$ref': "http://127.0.0.1:5000/api/taxonomies/studyfields/O_ucitelstvi"
+                        "-praktickeho-vyucovani/"
             }
         ],
         "degreeGrantor": [
             {
-                "ICO": "00216208",
-                "RID": "11000",
-                "address": "Ovocný trh 5  Staré Město  Praha 1, 116 36",
-                "data_box": "piyj9b4",
-                "deputy": "prof. MUDr. Tomáš Zima, DrSc., MBA",
-                # "descendants_count": 1046.0,
-                "form": "veřejná",
-                # "id": 45248,
-                "links": {
-                    "parent": "https://127.0.0.1:5000/api/taxonomies/universities/",
-                    "parent_tree": "https://127.0.0.1:5000/api/taxonomies/universities/?drilldown"
-                                   "=True",
-                    "self": "https://127.0.0.1:5000/api/taxonomies/universities/00216208/",
-                    "tree": "https://127.0.0.1:5000/api/taxonomies/universities/00216208"
-                            "/?drilldown=True"
-                },
-                "path": "/00216208",
-                "region": "Praha",
-                "slug": "00216208",
-                "term_of_office_from": "2018-02-01",
-                "term_of_office_until": "2022-01-31",
-                "title": [
-                    {
-                        "lang": "cze",
-                        "value": "Univerzita Karlova"
-                    }
-                ],
-                "type": "univerzitní",
-                "url": "https://www.cuni.cz"
+                "$ref": "http://127.0.0.1:5000/api/taxonomies/institutions/60461373/fakulta"
+                        "-chemicko-inzenyrska/ustav-chemickeho-inzenyrstvi/"
             }
         ]
     }
@@ -285,12 +198,37 @@ def test_language_load_2(app, thesis_metadata):
         schema.load(convert_dates(thesis_metadata))
 
 
-# def test_language_load_3(app, thesis_metadata):
-#     thesis_metadata["language"] = "CZE"
-#
-#     with pytest.raises(ValidationError):
-#         schema = ThesisMetadataSchemaV1()
-#         result = schema.load(convert_dates(thesis_metadata))
+def test_language_load_3(app, thesis_metadata):
+    thesis_metadata["language"] = [{
+        "title": [
+            {
+                "lang": "cze",
+                "value": "čeština"
+            },
+            {
+                "lang": "eng",
+                "value": "Czech"
+            }
+        ],
+        "approved": True,
+        "date_of_serialization": "2020-04-16 07:39:53.491593",
+        "id": 144576,
+        "slug": "cze",
+        "taxonomy": "languages",
+        "path": "/cze",
+        "links": {
+            "self": "http://127.0.0.1:5000/api/taxonomies/languages/cze/",
+            "tree": "http://127.0.0.1:5000/api/taxonomies/languages/cze/?drilldown=True",
+            "parent": "http://127.0.0.1:5000/api/taxonomies/languages/",
+            "parent_tree": "http://127.0.0.1:5000/api/taxonomies/languages/?drilldown=True"
+        },
+        "level": 1
+    }]
+
+    schema = ThesisMetadataSchemaV1()
+    expexted_result = deepcopy(thesis_metadata)
+    expexted_result["language"] = [{"$ref": "http://127.0.0.1:5000/api/taxonomies/languages/cze/"}]
+    assert expexted_result == schema.load(convert_dates(thesis_metadata))
 
 
 ########################################################################
@@ -302,6 +240,7 @@ def test_identifier_dump_1(app, dump_metadata):
         "type": "nusl"
     }]
     schema = ThesisMetadataSchemaV1()
+    pprint(schema.dump(dump_metadata))
     assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
 
 
@@ -619,27 +558,58 @@ def test_abstract_load_5(app, thesis_metadata):
 #                              rights                                  #
 ########################################################################
 def test_rights_dump_1(dump_metadata):
-    dump_metadata["rights"] = {
-        "CC": {
-            "code": "CC BY",
-            "version": "3.0",
-            "country": "CZ"
-        },
-        "copyright": [
+    dump_metadata["rights"] = [{
+        "title": [
             {
-                "name": "Dílo je chráněno podle autorského zákona č. 121/2000 Sb.",
-                "lang": "cze"
+                "lang": "cs",
+                "value": "verze 1.0 Obecná licence"
+            },
+            {
+                "lang": "en",
+                "value": "version 1.0 Generic License"
             }
-        ]
-    }
+        ],
+        "approved": True,
+        # "date_of_serialization": "2020-04-16 07:39:53.491593",
+        "id": 210545,
+        "slug": "1.0",
+        "taxonomy": "licenses",
+        "path": "/CC/1.0",
+        "links": {
+            "self": "http://127.0.0.1:5000/api/taxonomies/licenses/CC/1.0/",
+            "tree": "http://127.0.0.1:5000/api/taxonomies/licenses/CC/1.0/?drilldown=True",
+            "parent": "http://127.0.0.1:5000/api/taxonomies/licenses/CC/",
+            "parent_tree": "http://127.0.0.1:5000/api/taxonomies/licenses/CC/?drilldown=True"
+        },
+        "level": 2,
+        # "ancestors": [
+        #     {
+        #         "title": [
+        #             {
+        #                 "lang": "cs",
+        #                 "value": "Licence Creative Commons"
+        #             },
+        #             {
+        #                 "lang": "en",
+        #                 "value": "License Creative Commons"
+        #             }
+        #         ],
+        #         "approved": True,
+        #         "level": 1,
+        #         "slug": "CC"
+        #     }
+        # ],
+        "descendants_count": 6.0
+    }]
     schema = ThesisMetadataSchemaV1()
     assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
 
 
 def test_rights_dump_2(dump_metadata):
-    dump_metadata["rights"] = "blbost"
+    dump_metadata["rights"] = ["blbost"]
     schema = ThesisMetadataSchemaV1()
-    assert convert_dates(dump_metadata) != convert_dates(schema.dump(dump_metadata).data)
+    with pytest.raises(TypeError):
+        schema.dump(dump_metadata)
 
 
 def test_rights_dump_3(dump_metadata):
@@ -649,57 +619,59 @@ def test_rights_dump_3(dump_metadata):
 
 
 def test_rights_load_1(app, thesis_metadata):
-    thesis_metadata["rights"] = {
-        "CC": {
-            "code": "CC BY",
-            "version": "3.0",
-            "country": "CZ"
-        },
-        "copyright": [
-            {
-                "name": "Dílo je chráněno podle autorského zákona č. 121/2000 Sb.",
-                "lang": "cze"
-            }
-        ]
-    }
+    thesis_metadata["rights"] = [
+        {
+            "title": [
+                {
+                    "lang": "cs",
+                    "value": "verze 1.0 Obecná licence"
+                },
+                {
+                    "lang": "en",
+                    "value": "version 1.0 Generic License"
+                }
+            ],
+            "approved": True,
+            "date_of_serialization": "2020-04-16 07:39:53.491593",
+            "id": 210545,
+            "slug": "1.0",
+            "taxonomy": "licenses",
+            "path": "/CC/1.0",
+            "links": {
+                "self": "http://127.0.0.1:5000/api/taxonomies/licenses/CC/1.0/",
+                "tree": "http://127.0.0.1:5000/api/taxonomies/licenses/CC/1.0/?drilldown=True",
+                "parent": "http://127.0.0.1:5000/api/taxonomies/licenses/CC/",
+                "parent_tree": "http://127.0.0.1:5000/api/taxonomies/licenses/CC/?drilldown=True"
+            },
+            "level": 2,
+            "ancestors": [
+                {
+                    "title": [
+                        {
+                            "lang": "cs",
+                            "value": "Licence Creative Commons"
+                        },
+                        {
+                            "lang": "en",
+                            "value": "License Creative Commons"
+                        }
+                    ],
+                    "approved": True,
+                    "level": 1,
+                    "slug": "CC"
+                }
+            ],
+            "descendants_count": 6.0
+        }
+    ]
     schema = ThesisMetadataSchemaV1()
-    assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
+    expected_metadata = deepcopy(thesis_metadata)
+    expected_metadata["rights"] = [
+        {'$ref': 'http://127.0.0.1:5000/api/taxonomies/licenses/CC/1.0/'}]
+    assert expected_metadata == schema.load(convert_dates(thesis_metadata)).data
 
 
 def test_rights_load_2(app, thesis_metadata):
-    thesis_metadata["rights"] = {
-        "CC": {
-            "code": "CC BY",
-            "version": "3.0",
-            "country": "CZ"
-        },
-        "copyright": [
-            {
-                "name": "Dílo je chráněno podle autorského zákona č. 121/2000 Sb.",
-                "lang": "ces"
-            }
-        ]
-    }
-    final_data = dict(thesis_metadata)
-    final_data["rights"]["copyright"][0]["lang"] = "cze"
-    schema = ThesisMetadataSchemaV1()
-    assert final_data == schema.load(convert_dates(thesis_metadata)).data
-
-
-def test_rights_load_3(app, thesis_metadata):
-    thesis_metadata["rights"] = {
-        "CC": {
-            "code": "CC BY",
-            "version": "3.0",
-            "country": "CZ"
-        },
-        "copyright": []
-    }
-    schema = ThesisMetadataSchemaV1()
-    assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
-
-
-def test_rights_load_4(app, thesis_metadata):
     del thesis_metadata["rights"]
     schema = ThesisMetadataSchemaV1()
     assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
@@ -871,7 +843,34 @@ def test_contributor_dump_1(dump_metadata):
                 "value": "21454545",
                 "type": "ORCID"
             },
-            "role": "referee"
+            "role": {
+                "title": [
+                    {
+                        "lang": "cze",
+                        "value": "oponent"
+                    },
+                    {
+                        "lang": "eng",
+                        "value": "referee"
+                    }
+                ],
+                "approved": True,
+                "marcCode": "opn",
+                # "date_of_serialization": "2020-04-16 07:39:53.491593",
+                "id": 171348,
+                "slug": "referee",
+                "taxonomy": "contributor-type",
+                "path": "/referee",
+                "links": {
+                    "self": "http://127.0.0.1:5000/api/taxonomies/contributor-type/referee/",
+                    "tree": "http://127.0.0.1:5000/api/taxonomies/contributor-type/referee"
+                            "/?drilldown=True",
+                    "parent": "http://127.0.0.1:5000/api/taxonomies/contributor-type/",
+                    "parent_tree": "http://127.0.0.1:5000/api/taxonomies/contributor-type"
+                                   "/?drilldown=True"
+                },
+                "level": 1
+            }
         }
     ]
     schema = ThesisMetadataSchemaV1()
@@ -898,11 +897,42 @@ def test_contributor_load_1(app, thesis_metadata):
                 "value": "21454545",
                 "type": "ORCID"
             },
-            "role": "referee"
+            "role": {
+                "title": [
+                    {
+                        "lang": "cze",
+                        "value": "oponent"
+                    },
+                    {
+                        "lang": "eng",
+                        "value": "referee"
+                    }
+                ],
+                "approved": True,
+                "marcCode": "opn",
+                "date_of_serialization": "2020-04-16 07:39:53.491593",
+                "id": 171348,
+                "slug": "referee",
+                "taxonomy": "contributor-type",
+                "path": "/referee",
+                "links": {
+                    "self": "http://127.0.0.1:5000/api/taxonomies/contributor-type/referee/",
+                    "tree": "http://127.0.0.1:5000/api/taxonomies/contributor-type/referee"
+                            "/?drilldown=True",
+                    "parent": "http://127.0.0.1:5000/api/taxonomies/contributor-type/",
+                    "parent_tree": "http://127.0.0.1:5000/api/taxonomies/contributor-type"
+                                   "/?drilldown=True"
+                },
+                "level": 1
+            }
         }
     ]
+    expected_result = deepcopy(thesis_metadata)
+    expected_result["contributor"][0]["role"] = {
+        '$ref': 'http://127.0.0.1:5000/api/taxonomies/contributor-type/referee/'
+    }
     schema = ThesisMetadataSchemaV1()
-    assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
+    assert expected_result == schema.load(convert_dates(thesis_metadata)).data
 
 
 def test_contributor_load_2(app, thesis_metadata):
@@ -939,86 +969,134 @@ def test_contributor_load_3(app, thesis_metadata):
 ########################################################################
 #                             doctype                                  #
 ########################################################################
-# def test_doctype_dump_1(dump_metadata):
-#     dump_metadata["doctype"] = {
-#         "taxonomy": "NUSL",
-#         "value": [
-#             "vskp", "bakalarske_prace"
-#         ]
-#     }
-#     schema = ThesisMetadataSchemaV1()
-#     assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
-#
-#
-# def test_doctype_dump_2(dump_metadata):
-#     dump_metadata["doctype"] = {
-#         "taxonomy": "NUSL",
-#         "value": [
-#             "studie", "anl_met_mat"
-#         ]
-#     }
-#     schema = ThesisMetadataSchemaV1()
-#     assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
-#
-#
-# def test_doctype_dump_3(dump_metadata):
-#     del dump_metadata["doctype"]
-#     schema = ThesisMetadataSchemaV1()
-#     assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
-#
-#
-# def test_doctype_load_1(thesis_metadata):
-#     thesis_metadata["doctype"] = {
-#         "taxonomy": "NUSL",
-#         "value": [
-#             "vskp", "bakalarske_prace"
-#         ]
-#     }
-#     schema = ThesisMetadataSchemaV1()
-#     assert thesis_metadata == schema.load(convert_dates(thesis_metadata)).data
-#
-#
-# def test_doctype_load_2(thesis_metadata):
-#     thesis_metadata["doctype"] = {
-#         "taxonomy": "RIV",
-#         "value": [
-#             "polop", "Z"
-#         ]
-#     }
-#     with pytest.raises(ValidationError):
-#         schema = ThesisMetadataSchemaV1()
-#         schema.load(convert_dates(thesis_metadata)).data
-#
-#
-# # def test_doctype_load_3(thesis_metadata):
-# #     thesis_metadata["doctype"] = {
-# #         "RIV": {"term": "polop",
-# #                 "bterm": "Z"}
-# #     }
-# #     with pytest.raises(ValidationError):
-# #         schema = ThesisMetadataSchemaV1()
-# #         schema.load(convert_dates(thesis_metadata))
-#
-#
-# def test_doctype_load_4(app, thesis_metadata):
-#     thesis_metadata["doctype"] = {
-#         "taxonomy": "NUSL",
-#         "value": ["vskp", "studie"]
-#     }
-#     with pytest.raises(ValidationError):
-#         schema = ThesisMetadataSchemaV1()
-#         schema.load(convert_dates(thesis_metadata))
-#
-#
-# def test_doctype_load_5(app, thesis_metadata):
-#     thesis_metadata["doctype"] = {
-#         "taxonomy": "NUSL",
-#         "value": [None, "studie"]
-#     }
-#
-#     with pytest.raises(ValidationError):
-#         schema = ThesisMetadataSchemaV1()
-#         schema.load(convert_dates(thesis_metadata)).data
+def test_doc_type_dump_1(app, dump_metadata):
+    dump_metadata["doctype"] = {
+        "title": [
+            {
+                "lang": "cze",
+                "value": "Diplomové práce"
+            },
+            {
+                "lang": "eng",
+                "value": "Master’s theses "
+            }
+        ],
+        "approved": True,
+        # "date_of_serialization": "2020-04-16 07:39:53.491593", # TODO: vyřešit format data
+        "id": 180356,
+        "slug": "diplomove_prace",
+        "taxonomy": "doctypes",
+        "path": "/nusl/vskp/diplomove_prace",
+        "links": {
+            "self": "http://127.0.0.1:5000/api/taxonomies/doctypes/nusl/vskp/diplomove_prace/",
+            "tree": "http://127.0.0.1:5000/api/taxonomies/doctypes/nusl/vskp/diplomove_prace"
+                    "/?drilldown=True",
+            "parent": "http://127.0.0.1:5000/api/taxonomies/doctypes/nusl/vskp/",
+            "parent_tree": "http://127.0.0.1:5000/api/taxonomies/doctypes/nusl/vskp/?drilldown=True"
+        },
+        "level": 3,
+        # "ancestors": [
+        #     {
+        #         "title": [
+        #             {
+        #                 "lang": "cze",
+        #                 "value": "Typologie Národního uložiště šedé literatury"
+        #             },
+        #             {
+        #                 "lang": "eng",
+        #                 "value": "Typology of National Repository of Grey Literature"
+        #             }
+        #         ],
+        #         "approved": true,
+        #         "level": 1,
+        #         "slug": "nusl"
+        #     },
+        #     {
+        #         "title": [
+        #             {
+        #                 "lang": "cze",
+        #                 "value": "Vysokoškolské kvalifikační práce"
+        #             },
+        #             {
+        #                 "lang": "eng",
+        #                 "value": "Academic theses (ETDs)"
+        #             }
+        #         ],
+        #         "approved": true,
+        #         "level": 2,
+        #         "slug": "vskp"
+        #     }
+        # ]
+    }
+    schema = ThesisMetadataSchemaV1()
+    assert convert_dates(dump_metadata) == convert_dates(schema.dump(dump_metadata).data)
+
+
+def test_doc_type_1(app, thesis_metadata):
+    thesis_metadata["doctype"] = {
+        "title": [
+            {
+                "lang": "cze",
+                "value": "Diplomové práce"
+            },
+            {
+                "lang": "eng",
+                "value": "Master’s theses "
+            }
+        ],
+        "approved": True,
+        "date_of_serialization": "2020-04-16 07:39:53.491593",
+        "id": 180356,
+        "slug": "diplomove_prace",
+        "taxonomy": "doctypes",
+        "path": "/nusl/vskp/diplomove_prace",
+        "links": {
+            "self": "http://127.0.0.1:5000/api/taxonomies/doctypes/nusl/vskp/diplomove_prace/",
+            "tree": "http://127.0.0.1:5000/api/taxonomies/doctypes/nusl/vskp/diplomove_prace"
+                    "/?drilldown=True",
+            "parent": "http://127.0.0.1:5000/api/taxonomies/doctypes/nusl/vskp/",
+            "parent_tree": "http://127.0.0.1:5000/api/taxonomies/doctypes/nusl/vskp/?drilldown=True"
+        },
+        "level": 3,
+        "ancestors": [
+            {
+                "title": [
+                    {
+                        "lang": "cze",
+                        "value": "Typologie Národního uložiště šedé literatury"
+                    },
+                    {
+                        "lang": "eng",
+                        "value": "Typology of National Repository of Grey Literature"
+                    }
+                ],
+                "approved": True,
+                "level": 1,
+                "slug": "nusl"
+            },
+            {
+                "title": [
+                    {
+                        "lang": "cze",
+                        "value": "Vysokoškolské kvalifikační práce"
+                    },
+                    {
+                        "lang": "eng",
+                        "value": "Academic theses (ETDs)"
+                    }
+                ],
+                "approved": True,
+                "level": 2,
+                "slug": "vskp"
+            }
+        ]
+    }
+    schema = ThesisMetadataSchemaV1()
+    expected_result = deepcopy(thesis_metadata)
+    expected_result["doctype"] = {
+        "$ref": "http://127.0.0.1:5000/api/taxonomies/doctypes/nusl/vskp/diplomove_prace/"
+    }
+    assert expected_result == schema.load(convert_dates(thesis_metadata)).data
 
 
 ########################################################################
@@ -1254,7 +1332,45 @@ def test_accessibility_load_3(app, thesis_metadata):
 #                           accessRights                               #
 ########################################################################
 def test_accessRights_dump_1(dump_metadata):
-    dump_metadata["accessRights"] = "open"
+    dump_metadata["accessRights"] = {
+        "title": [
+            {
+                "lang": "cze",
+                "value": "pouze metadata"
+            },
+            {
+                "lang": "eng",
+                "value": "metadata only access"
+            }
+        ],
+        "approved": True,
+        "relatedURI": [
+            {
+                "value": "http://purl.org/coar/access_right/c_14cb",
+                "type": "coar"
+            },
+            {
+                "value": "http://purl.org/eprint/accessRights/ClosedAccess",
+                "type": "eprint"
+            },
+            {
+                "value": "",
+                "type": "vocabs"
+            }
+        ],
+        # "date_of_serialization": "2020-04-16 07:39:53.491593",
+        "id": 171277,
+        "slug": "c_14cb",
+        "taxonomy": "accessRights",
+        "path": "/c_14cb",
+        "links": {
+            "self": "http://127.0.0.1:5000/api/taxonomies/accessRights/c_14cb/",
+            "tree": "http://127.0.0.1:5000/api/taxonomies/accessRights/c_14cb/?drilldown=True",
+            "parent": "http://127.0.0.1:5000/api/taxonomies/accessRights/",
+            "parent_tree": "http://127.0.0.1:5000/api/taxonomies/accessRights/?drilldown=True"
+        },
+        "level": 1
+    }
     schema = ThesisMetadataSchemaV1()
     assert convert_dates(dump_metadata) == schema.dump(dump_metadata).data
 
@@ -1272,10 +1388,51 @@ def test_accessRights_dump_3(dump_metadata):
 
 
 def test_accessRights_load_1(app, thesis_metadata):
-    thesis_metadata["accessRights"] = "open"
-
+    thesis_metadata["accessRights"] = {
+        "title": [
+            {
+                "lang": "cze",
+                "value": "pouze metadata"
+            },
+            {
+                "lang": "eng",
+                "value": "metadata only access"
+            }
+        ],
+        "approved": True,
+        "relatedURI": [
+            {
+                "value": "http://purl.org/coar/access_right/c_14cb",
+                "type": "coar"
+            },
+            {
+                "value": "http://purl.org/eprint/accessRights/ClosedAccess",
+                "type": "eprint"
+            },
+            {
+                "value": "",
+                "type": "vocabs"
+            }
+        ],
+        "date_of_serialization": "2020-04-16 07:39:53.491593",
+        "id": 171277,
+        "slug": "c_14cb",
+        "taxonomy": "accessRights",
+        "path": "/c_14cb",
+        "links": {
+            "self": "http://127.0.0.1:5000/api/taxonomies/accessRights/c_14cb/",
+            "tree": "http://127.0.0.1:5000/api/taxonomies/accessRights/c_14cb/?drilldown=True",
+            "parent": "http://127.0.0.1:5000/api/taxonomies/accessRights/",
+            "parent_tree": "http://127.0.0.1:5000/api/taxonomies/accessRights/?drilldown=True"
+        },
+        "level": 1
+    }
     schema = ThesisMetadataSchemaV1()
-    assert convert_dates(thesis_metadata) == convert_dates(
+    expected_result = deepcopy(thesis_metadata)
+    expected_result["accessRights"] = {
+        '$ref': 'http://127.0.0.1:5000/api/taxonomies/accessRights/c_14cb/'
+    }
+    assert convert_dates(expected_result) == convert_dates(
         schema.load(convert_dates(thesis_metadata)).data)
 
 
@@ -1311,17 +1468,51 @@ def test_provider_1(app, thesis_metadata):
         schema = ThesisMetadataSchemaV1()
         schema.load(convert_dates(thesis_metadata))
 
-# TODO: neměl by projít prázdný dict
+
 def test_provider_2(app, thesis_metadata):
-    thesis_metadata["provider"] = {}
-
+    thesis_metadata["provider"] = {
+        "ico": "60461373",
+        "url": "www.vscht.cz",
+        "title": [
+            {
+                "lang": "cs",
+                "value": "Vysoká škola chemicko-technologická v Praze"
+            },
+            {
+                "lang": "en",
+                "value": "University of Chemistry and Technology, Prague"
+            }
+        ],
+        "aliases": [
+            "VŠCHT"
+        ],
+        "approved": True,
+        "provider": True,
+        "relatedID": {
+            "type": "rid",
+            "value": "22000"
+        },
+        "date_of_serialization": "2020-04-17 06:49:26.591265",
+        "id": 244838,
+        "slug": "60461373",
+        "taxonomy": "institutions",
+        "path": "/60461373",
+        "links": {
+            "self": "http://127.0.0.1:5000/api/taxonomies/institutions/60461373/",
+            "tree": "http://127.0.0.1:5000/api/taxonomies/institutions/60461373/?drilldown=True",
+            "parent": "http://127.0.0.1:5000/api/taxonomies/institutions/",
+            "parent_tree": "http://127.0.0.1:5000/api/taxonomies/institutions/?drilldown=True"
+        },
+        "level": 1,
+        "descendants_count": 42.0
+    }
     schema = ThesisMetadataSchemaV1()
-    schema.load(convert_dates(thesis_metadata))
-    assert convert_dates(thesis_metadata) == convert_dates(
+    expected_result = deepcopy(thesis_metadata)
+    expected_result["provider"] = {
+        "$ref": "http://127.0.0.1:5000/api/taxonomies/institutions/60461373/"
+    }
+    assert convert_dates(expected_result) == convert_dates(
         schema.load(convert_dates(thesis_metadata)).data)
-    pprint(convert_dates(
-        schema.load(convert_dates(thesis_metadata)).data))
-
 
 
 ########################################################################

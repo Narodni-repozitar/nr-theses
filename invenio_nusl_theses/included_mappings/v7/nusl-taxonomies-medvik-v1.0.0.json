@@ -1,0 +1,29 @@
+{
+    "medvik": {
+        "type": "object",
+        "properties": {
+            "relatedURI": {
+                "properties": {
+                    "type": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 256
+                            }
+                        }
+                    },
+                    "value": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 1000
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -8,19 +8,16 @@
 """JSON Schemas."""
 
 from __future__ import absolute_import, print_function
-from invenio_records_rest.schemas.fields.datetime import DateString
 
-from urllib.parse import urlparse
-
+from invenio_records_draft.marshmallow import DraftEnabledSchema
 from invenio_records_rest.schemas import Nested, StrictKeysMixin
 from invenio_records_rest.schemas.fields import PersistentIdentifier, SanitizedUnicode
+from invenio_records_rest.schemas.fields.datetime import DateString
 from marshmallow import fields, validate, ValidationError, pre_load, post_load
 from pycountry import languages, countries
 
-from flask_taxonomies.marshmallow import TaxonomySchemaV1
 from invenio_nusl_common.marshmallow.json import MultilanguageSchemaV1, ValueTypeSchemaV1, \
-    DoctypeSubSchemaV1
-from invenio_records_draft.marshmallow import DraftEnabledSchema
+    DoctypeSubSchemaV1, ApprovedTaxonomySchema
 
 
 ########################################################################
@@ -46,42 +43,37 @@ def validate_country(country):
 #########################################################################
 
 
-class CCMetadataSchemaV1(StrictKeysMixin):
-    code = SanitizedUnicode(required=True, validate=validate.OneOf(["CC BY",
-                                                                    "CC BY-NC",
-                                                                    "CC BY-SA",
-                                                                    "CC BY-ND",
-                                                                    "CC BY-NC-SA",
-                                                                    "CC BY-NC-ND"]))
-    version = SanitizedUnicode(required=True, validate=validate.Regexp(r"\d.\d"))
-    country = SanitizedUnicode(required=True, validate=validate_country)
-
-    @pre_load
-    def country_code(self, data, **kwargs):
-        if "country" in data:
-            country = data["country"]
-            if countries.get(alpha_3=country.upper()):
-                country = countries.get(alpha_3=country.upper())
-            elif countries.get(alpha_2=country.upper()):
-                country = countries.get(alpha_2=country.upper())
-            elif countries.get(name=country):
-                country = countries.get(name=country)
-            elif countries.get(official_name=country):
-                country = countries.get(official_name=country)
-            else:
-                country = None
-            if country is not None:
-                data["country"] = country.alpha_2
-        return data
+class PSHSchema:
+    modified = fields.DateTime()
+    uri = fields.Url()
+    altLabel = fields.List(Nested(MultilanguageSchemaV1))
 
 
-class RightsMetadataSchemaV1(StrictKeysMixin):
-    CC = fields.Nested(CCMetadataSchemaV1)
-    copyright = fields.List(Nested(MultilanguageSchemaV1()))
+class CZMeshSchema:
+    relatedURI = fields.List(Nested(ValueTypeSchemaV1()))
+    DateCreated = fields.Date()
+    DateRevised = fields.Date()
+    DateEstablished = fields.Date()
+    TreeNumberList = fields.List(SanitizedUnicode())
 
 
-class SubjectMetadataSchemaV1(TaxonomySchemaV1, StrictKeysMixin):
-    url = fields.Url()
+class MedvikSchema:
+    relatedURI = fields.List(Nested(ValueTypeSchemaV1()))
+
+
+class SubjectMetadataSchemaV1(ApprovedTaxonomySchema, PSHSchema, MedvikSchema, CZMeshSchema,
+                              StrictKeysMixin):
+    pass
+
+
+class RightsMetadataSchemaV1(ApprovedTaxonomySchema):
+    icon = fields.Url()
+    related = fields.List(Nested(ValueTypeSchemaV1()))
+
+
+class ContributorTaxonomySchema(ApprovedTaxonomySchema):
+    dataCiteCode = SanitizedUnicode()
+    marcCode = SanitizedUnicode()
 
 
 class CreatorSubSchemaV1(DraftEnabledSchema, StrictKeysMixin):
@@ -92,47 +84,28 @@ class CreatorSubSchemaV1(DraftEnabledSchema, StrictKeysMixin):
 class ContributorSubSchemaV1(DraftEnabledSchema):
     name = SanitizedUnicode(required=True)
     id = Nested(ValueTypeSchemaV1())
-    role = SanitizedUnicode(required=True)
+    role = Nested(ContributorTaxonomySchema(), required=True)
 
 
-class DegreeGrantorSubSchemaV1(TaxonomySchemaV1):
-    ICO = SanitizedUnicode(required=False, attribute='ICO', data_key='ICO')
-    RID = SanitizedUnicode(required=False)
-    address = SanitizedUnicode(required=False)
-    data_box = SanitizedUnicode(required=False)
-    deputy = SanitizedUnicode(required=False)
-    form = SanitizedUnicode(required=False)
-    region = SanitizedUnicode(required=False)
-    term_of_office_from = SanitizedUnicode(required=False)
-    term_of_office_until = SanitizedUnicode(required=False)
-    type = SanitizedUnicode()
-    url = fields.Url()
-
-
-class FieldGrantorSubschemaV1(DraftEnabledSchema, StrictKeysMixin):
-    faculty = SanitizedUnicode(required=False)
-    university = SanitizedUnicode(required=False)
-
-
-class FieldSubSchemaV1(TaxonomySchemaV1):
-    aliases = fields.List(SanitizedUnicode(), allow_none=True)
-    degree_level = SanitizedUnicode(required=False)
-    form_of_study = SanitizedUnicode(required=False)
-    grantor = fields.List(Nested(FieldGrantorSubschemaV1()))
-    date_of_accreditation_validity = SanitizedUnicode()
-    duration = SanitizedUnicode()
-    reference_number = SanitizedUnicode()
-    type = SanitizedUnicode()
-
-
-class ProviderSubSchemaV1(TaxonomySchemaV1):
-    address = SanitizedUnicode()
-    url = fields.Url()
-    lib_url = fields.Url()
-
-
-class LanguageSubSchemaV1(TaxonomySchemaV1):
+class FieldSubSchemaV1(ApprovedTaxonomySchema):
     pass
+
+
+class LanguageSubSchemaV1(ApprovedTaxonomySchema):
+    pass
+
+
+class AccessRightsSubSchema(ApprovedTaxonomySchema):
+    relatedURI = fields.List(Nested(ValueTypeSchemaV1()))
+
+
+class InstitutionsSubClass(ApprovedTaxonomySchema):
+    relatedID = fields.List(Nested(ValueTypeSchemaV1()))
+    aliases = fields.List(SanitizedUnicode())
+    ico = SanitizedUnicode()
+    url = fields.Url()
+    provider = fields.Boolean(missing=False)
+    formerNames = fields.List(SanitizedUnicode())
 
 
 #########################################################################
@@ -151,7 +124,7 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
     title = fields.List(Nested(MultilanguageSchemaV1()), required=True)
     extent = SanitizedUnicode()
     abstract = fields.List(Nested(MultilanguageSchemaV1()))
-    rights = fields.Nested(RightsMetadataSchemaV1)
+    rights = fields.List(Nested(RightsMetadataSchemaV1))
     subject = fields.List(Nested(SubjectMetadataSchemaV1))
     keywords = fields.List(Nested(MultilanguageSchemaV1()))
     creator = fields.List(Nested(CreatorSubSchemaV1), required=True)
@@ -160,12 +133,11 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
     subtitle = fields.List(Nested(MultilanguageSchemaV1()))
     note = fields.List(SanitizedUnicode())
     accessibility = fields.List(Nested(MultilanguageSchemaV1()))
-    accessRights = SanitizedUnicode(
-        validate=validate.OneOf(["open", "embargoed", "restricted", "metadata_only"]))
-    provider = Nested(ProviderSubSchemaV1)
+    accessRights = Nested(AccessRightsSubSchema())
+    provider = Nested(InstitutionsSubClass())
     defended = fields.Boolean()
     studyField = fields.List(Nested(FieldSubSchemaV1))
-    degreeGrantor = fields.List(Nested(DegreeGrantorSubSchemaV1), required=True)
+    degreeGrantor = fields.List(Nested(InstitutionsSubClass()), required=True)
 
     @pre_load()
     def id_to_str(self, data, **kwargs):
@@ -183,24 +155,6 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
         if len(data.get("keywords", [])) < 3 and len(data.get("subject", [])) < 3:
             raise ValidationError("Number of keywords or subject have to be minimal three!",
                                   field_names=["subject", "keywords"])
-        return data
-
-    @post_load()
-    def validate_study_field(self, data, **kwargs):
-        if self.context.get("draft"):
-            return data
-        study_fields = data.get("studyField")
-        if study_fields is not None:
-            for field in study_fields:
-                if "$ref" in field:
-                    url = urlparse(field["$ref"])
-                    path = url.path
-                    path_components = path.split("/")
-                    last = path_components[-1]
-                    if "no_valid_" in last:
-                        raise ValidationError(
-                            f"Studyfield is not valid.",
-                            field_names=["studyField"])
         return data
 
 

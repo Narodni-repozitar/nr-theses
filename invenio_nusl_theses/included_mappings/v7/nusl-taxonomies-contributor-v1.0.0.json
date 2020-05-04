@@ -1,0 +1,13 @@
+{
+    "contributor": {
+        "type": "taxonomy-v1.0.0.json#/TaxonomyTerm",
+        "properties": {
+            "dataCiteCode": {
+                "type": "keyword"
+            },
+            "marcCode": {
+                "type": "keyword"
+            }
+        }
+    }
+}

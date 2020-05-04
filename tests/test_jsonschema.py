@@ -5,6 +5,8 @@ from .utils import convert_dates
 
 
 def test_json(app, thesis_metadata):
+    print("\n\n\n\n\n")
+    print("START")
     print(app)
     print(current_jsonschemas.list_schemas())
     _records_state.validate(convert_dates(thesis_metadata),
