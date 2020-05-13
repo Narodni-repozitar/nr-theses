@@ -50,6 +50,8 @@ from invenio_records.ext import InvenioRecords
 #     shutil.rmtree(instance_path)
 from flask_taxonomies_es import FlaskTaxonomiesES
 
+from invenio_nusl_theses import InvenioNUSLTheses
+
 
 @pytest.yield_fixture()
 def app():
@@ -73,6 +75,7 @@ def app():
     InvenioSearch(_app)
     FlaskTaxonomies(_app)
     FlaskTaxonomiesES(_app)
+    InvenioNUSLTheses(_app)
     with _app.app_context():
         _app.register_blueprint(taxonomies_blueprint)
         yield _app

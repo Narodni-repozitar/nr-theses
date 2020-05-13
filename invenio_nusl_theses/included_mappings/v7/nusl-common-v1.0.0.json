@@ -2,7 +2,7 @@
     "multilanguage": {
         "type": "nested",
         "properties": {
-            "name": {
+            "value": {
                 "type": "text",
                 "fields": {
                     "keyword": {
