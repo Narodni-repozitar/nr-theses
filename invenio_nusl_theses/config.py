@@ -11,7 +11,6 @@ from __future__ import absolute_import, print_function
 
 from elasticsearch_dsl import Q
 from invenio_records_rest.facets import terms_filter
-from invenio_records_rest.utils import allow_all
 
 from invenio_nusl_theses.marshmallow import ThesisRecordSchemaV1, ThesisMetadataSchemaV1
 from invenio_nusl_theses.permissions import thesis_write_permission_factory
@@ -52,6 +51,7 @@ DRAFT_ENABLED_RECORDS_REST_ENDPOINTS = {
     }
 }
 
+# https://github.com/oarepo/invenio-oarepo-ui/blob/master/invenio_oarepo_ui/views.py#L28
 INVENIO_OAREPO_UI_COLLECTIONS = {
     "theses": {
         "title": {
@@ -155,17 +155,31 @@ def person_filter(field):
     return inner
 
 
+def boolean_filter(field):
+    def inner(values):
+        queries = []
+        for value in values:
+            queries.append(
+                Q('term', **{
+                    field: bool(int(value))
+                })
+            )
+        return Q('bool', should=queries, minimum_should_match=1)
+
+    return inner
+
+
 FILTERS = {
     'yearAccepted': year_filter('dateAccepted'),
-    'language': terms_filter('language'),
-    'defended': terms_filter('defended'),
+    'language': terms_filter('language.slug'),
+    'defended': boolean_filter('defended'),
     'person': person_filter('person.keyword'),
     'subjectKeywords': terms_filter('subjectKeywords'),
     'accessRights': terms_filter('accessRights'),
     'studyField': nested_terms_filter('studyField.title', 'value.keyword'),
     'university': degree_grantor_filter('degreeGrantor.ancestors.title.value.keyword'),
     'faculty': degree_grantor_filter('degreeGrantor.ancestors.title.value.keyword'),
-    'valid': terms_filter("invenio_draft_validation.valid"),
+    'valid': boolean_filter("invenio_draft_validation.valid"),
     'marshmallow.field': terms_filter("invenio_draft_validation.errors.marshmallow.field"),
     'marshmallow.message': terms_filter(
         "invenio_draft_validation.errors.marshmallow.message.keyword"),
@@ -180,21 +194,22 @@ POST_FILTERS = {
 RECORDS_REST_FACETS = {
     'draft-invenio_nusl_theses-nusl-theses-v1.0.0': {
         'aggs': {  # agregace
-            'yearAccepted': {
-                "date_histogram": {
-                    "field": "dateAccepted",
-                    "interval": "1y",
-                    "format": "yyyy",
-                    "min_doc_count": 1,
-                    "order": {
-                        "_key": "desc"
-                    }
-
-                }
-            },
+            # 'yearAccepted': {
+            #     "date_histogram": {
+            #         "field": "dateAccepted",
+            #         "interval": "1y",
+            #         "format": "yyyy",
+            #         "min_doc_count": 1,
+            #         "order": {
+            #             "_key": "desc"
+            #         }
+            #
+            #     }
+            # },
             'language': {
                 'terms': {
-                    'field': 'language.slug'
+                    'field': 'language.slug',
+                    'order': {'_count': 'desc'}
                 }
             },
             'defended': {
@@ -207,73 +222,35 @@ RECORDS_REST_FACETS = {
                     'field': 'doctype.slug'
                 }
             },
-            'person': {
-                'terms': {
-                    'field': 'person.keyword'
-                }
-            },
-            'subjectKeywords': {
-                'terms': {
-                    'field': 'subjectKeywords',
-                    'size': 100
-                }
-            },
-            'accessRights': {
-                'terms': {
-                    'field': 'accessRights'
-                }
-            },
-            "studyField": {
-                "nested": {
-                    "path": "studyField.title"
-                },
-                "aggs": {
-                    "studyField": {
-                        "terms": {
-                            "field": "studyField.title.value.keyword",
-                            "size": 100
-                        }
-                    }
-                }
-            },
-            "degreeGrantor": {
-                "nested": {
-                    "path": "degreeGrantor.ancestors"
-                },
-                "aggs": {
-                    "degreeGrantor": {
-                        "filters": {
-                            "filters": {
-                                "faculty": {
-                                    "term": {
-                                        "degreeGrantor.ancestors.level": 2
-                                    }
-                                },
-                                "university": {
-                                    "term": {
-                                        "degreeGrantor.ancestors.level": 1
-                                    }
-                                }
-                            }
-                        },
-                        "aggs": {
-                            "title": {
-                                "nested": {
-                                    "path": "degreeGrantor.ancestors.title"
-                                },
-                                "aggs": {
-                                    "degreeGrantor": {
-                                        "terms": {
-                                            "field": "degreeGrantor.ancestors.title.value.keyword",
-                                            "size": 100
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
+            # 'person': {
+            #     'terms': {
+            #         'field': 'person.keyword'
+            #     }
+            # },
+            # 'subjectKeywords': {
+            #     'terms': {
+            #         'field': 'subjectKeywords',
+            #         'size': 100
+            #     }
+            # },
+            # 'accessRights': {
+            #     'terms': {
+            #         'field': 'accessRights'
+            #     }
+            # },
+            # "studyField": {
+            #     "nested": {
+            #         "path": "studyField.title"
+            #     },
+            #     "aggs": {
+            #         "studyField": {
+            #             "terms": {
+            #                 "field": "studyField.title.value.keyword",
+            #                 "size": 100
+            #             }
+            #         }
+            #     }
+            # },
             "valid": {
                 'terms': {
                     'field': "invenio_draft_validation.valid"
