@@ -110,3 +110,14 @@ class ThesisAPI:
         db.session.add(recid)
         db.session.commit()
         return new_recid
+
+    def attach_id(self, transformed, pid_value=None):
+        if not pid_value:
+            pid_value = str(self.get_new_pid())
+        transformed["id"] = pid_value
+        transformed.setdefault("identifier", [])
+        transformed["identifier"].append({
+            "type": "nusl",
+            "value": pid_value
+        })
+        return transformed
