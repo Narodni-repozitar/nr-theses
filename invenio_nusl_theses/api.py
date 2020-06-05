@@ -64,7 +64,7 @@ class ThesisAPI:
         return db_record
 
     @staticmethod
-    def create_draft_record(record: Record, pid_type=None, pid_value=None):
+    def create_draft_record(record: dict, pid_type=None, pid_value=None):
         if not pid_type:
             pid_type = "dnusl"
         if not pid_value:
