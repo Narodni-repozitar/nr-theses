@@ -108,12 +108,12 @@ def thesis_metadata():
         "dateAccepted": "2019-05-19",  # date(2019, 5, 19),
         "title": [
             {
-                "name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do "
+                "value": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do "
                         "sklonku středověku.",
                 "lang": "cze"
             },
             {
-                "name": "Historical landscape of the Bohemian-Moravian Highlands. Settlement from "
+                "value": "Historical landscape of the Bohemian-Moravian Highlands. Settlement from "
                         "prehistoric to late medieval times",
                 "lang": "eng"
             }
@@ -121,7 +121,7 @@ def thesis_metadata():
         "extent": "123s",
         "abstract": [
             {
-                "name": "Bakalářská práce je zaměřena na téma možností integrace pachatelů "
+                "value": "Bakalářská práce je zaměřena na téma možností integrace pachatelů "
                         "trestné činnosti zpět do společnosti. V rámci práce je na základě "
                         "odborné literatury a získaných informací cílem seznámit zájemce, "
                         "a to v teoretické části práce, s hlavními termíny a problematikou daného "
@@ -136,7 +136,7 @@ def thesis_metadata():
                 "lang": "cze"
             },
             {
-                "name": "The bachelor thesis is focused on the possibility of integrating "
+                "value": "The bachelor thesis is focused on the possibility of integrating "
                         "criminals back into society. In the theoretical part are introduced the "
                         "main terms and issues to layman, thanks to the literature and acquired "
                         "information. In the practical part will be described the process of data "
@@ -222,7 +222,7 @@ def thesis_metadata():
         "id": "1276327",
         "subtitle": [
             {
-                "name": "Alternativní název",
+                "value": "Alternativní název",
                 "lang": "cze"
             }
         ],
@@ -232,11 +232,11 @@ def thesis_metadata():
         ],
         "accessibility": [
             {
-                "name": "Dostupné kdesi blabla",
+                "value": "Dostupné kdesi blabla",
                 "lang": "cze"
             },
             {
-                "name": "Available at blabla",
+                "value": "Available at blabla",
                 "lang": "eng"
             }
         ],

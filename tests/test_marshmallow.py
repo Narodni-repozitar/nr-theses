@@ -24,12 +24,12 @@ def dump_metadata():
         "dateAccepted": "2019-05-19",  # date(2019, 5, 19),
         "title": [
             {
-                "name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do "
+                "value": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do "
                         "sklonku středověku.",
                 "lang": "cze"
             },
             {
-                "name": "Historical landscape of the Bohemian-Moravian Highlands. Settlement from "
+                "value": "Historical landscape of the Bohemian-Moravian Highlands. Settlement from "
                         "prehistoric to late medieval times",
                 "lang": "eng"
             }
@@ -37,7 +37,7 @@ def dump_metadata():
         "extent": "123s",
         "abstract": [
             {
-                "name": "Bakalářská práce je zaměřena na téma možností integrace pachatelů "
+                "value": "Bakalářská práce je zaměřena na téma možností integrace pachatelů "
                         "trestné činnosti zpět do společnosti. V rámci práce je na základě "
                         "odborné literatury a získaných informací cílem seznámit zájemce, "
                         "a to v teoretické části práce, s hlavními termíny a problematikou daného "
@@ -52,7 +52,7 @@ def dump_metadata():
                 "lang": "cze"
             },
             {
-                "name": "The bachelor thesis is focused on the possibility of integrating "
+                "value": "The bachelor thesis is focused on the possibility of integrating "
                         "criminals back into society. In the theoretical part are introduced the "
                         "main terms and issues to layman, thanks to the literature and acquired "
                         "information. In the practical part will be described the process of data "
@@ -138,7 +138,7 @@ def dump_metadata():
         "id": "1276327",
         "subtitle": [
             {
-                "name": "Alternativní název",
+                "value": "Alternativní název",
                 "lang": "cze"
             }
         ],
@@ -148,11 +148,11 @@ def dump_metadata():
         ],
         "accessibility": [
             {
-                "name": "Dostupné kdesi blabla",
+                "value": "Dostupné kdesi blabla",
                 "lang": "cze"
             },
             {
-                "name": "Available at blabla",
+                "value": "Available at blabla",
                 "lang": "eng"
             }
         ],
@@ -330,7 +330,7 @@ def test_dateaccepted_load_3(app, thesis_metadata):
 def test_title_dump_1(app, dump_metadata):
     dump_metadata["title"] = [
         {
-            "name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku "
+            "value": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku "
                     "středověku.",
             "lang": "cze"
         }]
@@ -341,7 +341,7 @@ def test_title_dump_1(app, dump_metadata):
 def test_title_dump_2(app, dump_metadata):
     dump_metadata["title"] = [
         {
-            "name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku "
+            "value": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku "
                     "středověku.",
             "lang": "cz"
         }]
@@ -366,7 +366,7 @@ def test_title_dump_4(app, dump_metadata):
 def test_title_load_1(app, thesis_metadata):
     thesis_metadata["title"] = [
         {
-            "name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku "
+            "value": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku "
                     "středověku.",
             "lang": "cze"
         }]
@@ -379,7 +379,7 @@ def test_title_load_1(app, thesis_metadata):
 def test_title_load_2(app, thesis_metadata):
     thesis_metadata["title"] = [
         {
-            "name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku "
+            "value": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku "
                     "středověku.",
             "lang": "cz"
         }]
@@ -441,7 +441,7 @@ def test_extent_load_4(app, thesis_metadata):
 def test_abstract_dump_1(dump_metadata):
     dump_metadata["abstract"] = [
         {
-            "name": "Bakalářská práce je zaměřena na téma možností integrace pachatelů trestné "
+            "value": "Bakalářská práce je zaměřena na téma možností integrace pachatelů trestné "
                     "činnosti zpět do společnosti. V rámci práce je na základě odborné literatury "
                     "a získaných informací cílem seznámit zájemce, a to v teoretické části práce, "
                     "s hlavními termíny a problematikou daného tématu. V praktické části je "
@@ -477,7 +477,7 @@ def test_abstract_dump_3(dump_metadata):
 def test_abstract_load_1(app, thesis_metadata):
     thesis_metadata["abstract"] = [
         {
-            "name": "Bakalářská práce je zaměřena na téma možností integrace pachatelů trestné "
+            "value": "Bakalářská práce je zaměřena na téma možností integrace pachatelů trestné "
                     "činnosti zpět do společnosti. V rámci práce je na základě odborné literatury "
                     "a získaných informací cílem seznámit zájemce, a to v teoretické části práce, "
                     "s hlavními termíny a problematikou daného tématu. V praktické části je "
@@ -511,7 +511,7 @@ def test_abstract_load_3(app, thesis_metadata):
 def test_abstract_load_4(app, thesis_metadata):
     thesis_metadata["abstract"] = [
         {
-            "name": "Bakalářská práce je zaměřena na téma možností integrace pachatelů trestné "
+            "value": "Bakalářská práce je zaměřena na téma možností integrace pachatelů trestné "
                     "činnosti zpět do společnosti. V rámci práce je na základě odborné literatury "
                     "a získaných informací cílem seznámit zájemce, a to v teoretické části práce, "
                     "s hlavními termíny a problematikou daného tématu. V praktické části je "
@@ -534,7 +534,7 @@ def test_abstract_load_4(app, thesis_metadata):
 def test_abstract_load_5(app, thesis_metadata):
     thesis_metadata["abstract"] = [
         {
-            "name": "Bakalářská práce je zaměřena na téma možností integrace pachatelů trestné "
+            "value": "Bakalářská práce je zaměřena na téma možností integrace pachatelů trestné "
                     "činnosti zpět do společnosti. V rámci práce je na základě odborné literatury "
                     "a získaných informací cílem seznámit zájemce, a to v teoretické části práce, "
                     "s hlavními termíny a problematikou daného tématu. V praktické části je "
@@ -683,11 +683,11 @@ def test_rights_load_2(app, thesis_metadata):
 def test_keywords_dump_1(dump_metadata):
     dump_metadata["keywords"] = [
         {
-            "name": "koza",
+            "value": "koza",
             "lang": "cze"
         },
         {
-            "name": "anorganická chemie",
+            "value": "anorganická chemie",
             "lang": "cze"
         }
     ]
@@ -704,11 +704,11 @@ def test_keywords_dump_2(dump_metadata):
 def test_keywords_load_1(app, thesis_metadata):
     thesis_metadata["keywords"] = [
         {
-            "name": "koza",
+            "value": "koza",
             "lang": "cze"
         },
         {
-            "name": "anorganická chemie",
+            "value": "anorganická chemie",
             "lang": "cze"
         }
     ]
@@ -719,10 +719,10 @@ def test_keywords_load_1(app, thesis_metadata):
 def test_keywords_load_2(app, thesis_metadata):
     thesis_metadata["keywords"] = [
         {
-            "name": "koza",
+            "value": "koza",
         },
         {
-            "name": "anorganická chemie",
+            "value": "anorganická chemie",
             "lang": "cze"
         }
     ]
@@ -735,11 +735,11 @@ def test_keywords_load_2(app, thesis_metadata):
 def test_keywords_load_3(app, thesis_metadata):
     thesis_metadata["keywords"] = [
         {
-            "name": "koza",
+            "value": "koza",
             "lang": "cze"
         },
         {
-            "name": "anorganická chemie",
+            "value": "anorganická chemie",
             "lang": "cze"
         }
     ]
@@ -1147,7 +1147,7 @@ def test_id_load_3(app, thesis_metadata):
 def test_subtitle_dump_1(dump_metadata):
     dump_metadata["subtitle"] = [
         {
-            "name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku "
+            "value": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku "
                     "středověku.",
             "lang": "cze"
         }]
@@ -1158,7 +1158,7 @@ def test_subtitle_dump_1(dump_metadata):
 def test_subtitle_dump_2(dump_metadata):
     dump_metadata["subtitle"] = [
         {
-            "name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku "
+            "value": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku "
                     "středověku.",
             "lang": "cz"
         }]
@@ -1183,7 +1183,7 @@ def test_subtitle_dump_4(dump_metadata):
 def test_subtitle_load_1(app, thesis_metadata):
     thesis_metadata["subtitle"] = [
         {
-            "name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku "
+            "value": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku "
                     "středověku.",
             "lang": "cze"
         }]
@@ -1196,7 +1196,7 @@ def test_subtitle_load_1(app, thesis_metadata):
 def test_subtitle_load_2(app, thesis_metadata):
     thesis_metadata["subtitle"] = [
         {
-            "name": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku "
+            "value": "Historická krajina Českomoravské vrchoviny. Osídlení od pravěku do sklonku "
                     "středověku.",
             "lang": "cz"
         }]
@@ -1264,11 +1264,11 @@ def test_note_load_3(app, thesis_metadata):
 def test_accessibility_dump_1(dump_metadata):
     dump_metadata["accessibility"] = [
         {
-            "name": "Dostupné kdesi blabla",
+            "value": "Dostupné kdesi blabla",
             "lang": "cz"
         },
         {
-            "name": "Avallable at blabla",
+            "value": "Avallable at blabla",
             "lang": "en"
         }
     ]
@@ -1291,11 +1291,11 @@ def test_accessibility_dump_3(dump_metadata):
 def test_accessibility_load_1(app, thesis_metadata):
     thesis_metadata["accessibility"] = [
         {
-            "name": "Dostupné kdesi blabla",
+            "value": "Dostupné kdesi blabla",
             "lang": "cze"
         },
         {
-            "name": "Avallable at blabla",
+            "value": "Avallable at blabla",
             "lang": "eng"
         }
     ]
@@ -1308,11 +1308,11 @@ def test_accessibility_load_1(app, thesis_metadata):
 def test_accessibility_load_2(app, thesis_metadata):
     thesis_metadata["accessibility"] = [
         {
-            "name": "Dostupné kdesi blabla",
+            "value": "Dostupné kdesi blabla",
             "lang": "cz"
         },
         {
-            "name": "Avallable at blabla",
+            "value": "Avallable at blabla",
             "lang": "en"
         }
     ]
@@ -1595,11 +1595,11 @@ def test_subject_keywords_load_2(app, thesis_metadata):
     del thesis_metadata["subject"]
     thesis_metadata["keywords"] = [
         {
-            "name": "něco1",
+            "value": "něco1",
             "lang": "cze"
         },
         {
-            "name": "něco2",
+            "value": "něco2",
             "lang": "cze"
         }
     ]

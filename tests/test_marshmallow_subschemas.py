@@ -112,8 +112,8 @@ def test_approved_3():
             }
         ]
     }
-    result = schema.load(meta_data)
-    pprint(result)
+    with pytest.raises(ValidationError):
+        schema.load(meta_data)
 
 
 #########################################################################
@@ -204,7 +204,7 @@ def contributor_fix():
 
 
 @pytest.fixture()
-def language_fix():
+def studyfield_fix():
     return {
         "title": [
             {
@@ -275,7 +275,7 @@ def language_fix():
 
 
 @pytest.fixture()
-def institution_fix():
+def access_fix():
     return {
         "title": [
             {
