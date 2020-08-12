@@ -251,6 +251,19 @@ RECORDS_REST_FACETS = {
             #         }
             #     }
             # },
+            "provider": {
+                "nested": {
+                    "path": "provider.title"
+                },
+                "aggs": {
+                    "provider": {
+                        "terms": {
+                            "field": "provider.title.value.keyword",
+                            "size": 100
+                        }
+                    }
+                }
+            },
             "valid": {
                 'terms': {
                     'field': "invenio_draft_validation.valid"
@@ -282,8 +295,29 @@ RECORDS_REST_FACETS = {
     }
 }
 
-RECORDS_REST_SORT_OPTIONS = {
-}
+RECORDS_REST_SORT_OPTIONS = dict(
+#     records=dict(
+#         bestmatch=dict(
+#             title=('Best match'),
+#             fields=['_score'],
+#             default_order='desc',
+#             order=1,
+#         ),
+#         mostrecent=dict(
+#             title=('Most recent'),
+#             fields=['-_created'],
+#             default_order='asc',
+#             order=2,
+#         ),
+#     )
+)
+# """Setup sorting options."""
+#
+RECORDS_REST_DEFAULT_SORT = dict(
+#     records=dict(
+#         query='bestmatch',
+#         noquery='mostrecent',
+#     )
+)
 
-RECORDS_REST_DEFAULT_SORT = {
-}
+"""Set default sorting options."""
