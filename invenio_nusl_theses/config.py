@@ -297,11 +297,11 @@ RECORDS_REST_FACETS = {
     }
 }
 
-RECORDS_REST_SORT_OPTIONS = dict(
-    records=dict(
+RECORDS_REST_SORT_OPTIONS = {
+    'draft-invenio_nusl_theses-nusl-theses-v1.0.0': dict(
         byid=dict(
             title=('by id'),
-            fields=['id'],
+            fields=['-id'],
             default_order='desc',
             order=1,
         ),
@@ -318,14 +318,13 @@ RECORDS_REST_SORT_OPTIONS = dict(
             order=3,
         ),
     )
-)
-# """Setup sorting options."""
-#
-RECORDS_REST_DEFAULT_SORT = dict(
-    records=dict(
-        query='bestmatch',
-        noquery='byid',
-    )
-)
+}
+
+RECORDS_REST_DEFAULT_SORT = {
+    'draft-invenio_nusl_theses-nusl-theses-v1.0.0': {
+        'query': 'byid',
+        'noquery': 'byid',
+    }
+}
 
 """Set default sorting options."""
