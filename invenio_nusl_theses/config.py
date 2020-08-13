@@ -298,28 +298,34 @@ RECORDS_REST_FACETS = {
 }
 
 RECORDS_REST_SORT_OPTIONS = dict(
-#     records=dict(
-#         bestmatch=dict(
-#             title=('Best match'),
-#             fields=['_score'],
-#             default_order='desc',
-#             order=1,
-#         ),
-#         mostrecent=dict(
-#             title=('Most recent'),
-#             fields=['-_created'],
-#             default_order='asc',
-#             order=2,
-#         ),
-#     )
+    records=dict(
+        byid=dict(
+            title=('by id'),
+            fields=['_source.id'],
+            default_order='desc',
+            order=1,
+        ),
+        bestmatch=dict(
+            title=('Best match'),
+            fields=['_score'],
+            default_order='desc',
+            order=2,
+        ),
+        mostrecent=dict(
+            title=('Most recent'),
+            fields=['-_created'],
+            default_order='asc',
+            order=3,
+        ),
+    )
 )
 # """Setup sorting options."""
 #
 RECORDS_REST_DEFAULT_SORT = dict(
-#     records=dict(
-#         query='bestmatch',
-#         noquery='mostrecent',
-#     )
+    records=dict(
+        query='bestmatch',
+        noquery='byid',
+    )
 )
 
 """Set default sorting options."""
