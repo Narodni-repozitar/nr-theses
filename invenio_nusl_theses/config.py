@@ -178,6 +178,7 @@ FILTERS = {
     'subjectKeywords': terms_filter('subjectKeywords'),
     'accessRights': terms_filter('accessRights'),
     'studyField': nested_terms_filter('studyField.title', 'value.keyword'),
+    'provider': nested_terms_filter('provider.title', 'value.keyword'),
     'university': degree_grantor_filter('degreeGrantor.ancestors.title.value.keyword'),
     'faculty': degree_grantor_filter('degreeGrantor.ancestors.title.value.keyword'),
     'valid': boolean_filter("invenio_draft_validation.valid"),
