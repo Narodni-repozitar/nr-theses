@@ -301,7 +301,7 @@ RECORDS_REST_SORT_OPTIONS = dict(
     records=dict(
         byid=dict(
             title=('by id'),
-            fields=['_source.id'],
+            fields=['id'],
             default_order='desc',
             order=1,
         ),
