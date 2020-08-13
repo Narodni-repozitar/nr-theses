@@ -32,7 +32,7 @@ DRAFT_ENABLED_RECORDS_REST_ENDPOINTS = {
         'pid_fetcher': 'nusl',
         'draft_pid_type': 'dnusl',
         'draft_allow_patch': True,
-        'max_results_window': 500000,
+        'max_result_window': 500000,
 
         'record_marshmallow': ThesisRecordSchemaV1,
         'metadata_marshmallow': ThesisMetadataSchemaV1,
