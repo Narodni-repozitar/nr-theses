@@ -1,8 +1,7 @@
 from flask import current_app
-from invenio_jsonschemas import current_jsonschemas
 
-from invenio_records_draft.record import DraftEnabledRecordMixin, MarshmallowValidator
 from invenio_records.api import Record
+from oarepo_validate import SchemaKeepingRecordMixin, MarshmallowValidatedRecordMixin
 from werkzeug.utils import cached_property
 
 
