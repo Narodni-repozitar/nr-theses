@@ -1,6 +1,7 @@
 from flask import current_app
 
 from invenio_records.api import Record
+from oarepo_references.mixins import ReferenceEnabledRecordMixin
 from oarepo_validate import SchemaKeepingRecordMixin, MarshmallowValidatedRecordMixin
 from werkzeug.utils import cached_property
 
