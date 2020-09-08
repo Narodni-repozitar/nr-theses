@@ -10,19 +10,21 @@ from setuptools import find_packages, setup
 readme = open('README.rst').read()
 
 tests_require = [
-    'check-manifest>=0.25',
-    'coverage>=4.0',
-    'isort>=4.3.3',
-    'mock>=2.0.0',
-    'pydocstyle>=1.0.0',
-    'pytest-cache>=1.0',
-    'pytest-invenio>=1.0.2,<1.1.0',
-    'pytest-mock>=1.6.0',
-    'pytest-cov>=1.8.0',
-    'pytest-random-order>=0.5.4',
-    'pytest-pep8>=1.0.6',
-    'pytest>=2.8.0',
-    'selenium>=3.4.3',
+    # 'check-manifest>=0.25',
+    # 'coverage>=4.0',
+    # 'isort>=4.3.3',
+    # 'mock>=2.0.0',
+    # 'pydocstyle>=1.0.0',
+    # 'pytest-cache>=1.0',
+    # 'pytest-invenio>=1.0.2,<1.1.0',
+    # 'pytest-mock>=1.6.0',
+    # 'pytest-cov>=1.8.0',
+    # 'pytest-random-order>=0.5.4',
+    # 'pytest-pep8>=1.0.6',
+    # 'pytest>=2.8.0',
+    # 'selenium>=3.4.3',
+    'oarepo>=3.3.0.4, <3.4.0.0',
+    'pytest>=6.0.0, <7.0.0'
 ]
 
 extras_require = {
@@ -32,18 +34,13 @@ extras_require = {
     'tests': tests_require,
 }
 
-extras_require['all'] = []
-for reqs in extras_require.values():
-    extras_require['all'].extend(reqs)
-
 setup_requires = [
     'pytest-runner>=2.6.2',
 ]
 
 install_requires = [
-    'invenio-oarepo>=1.0.0',
-    'invenio-oarepo-mapping-includes>=1.3.0',
-    'invenio-oarepo-multilingual>=1.1.1'
+    "oarepo-records-draft>=5.0.0a7, <6.0.0",
+    "oarepo-validate>=1.2.8, <2.0.0"
 ]
 
 packages = find_packages()

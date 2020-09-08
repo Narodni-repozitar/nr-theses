@@ -111,7 +111,7 @@ class InstitutionsSubClass(ApprovedTaxonomySchema):
 #########################################################################
 #                     Main schema                                       #
 #########################################################################
-class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
+class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
     """Schema for the record metadata."""
 
     schema = fields.String(attribute='$schema', data_key='$schema', required=False)
@@ -158,7 +158,7 @@ class ThesisMetadataSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # modifikace
         return data
 
 
-class ThesisRecordSchemaV1(DraftEnabledSchema, StrictKeysMixin):  # get - zobrazit
+class ThesisRecordSchemaV1(StrictKeysMixin):  # get - zobrazit
     """Record schema."""
 
     metadata = fields.Nested(ThesisMetadataSchemaV1())
