@@ -5,14 +5,17 @@ from oarepo_references.mixins import ReferenceEnabledRecordMixin
 from oarepo_validate import SchemaKeepingRecordMixin, MarshmallowValidatedRecordMixin
 from werkzeug.utils import cached_property
 
+from .constants import THESES_ALLOWED_SCHEMAS, THESES_PREFERRED_SCHEMA
+from .marshmallow import ThesisMetadataSchemaV1
+
 
 class PublishedThesisRecord(SchemaKeepingRecordMixin,
                             MarshmallowValidatedRecordMixin,
                             ReferenceEnabledRecordMixin,
                             Record):
-    ALLOWED_SCHEMAS = OBJECT_ALLOWED_SCHEMAS
-    PREFERRED_SCHEMA = OBJECT_PREFERRED_SCHEMA
-    MARSHMALLOW_SCHEMA = RestorationObjectMetadataSchemaV1
+    ALLOWED_SCHEMAS = THESES_ALLOWED_SCHEMAS
+    PREFERRED_SCHEMA = THESES_PREFERRED_SCHEMA
+    MARSHMALLOW_SCHEMA = ThesisMetadataSchemaV1
 
     @cached_property
     def server_name(self):

@@ -41,7 +41,10 @@ setup_requires = [
 install_requires = [
     "oarepo-records-draft>=5.0.0a7, <6.0.0",
     "oarepo-validate>=1.2.8, <2.0.0",
-    "oarepo-references>=1.8.1, <2.0.0"
+    "oarepo-references>=1.8.1, <2.0.0",
+    "oarepo_invenio_model>=2.0.1, <3.0.0",
+    "oarepo_multilingual>=2.2.0, <3.0.0",
+    "oarepo-taxonomies>=2.4.1, <3.0.0"
 ]
 
 packages = find_packages()

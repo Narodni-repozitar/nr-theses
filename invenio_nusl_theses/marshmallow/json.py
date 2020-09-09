@@ -9,11 +9,11 @@
 
 from __future__ import absolute_import, print_function
 
-from invenio_records_draft.marshmallow import DraftEnabledSchema
 from invenio_records_rest.schemas import Nested, StrictKeysMixin
-from invenio_records_rest.schemas.fields import PersistentIdentifier, SanitizedUnicode
+from invenio_records_rest.schemas.fields import SanitizedUnicode
 from invenio_records_rest.schemas.fields.datetime import DateString
 from marshmallow import fields, validate, ValidationError, pre_load, post_load
+from oarepo_invenio_model.marshmallow import InvenioRecordMetadataSchemaV1Mixin
 from pycountry import languages, countries
 
 from invenio_nusl_common.marshmallow.json import MultilanguageSchemaV1, ValueTypeSchemaV1, \
@@ -76,12 +76,7 @@ class ContributorTaxonomySchema(ApprovedTaxonomySchema):
     marcCode = SanitizedUnicode()
 
 
-class CreatorSubSchemaV1(DraftEnabledSchema, StrictKeysMixin):
-    name = SanitizedUnicode(required=True)
-    id = Nested(ValueTypeSchemaV1())
-
-
-class ContributorSubSchemaV1(DraftEnabledSchema):
+class ContributorSubSchemaV1(StrictKeysMixin):
     name = SanitizedUnicode(required=True)
     id = Nested(ValueTypeSchemaV1())
     role = Nested(ContributorTaxonomySchema(), required=True)
@@ -111,11 +106,9 @@ class InstitutionsSubClass(ApprovedTaxonomySchema):
 #########################################################################
 #                     Main schema                                       #
 #########################################################################
-class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
+class ThesisMetadataSchemaV1(InvenioRecordMetadataSchemaV1Mixin, StrictKeysMixin):  # modifikace
     """Schema for the record metadata."""
 
-    schema = fields.String(attribute='$schema', data_key='$schema', required=False)
-    id = SanitizedUnicode(required=True)
     language = fields.List(Nested(LanguageSubSchemaV1), required=True,
                            validate=validate.Length(min=1))
     identifier = fields.List(Nested(ValueTypeSchemaV1()),
@@ -156,14 +149,3 @@ class ThesisMetadataSchemaV1(StrictKeysMixin):  # modifikace
             raise ValidationError("Number of keywords or subject have to be minimal three!",
                                   field_names=["subject", "keywords"])
         return data
-
-
-class ThesisRecordSchemaV1(StrictKeysMixin):  # get - zobrazit
-    """Record schema."""
-
-    metadata = fields.Nested(ThesisMetadataSchemaV1())
-    created = fields.Str(dump_only=True)
-    revision = fields.Integer(dump_only=True)
-    updated = fields.Str(dump_only=True)
-    links = fields.Dict(dump_only=True)
-    id = PersistentIdentifier()
