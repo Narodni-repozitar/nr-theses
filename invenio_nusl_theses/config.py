@@ -55,7 +55,7 @@ RECORDS_DRAFT_ENDPOINTS = {
 # DRAFT_ENABLED_RECORDS_REST_ENDPOINTS = {
 #     'theses': {
 #         'json_schemas': [
-#             'invenio_nusl_theses/nusl-theses-v1.0.0.json'
+#             'invenio_nusl_theses/nusl-common-v1.0.0.json'
 #         ],
 #         'published_pid_type': 'nusl',
 #         'pid_minter': 'nusl',

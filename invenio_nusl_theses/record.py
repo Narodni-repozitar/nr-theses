@@ -6,7 +6,7 @@ from oarepo_validate import SchemaKeepingRecordMixin, MarshmallowValidatedRecord
 from werkzeug.utils import cached_property
 
 from .constants import THESES_ALLOWED_SCHEMAS, THESES_PREFERRED_SCHEMA
-from .marshmallow import ThesisMetadataSchemaV1
+from .marshmallow import ThesisMetadataSchemaV2
 
 
 class PublishedThesisRecord(SchemaKeepingRecordMixin,
@@ -15,7 +15,7 @@ class PublishedThesisRecord(SchemaKeepingRecordMixin,
                             Record):
     ALLOWED_SCHEMAS = THESES_ALLOWED_SCHEMAS
     PREFERRED_SCHEMA = THESES_PREFERRED_SCHEMA
-    MARSHMALLOW_SCHEMA = ThesisMetadataSchemaV1
+    MARSHMALLOW_SCHEMA = ThesisMetadataSchemaV2
 
     @cached_property
     def server_name(self):

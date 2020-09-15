@@ -8,7 +8,7 @@
 """Mappings.
 
 Mappings define how invenio_nusl_theses and their fields will be indexed in Elasticsearch.
-The provided nusl-theses-v1.0.0.json file is an example of how to index invenio_nusl_theses
+The provided nusl-common-v1.0.0.json file is an example of how to index invenio_nusl_theses
 in Elasticsearch. You need to provide one mapping per major version of
 Elasticsearch you want to support.
 """
