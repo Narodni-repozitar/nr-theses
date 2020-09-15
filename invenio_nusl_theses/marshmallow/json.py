@@ -7,6 +7,8 @@
 
 """JSON Schemas."""
 
+from invenio_records_rest.schemas.fields.datetime import DateString
+from marshmallow import fields
 # from __future__ import absolute_import, print_function
 #
 # from invenio_records_rest.schemas import Nested, StrictKeysMixin
@@ -149,9 +151,11 @@
 #             raise ValidationError("Number of keywords or subject have to be minimal three!",
 #                                   field_names=["subject", "keywords"])
 #         return data
+from oarepo_taxonomies.marshmallow import TaxonomyField
+
 from invenio_nusl_common.marshmallow.json import CommonMetadataSchemaV2
-from invenio_records_rest.schemas.fields.datetime import DateString
-from marshmallow import fields
+from invenio_nusl_common.marshmallow.subschemas import TitledMixin, InstitutionsMixin
+from invenio_nusl_theses.marshmallow.subschemas import StudyFieldMixin
 
 
 class ThesisMetadataSchemaV2(CommonMetadataSchemaV2):
