@@ -4,5 +4,5 @@ from marshmallow.fields import List
 
 
 class StudyFieldMixin(StrictKeysMixin):
-    AKVO = SanitizedUnicode
+    AKVO = SanitizedUnicode()
     aliases = List(SanitizedUnicode())
