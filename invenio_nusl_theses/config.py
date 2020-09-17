@@ -13,11 +13,9 @@ from elasticsearch_dsl import Q
 from invenio_records_rest.facets import terms_filter
 from invenio_records_rest.utils import allow_all
 
-from invenio_nusl_theses.record import PublishedThesisRecord
-
 RECORDS_DRAFT_ENDPOINTS = {
     'theses': {
-        'draft': 'draft-restorations/objects',
+        'draft': 'draft-theses',
 
         'pid_type': 'nusl',
         'pid_minter': 'nusl',
@@ -25,7 +23,7 @@ RECORDS_DRAFT_ENDPOINTS = {
         'default_endpoint_prefix': True,
         'max_result_window': 500000,
 
-        'record_class': PublishedThesisRecord,
+        'record_class': 'invenio_nusl_theses.record:PublishedThesisRecord',
 
         'publish_permission_factory_imp': allow_all,  # TODO: change this !!!
         'unpublish_permission_factory_imp': allow_all,
