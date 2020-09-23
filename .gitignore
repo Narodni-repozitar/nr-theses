@@ -65,3 +65,5 @@ target/
 .*.sw?
 
 epydoc/
+
+database.db
