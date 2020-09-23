@@ -23,6 +23,9 @@ from invenio_db import db as db_
 from invenio_indexer import InvenioIndexer
 from invenio_indexer.api import RecordIndexer
 from invenio_jsonschemas import InvenioJSONSchemas
+from invenio_records_rest.views import create_blueprint_from_app
+
+from invenio_nusl_theses import InvenioNUSLTheses
 from invenio_pidstore.providers.recordid import RecordIdProvider
 from invenio_records import InvenioRecords, Record
 from invenio_records_rest import InvenioRecordsREST
@@ -130,6 +133,7 @@ def app():
     InvenioRecords(app)
     InvenioRecordsREST(app)
     InvenioCelery(app)
+    InvenioNUSLTheses(app)
 
     # Celery
     print(app.config["CELERY_BROKER_URL"])
@@ -143,7 +147,7 @@ def app():
         user_obj = User.query.get(int(user_id))
         return user_obj
 
-    # app.register_blueprint(create_blueprint_from_app(app))
+    # blueprints = create_blueprint_from_app(app)
 
     @app.route('/test/login/<int:id>', methods=['GET', 'POST'])
     def test_login(id):
@@ -421,11 +425,11 @@ def base_json():
         "dateIssued": "2010-07-01",
         "dateDefended": "2010-07-01",
         "defended": True,
-        "degreeGrantor": {
+        "degreeGrantor": [{
             "links": {
                 "self": "http://127.0.0.1:5000/2.0/taxonomies/test_taxonomy/61384984"
             }
-        },
+        }],
         "keywords": [
             {"cs": "1", "en": "1"},
             {"cs": "2", "en": "2"},
@@ -475,85 +479,86 @@ def base_json():
 def base_json_dereferenced():
     return {
         'accessRights': [{
-                             'is_ancestor': False,
-                             'links': {
-                                 'self': 'http://127.0.0.1:5000/2.0/taxonomies/test_taxonomy/c-abf2'
-                             },
-                             'relatedURI': {
-                                 'coar': 'http://purl.org/coar/access_right/c_abf2',
-                                 'eprint': 'http://purl.org/eprint/accessRights/OpenAccess',
-                                 'vocabs':
-                                     'https://vocabs.acdh.oeaw.ac.at/archeaccessrestrictions/public'
-                             },
-                             'title': {'cs': 'otevřený přístup', 'en': 'open access'}
-                         }],
+            'is_ancestor': False,
+            'links': {
+                'self': 'http://127.0.0.1:5000/2.0/taxonomies/test_taxonomy/c-abf2'
+            },
+            'relatedURI': {
+                'coar': 'http://purl.org/coar/access_right/c_abf2',
+                'eprint': 'http://purl.org/eprint/accessRights/OpenAccess',
+                'vocabs':
+                    'https://vocabs.acdh.oeaw.ac.at/archeaccessrestrictions/public'
+            },
+            'title': {'cs': 'otevřený přístup', 'en': 'open access'}
+        }],
         'control_number': '411100',
         'creator': [{'name': 'Daniel Kopecký'}],
         'dateDefended': '2010-07-01',
         'dateIssued': '2010-07-01',
         'defended': True,
         'degreeGrantor': [{
-                              'address': 'Malostranské náměstí 259/12, 118 00 Praha 1',
-                              'aliases': ['AMU'],
-                              'ico': '61384984',
-                              'is_ancestor': False,
-                              'links': {
-                                  'self':
-                                      'http://127.0.0.1:5000/2.0/taxonomies/test_taxonomy/61384984'
-                              },
-                              'provider': True,
-                              'related': {'rid': '51000'},
-                              'title': {
-                                  'cs': 'Akademie múzických umění v Praze',
-                                  'en': 'Academy of Performing Arts in Prague'
-                              },
-                              'type': 'veřejná VŠ',
-                              'url': 'https://www.amu.cz'
-                          }],
+            'address': 'Malostranské náměstí 259/12, 118 00 Praha 1',
+            'aliases': ['AMU'],
+            'ico': '61384984',
+            'is_ancestor': False,
+            'links': {
+                'self':
+                    'http://127.0.0.1:5000/2.0/taxonomies/test_taxonomy/61384984'
+            },
+            'provider': True,
+            'related': {'rid': '51000'},
+            'title': {
+                'cs': 'Akademie múzických umění v Praze',
+                'en': 'Academy of Performing Arts in Prague'
+            },
+            'type': 'veřejná VŠ',
+            'url': 'https://www.amu.cz'
+        }],
         'keywords': [{'cs': '1', 'en': '1'},
                      {'cs': '2', 'en': '2'},
                      {'cs': '3', 'en': '3'}],
         'language': [{
-                         'is_ancestor': False,
-                         'links': {
-                             'self': 'http://127.0.0.1:5000/2.0/taxonomies/test_taxonomy/cze'
-                         },
-                         'title': {'cs': 'čeština', 'en': 'Czech'}
-                     }],
+            'is_ancestor': False,
+            'links': {
+                'self': 'http://127.0.0.1:5000/2.0/taxonomies/test_taxonomy/cze'
+            },
+            'title': {'cs': 'čeština', 'en': 'Czech'}
+        }],
         'provider': [{
-                         'address': 'Malostranské náměstí 259/12, 118 00 Praha 1',
-                         'aliases': ['AMU'],
-                         'ico': '61384984',
-                         'is_ancestor': False,
-                         'links': {
-                             'self': 'http://127.0.0.1:5000/2.0/taxonomies/test_taxonomy/61384984'
-                         },
-                         'provider': True,
-                         'related': {'rid': '51000'},
-                         'title': {
-                             'cs': 'Akademie múzických umění v Praze',
-                             'en': 'Academy of Performing Arts in Prague'
-                         },
-                         'type': 'veřejná VŠ',
-                         'url': 'https://www.amu.cz'
-                     }],
+            'address': 'Malostranské náměstí 259/12, 118 00 Praha 1',
+            'aliases': ['AMU'],
+            'ico': '61384984',
+            'is_ancestor': False,
+            'links': {
+                'self': 'http://127.0.0.1:5000/2.0/taxonomies/test_taxonomy/61384984'
+            },
+            'provider': True,
+            'related': {'rid': '51000'},
+            'title': {
+                'cs': 'Akademie múzických umění v Praze',
+                'en': 'Academy of Performing Arts in Prague'
+            },
+            'type': 'veřejná VŠ',
+            'url': 'https://www.amu.cz'
+        }],
         'resourceType': [{
-                             'is_ancestor': False,
-                             'links': {
-                                 'self': 'http://127.0.0.1:5000/2.0/taxonomies/test_taxonomy/bakalarske-prace'
-                             },
-                             'title': {
-                                 'cs': 'Bakalářské práce',
-                                 'en': 'Bachelor’s theses'
-                             }
-                         }],
+            'is_ancestor': False,
+            'links': {
+                'self': 'http://127.0.0.1:5000/2.0/taxonomies/test_taxonomy/bakalarske-prace'
+            },
+            'title': {
+                'cs': 'Bakalářské práce',
+                'en': 'Bachelor’s theses'
+            }
+        }],
         'studyField': [{
-                           'AKVO': '8203R082',
-                           'is_ancestor': False,
-                           'links': {
-                               'self': 'http://127.0.0.1:5000/2.0/taxonomies/test_taxonomy/o-herectvi-alternativniho-divadla'
-                           },
-                           'title': {'cs': 'Herectví alternativního divadla'}
-                       }],
+            'AKVO': '8203R082',
+            'is_ancestor': False,
+            'links': {
+                'self': 'http://127.0.0.1:5000/2.0/taxonomies/test_taxonomy/o-herectvi'
+                        '-alternativniho-divadla'
+            },
+            'title': {'cs': 'Herectví alternativního divadla'}
+        }],
         'title': [{'cs': 'Testovací záznam', 'en': 'Test record'}]
     }
