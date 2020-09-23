@@ -6,9 +6,9 @@
 # the terms of the MIT License; see LICENSE file for more details.
 
 """JSON Schemas."""
-
+import arrow
 from invenio_records_rest.schemas.fields.datetime import DateString
-from marshmallow import fields
+from marshmallow import fields, validates, ValidationError
 # from __future__ import absolute_import, print_function
 #
 # from invenio_records_rest.schemas import Nested, StrictKeysMixin
@@ -162,4 +162,15 @@ class ThesisMetadataSchemaV2(CommonMetadataSchemaV2):
     dateDefended = DateString(required=True)
     defended = fields.Boolean(required=True)
     degreeGrantor = TaxonomyField(mixins=[TitledMixin, InstitutionsMixin], required=True)
-    studyField = TaxonomyField(mixins=[TitledMixin, StudyFieldMixin], required=True)
+    studyField = TaxonomyField(name="studyField", mixins=[TitledMixin, StudyFieldMixin],
+                               required=True)
+
+    @validates("dateDefended")
+    def validate_date_range(self, value):
+        date = arrow.get(value)
+        min = arrow.get("1700-01-01")
+        current_date = arrow.get()
+        if date > current_date:
+            raise ValidationError("Date cannot be in the future")
+        if date < min:
+            raise ValidationError("Records older than from 1700 is not supported")
