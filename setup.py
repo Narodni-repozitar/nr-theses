@@ -10,19 +10,6 @@ from setuptools import find_packages, setup
 readme = open('README.rst').read()
 
 tests_require = [
-    # 'check-manifest>=0.25',
-    # 'coverage>=4.0',
-    # 'isort>=4.3.3',
-    # 'mock>=2.0.0',
-    # 'pydocstyle>=1.0.0',
-    # 'pytest-cache>=1.0',
-    # 'pytest-invenio>=1.0.2,<1.1.0',
-    # 'pytest-mock>=1.6.0',
-    # 'pytest-cov>=1.8.0',
-    # 'pytest-random-order>=0.5.4',
-    # 'pytest-pep8>=1.0.6',
-    # 'pytest>=2.8.0',
-    # 'selenium>=3.4.3',
     'oarepo>=3.3.0.4, <3.4.0.0',
     'pytest>=6.0.0, <7.0.0'
 ]
@@ -44,8 +31,12 @@ install_requires = [
     "oarepo-references>=1.8.1, <2.0.0",
     "oarepo_invenio_model>=2.0.1, <3.0.0",
     "oarepo_multilingual>=2.2.0, <3.0.0",
-    "oarepo-taxonomies>=2.4.1, <3.0.0"
+    "oarepo-taxonomies>=2.4.1, <3.0.0",
+    # 'https://github.com/Narodni-repozitar/invenio-nusl-common.git#egg=package-3.0.0a'
 ]
+
+dependency_links = [
+    'https://github.com/Narodni-repozitar/invenio-nusl-common/tarball/master#egg=package-3.0.0a']
 
 packages = find_packages()
 
@@ -69,6 +60,7 @@ setup(
     zip_safe=False,
     include_package_data=True,
     platforms='any',
+    dependency_links=dependency_links,
     entry_points={
         'invenio_base.apps': [
             'theses = invenio_nusl_theses:InvenioNUSLTheses',
