@@ -3,12 +3,13 @@ from __future__ import absolute_import, print_function
 import os
 import shutil
 import subprocess
+import sys
 import tempfile
 import uuid
 from pathlib import Path
 
 import pytest
-from flask import Flask, make_response, url_for
+from flask import Flask, make_response, url_for, current_app
 from flask_login import LoginManager, login_user
 from flask_principal import RoleNeed, Principal, Permission
 from flask_taxonomies.proxies import current_flask_taxonomies
@@ -23,22 +24,26 @@ from invenio_db import db as db_
 from invenio_indexer import InvenioIndexer
 from invenio_indexer.api import RecordIndexer
 from invenio_jsonschemas import InvenioJSONSchemas
-from invenio_records_rest.views import create_blueprint_from_app
-
-from invenio_nusl_theses import InvenioNUSLTheses
+from invenio_pidstore import InvenioPIDStore
 from invenio_pidstore.providers.recordid import RecordIdProvider
 from invenio_records import InvenioRecords, Record
 from invenio_records_rest import InvenioRecordsREST
 from invenio_records_rest.schemas.fields import SanitizedUnicode
+from invenio_records_rest.utils import PIDConverter
+from invenio_records_rest.views import create_blueprint_from_app
 from invenio_search import InvenioSearch, RecordsSearch
 from marshmallow import Schema
 from oarepo_mapping_includes.ext import OARepoMappingIncludesExt
+from oarepo_records_draft.ext import RecordsDraft
 from oarepo_references import OARepoReferences
 from oarepo_references.mixins import ReferenceEnabledRecordMixin
+from oarepo_taxonomies.cli import init_db
 from oarepo_taxonomies.ext import OarepoTaxonomies
 from oarepo_validate import MarshmallowValidatedRecordMixin
 from sqlalchemy_utils import database_exists, create_database, drop_database
+from werkzeug.routing import BuildError
 
+from invenio_nusl_theses import InvenioNUSLTheses
 from tests.helpers import set_identity
 
 
@@ -134,6 +139,9 @@ def app():
     InvenioRecordsREST(app)
     InvenioCelery(app)
     InvenioNUSLTheses(app)
+    InvenioPIDStore(app)
+    RecordsDraft(app)
+    app.url_map.converters['pid'] = PIDConverter
 
     # Celery
     print(app.config["CELERY_BROKER_URL"])
@@ -147,7 +155,7 @@ def app():
         user_obj = User.query.get(int(user_id))
         return user_obj
 
-    # blueprints = create_blueprint_from_app(app)
+    app.register_blueprint(create_blueprint_from_app(app))
 
     @app.route('/test/login/<int:id>', methods=['GET', 'POST'])
     def test_login(id):
@@ -165,6 +173,7 @@ def app():
 
     with app.app_context():
         # app.register_blueprint(taxonomies_blueprint)
+        print(app.url_map)
         yield app
 
     shutil.rmtree(instance_path)
@@ -186,6 +195,11 @@ def db(app):
         create_database(db_.engine.url)
     db_.create_all()
     subprocess.run(["invenio", "taxonomies", "init"])
+    runner = app.test_cli_runner()
+    result = runner.invoke(init_db)
+    if result.exit_code:
+        print(result.output, file=sys.stderr)
+    assert result.exit_code == 0
     yield db_
 
     # Explicitly close DB connection
