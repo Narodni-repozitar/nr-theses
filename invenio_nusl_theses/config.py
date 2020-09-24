@@ -11,70 +11,74 @@ from __future__ import absolute_import, print_function
 
 from elasticsearch_dsl import Q
 from invenio_records_rest.facets import terms_filter
+from invenio_records_rest.utils import allow_all
 
-from invenio_nusl_theses.marshmallow import ThesisRecordSchemaV1, ThesisMetadataSchemaV1
-from invenio_nusl_theses.permissions import thesis_write_permission_factory
-from invenio_nusl_theses.record import PublishedThesisRecord, DraftThesisRecord
-
-THESES_SEARCH_INDEX = 'invenio_nusl_theses-nusl-theses-v1.0.0'
-THESES_STAGING_SEARCH_INDEX = 'invenio_nusl_theses-nusl-theses-staging-v1.0.0'
-THESES_PID = 'pid(nusl,record_class="invenio_nusl_theses.api:ThesisRecord")'
-THESES_STAGING_JSON_SCHEMA = "https://nusl.cz/schemas/invenio_nusl_theses/nusl-theses-staging-v1" \
-                             ".0.0.json"
-
-DRAFT_ENABLED_RECORDS_REST_ENDPOINTS = {
+RECORDS_DRAFT_ENDPOINTS = {
     'theses': {
-        'json_schemas': [
-            'invenio_nusl_theses/nusl-theses-v1.0.0.json'
-        ],
-        'published_pid_type': 'nusl',
+        'draft': 'draft-theses',
+
+        'pid_type': 'nusl',
         'pid_minter': 'nusl',
         'pid_fetcher': 'nusl',
-        'draft_pid_type': 'dnusl',
-        'draft_allow_patch': True,
+        'default_endpoint_prefix': True,
         'max_result_window': 500000,
 
-        'record_marshmallow': ThesisRecordSchemaV1,
-        'metadata_marshmallow': ThesisMetadataSchemaV1,
+        'record_class': 'invenio_nusl_theses.record:PublishedThesisRecord',
 
-        'draft_record_class': DraftThesisRecord,
-        'published_record_class': PublishedThesisRecord,
-
-        'publish_permission_factory': thesis_write_permission_factory,
-        'unpublish_permission_factory': thesis_write_permission_factory,
-        'edit_permission_factory': thesis_write_permission_factory,
-        'draft_modify_permission_factory': thesis_write_permission_factory,
-        'draft_read_permission_factory': thesis_write_permission_factory,
-
-        # 'search_class': DebugACLRecordsSearch,
+        'publish_permission_factory_imp': allow_all,  # TODO: change this !!!
+        'unpublish_permission_factory_imp': allow_all,
+        'edit_permission_factory_imp': allow_all,
+        'default_media_type': 'application/json',
         # 'indexer_class': CommitingRecordIndexer,
 
+    },
+    'draft-theses': {
+        'pid_type': 'dnusl',
+        # 'record_class': 'restoration.objects.record.RestorationObjectDraftRecord',
+        # 'create_permission_factory_imp':
+        #     'restoration.objects.permissions.create_object_permission_impl',
+        # 'update_permission_factory_imp':
+        #     'restoration.objects.permissions.update_object_permission_impl'
     }
 }
 
-# https://github.com/oarepo/invenio-oarepo-ui/blob/master/invenio_oarepo_ui/views.py#L28
-INVENIO_OAREPO_UI_COLLECTIONS = {
-    "theses": {
-        "title": {
-            "cs-cz": "Vysokoškolské práce",
-            "en-us": "Theses"
-        },
-        "description": {
-            "cs-cz": """
 
-""",
-            "en-us": """
+# THESES_SEARCH_INDEX = 'invenio_nusl_theses-nusl-theses-v1.0.0'
+# THESES_STAGING_SEARCH_INDEX = 'invenio_nusl_theses-nusl-theses-staging-v1.0.0'
+# THESES_PID = 'pid(nusl,record_class="invenio_nusl_theses.api:ThesisRecord")'
+# THESES_STAGING_JSON_SCHEMA = "https://nusl.cz/schemas/invenio_nusl_theses/nusl-theses-staging
+# -v1" \
+#                              ".0.0.json"
 
-"""
-        },
-        "rest": "/api/drafts/theses/",
-        "facet_filters": list()
-    },
-}
-
-INVENIO_RECORD_DRAFT_SCHEMAS = [
-    'invenio_nusl_theses/nusl-theses-v1.0.0.json',
-]
+# DRAFT_ENABLED_RECORDS_REST_ENDPOINTS = {
+#     'theses': {
+#         'json_schemas': [
+#             'invenio_nusl_theses/nusl-common-v1.0.0.json'
+#         ],
+#         'published_pid_type': 'nusl',
+#         'pid_minter': 'nusl',
+#         'pid_fetcher': 'nusl',
+#         'draft_pid_type': 'dnusl',
+#         'draft_allow_patch': True,
+#         'max_result_window': 500000,
+#
+#         'record_marshmallow': ThesisRecordSchemaV1,
+#         'metadata_marshmallow': ThesisMetadataSchemaV1,
+#
+#         'draft_record_class': DraftThesisRecord,
+#         'published_record_class': PublishedThesisRecord,
+#
+#         'publish_permission_factory': thesis_write_permission_factory,
+#         'unpublish_permission_factory': thesis_write_permission_factory,
+#         'edit_permission_factory': thesis_write_permission_factory,
+#         'draft_modify_permission_factory': thesis_write_permission_factory,
+#         'draft_read_permission_factory': thesis_write_permission_factory,
+#
+#         # 'search_class': DebugACLRecordsSearch,
+#         # 'indexer_class': CommitingRecordIndexer,
+#
+#     }
+# }
 
 
 def degree_grantor_filter(field, path=None):
