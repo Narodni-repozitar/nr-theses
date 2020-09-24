@@ -24,7 +24,7 @@ before_install:
     - cat poetry.lock
 
 install:
-    - travis_retry poetry install
+    - "travis_retry poetry install --extras tests"
 
 script:
     - "./run-tests.sh"
