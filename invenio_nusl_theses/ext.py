@@ -35,13 +35,11 @@ class InvenioNUSLTheses(object):
 
         Override configuration variables with the values in this package.
         """
-        app.config.setdefault('INVENIO_RECORD_DRAFT_SCHEMAS', []).extend(config.INVENIO_RECORD_DRAFT_SCHEMAS)
-        app.config.setdefault('INVENIO_OAREPO_UI_COLLECTIONS', {}).update(config.INVENIO_OAREPO_UI_COLLECTIONS)
-        app.config.setdefault('DRAFT_ENABLED_RECORDS_REST_ENDPOINTS', {}).update(
-            config.DRAFT_ENABLED_RECORDS_REST_ENDPOINTS)
-
+        app.config.setdefault('RECORDS_DRAFT_ENDPOINTS', {}).update(config.RECORDS_DRAFT_ENDPOINTS)
         app.config.setdefault('RECORDS_REST_FACETS', {}).update(config.RECORDS_REST_FACETS)
 
-        app.config.setdefault('RECORDS_REST_SORT_OPTIONS', {}).update(config.RECORDS_REST_SORT_OPTIONS)
+        app.config.setdefault('RECORDS_REST_SORT_OPTIONS', {}).update(
+            config.RECORDS_REST_SORT_OPTIONS)
 
-        app.config.setdefault('RECORDS_REST_DEFAULT_SORT', {}).update(config.RECORDS_REST_DEFAULT_SORT)
+        app.config.setdefault('RECORDS_REST_DEFAULT_SORT', {}).update(
+            config.RECORDS_REST_DEFAULT_SORT)

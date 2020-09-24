@@ -1,0 +1,35 @@
+notifications:
+    email: false
+
+dist: focal
+
+sudo: false
+
+language: python
+
+matrix:
+    fast_finish: true
+
+cache:
+    - pip
+
+python:
+    - '3.8'
+
+
+before_install:
+    - travis_retry pip install --upgrade pip setuptools py
+    - "travis_retry pip install twine wheel coveralls"
+    - pip install poetry
+    - cat poetry.lock
+
+install:
+    - "travis_retry poetry install --extras tests"
+
+script:
+    - "./run-tests.sh"
+
+after_success:
+    - coveralls
+
+

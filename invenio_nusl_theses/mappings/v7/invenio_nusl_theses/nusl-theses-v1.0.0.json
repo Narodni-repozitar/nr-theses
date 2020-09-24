@@ -3,139 +3,18 @@
         "date_detection": false,
         "numeric_detection": false,
         "dynamic": false,
+        "oarepo:extends": [
+            "nusl-common-v1.0.0.json"
+        ],
         "properties": {
-            "$schema": {
-                "type": "keyword",
-                "index": true
-            },
-            "language": {
-                "type": "taxonomy-v1.0.0.json#/TaxonomyTerm"
-            },
-            "identifier": {
-                "type": "nested",
-                "properties": {
-                    "value": {
-                        "type": "keyword"
-                    },
-                    "type": {
-                        "type": "keyword"
-                    }
-                }
-            },
-            "dateAccepted": {
-                "type": "date",
-                "format": "date"
-            },
-            "title": {
-                "type": "nusl-common-v1.0.0.json#/multilanguage"
-            },
-            "extent": {
-                "type": "keyword",
-                "index": false
-            },
-            "abstract": {
-                "type": "nusl-common-v1.0.0.json#/multilanguage"
-            },
-            "rights": {
-                "type": "nusl-taxonomies-rights-v1.0.0.json#/rights"
-            },
-             "subject": {
-                "type": "nusl-taxonomies-subject-v1.0.0.json#/subject",
-                "properties": {
-                    "title": {
-                        "type": "object",
-                        "properties": {
-                            "value": {
-                                "type": "text",
-                                "copy_to": "subjectKeywords"
-                            },
-                            "lang": {
-                                "type": "text"
-                            }
-                        }
-                    }
-                }
-            },
-            "keywords": {
-                "type": "nusl-common-v1.0.0.json#/multilanguage",
-                "properties": {
-                    "name": {
-                        "type": "text",
-                        "copy_to": "subjectKeywords"
-                    },
-                    "lang": {
-                        "type": "keyword",
-                        "ignore_above": 3
-                    }
-                }
-            },
-            "subjectKeywords": {
-                "type": "keyword"
-            },
-            "creator": {
-                "type": "nested",
-                "properties": {
-                    "name": {
-                        "type": "text",
-                        "copy_to": "person"
-                    },
-                    "id": {
-                        "type": "nusl-common-v1.0.0.json#/valueType"
-                    }
-                }
-            },
-            "contributor": {
-                "type": "nested",
-                "properties": {
-                    "name": {
-                        "type": "text",
-                        "copy_to": "person"
-                    },
-                    "id": {
-                        "type": "nusl-common-v1.0.0.json#/valueType"
-                    },
-                    "role": {
-                        "type": "nusl-taxonomies-contributor-v1.0.0.json#/contributor"
-                    }
-                }
-            },
-            "person": {
-                "type": "text",
-                "fields": {
-                    "keyword": {
-                        "type": "keyword"
-                    }
-                }
-            },
-            "doctype": {
-                "type": "taxonomy-v1.0.0.json#/TaxonomyTerm"
-            },
-            "id": {
-                "type": "keyword"
-            },
-            "subtitle": {
-                "type": "nusl-common-v1.0.0.json#/multilanguage"
-            },
-            "note": {
-                "type": "text"
-            },
-            "accessibility": {
-                "type": "nusl-common-v1.0.0.json#/multilanguage"
-            },
-            "accessRights": {
-                "type": "nusl-taxonomies-accessRights-v1.0.0.json#/accessRights"
-            },
-            "provider": {
-                "type": "nusl-taxonomies-institution-v1.0.0.json#/Institution"
-            },
             "defended": {
                 "type": "boolean"
             },
             "studyField": {
-                "type": "taxonomy-v1.0.0.json#/TaxonomyTerm"
+                "type": "studyField"
             },
             "degreeGrantor": {
-                "type": "nusl-taxonomies-institution-v1.0.0.json#/Institution"
+                "type": "Institution"
             }
         }
     }

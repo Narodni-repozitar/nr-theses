@@ -1,216 +1,34 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "id": "https://nusl.cz/schemas/invenio_nusl_theses/nusl-theses-v1.0.0.json",
-    "additionalProperties": false,
-    "title": "My site v1.0.0",
-    "type": "object",
-    "properties": {
-        "$schema": {
-            "type": "string"
+    "allOf": [
+        {
+            "$ref": "../nusl-common-v1.0.0.json"
         },
-        "language": {
-            "description": "ISO 639-2 B language code, i.e. code for a language in English.",
-            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTermOrReferenceArray",
-            "minItems": 1
-        },
-        "identifier": {
-            "description": "It contains identifiers collected from other resources as are persistent ID of original record (handle, doi), ID from library catalogue, or identifiers used for data exchange via OAI-PMH. At least one is obligatory but usually contains more than one.",
-            "type": "array",
-            "$comment": "all current types - nusl, originalRecord, nuslOAI, originalOAI, catalogue, RIV",
-            "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                    "value": {
-                        "type": "string"
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "nusl",
-                            "originalRecord",
-                            "nuslOAI",
-                            "originalOAI",
-                            "catalogue",
-                            "RIV"
-                        ]
-                    }
-                },
-                "required": [
-                    "value",
-                    "type"
-                ]
-            }
-        },
-        "dateAccepted": {
-            "description": "Defence date of a thesis or desartion. Expected as YYYY-MM-DD.",
-            "type": "string",
-            "format": "date",
-            "$comment": "datum obhajoby"
-        },
-        "title": {
-            "description": "Title of the work. It is allowed to insert title in multiple languages.",
-            "type": "array",
-            "items": {
-                "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
-            }
-        },
-        "extent": {
-            "description": "Extent of the work. If it is not paged, then it takes over number of pages of the entire pdf.",
-            "type": "string"
-        },
-        "abstract": {
-            "description": "It briefly describes the work in original language and usually in Czech and English.",
-            "type": "array",
-            "items": {
-                "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
-            }
-        },
-        "rights": {
-            "description": "It tells details on copyright - if it is fully under copyright act or if it is available under Creative Commons licence and if so under which one.",
-            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTermOrReferenceArray"
-        },
-        "subject": {
-            "description": "subject headings that describes the work taken over from a vocabulary (taxonomy). Current vocabularies - PSH, CZENAS, CZMESH.",
-            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTermOrReferenceArray"
-        },
-        "keywords": {
-            "description": "free-form keywords, often created by author(s)",
-            "type": "array",
-            "items": {
-                "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
-            }
-        },
-        "creator": {
-            "description": "Metadata on primary responsibility on the work - people (authors; preferred in a form Surname, First Name) and organizations. Contains its name and identifier as e.g. ORCID",
-            "type": "array",
-            "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "id": {
-                        "$ref": "../nusl-common-v1.0.0.json#/definitions/valueType"
-                    }
-                }
-            }
-        },
-        "contributor": {
-            "description": "Metadata on secondary responsibility on the work - people (editors, illustrators, etc.; preferred in a form Surname, First Name) and organizations. Contains its name, identifier as e.g. ORCID, and role (referee, editor, etc.) Roles are driven by a taxonomy.",
-            "$comment":"role už není string ale ref na taxonomii",
-            "type": "array",
-            "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "id": {
-                        "$ref": "../nusl-common-v1.0.0.json#/definitions/valueType"
-                    },
-                    "role": {
-                        "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTermOrReference"
-                    }
-                }
-            }
-        },
-        "doctype": {
-            "description": "Taxonomy driven typology of documents that's possible to store in the repository. More details on document typology is available from website www.narodnirepozitar.cz",
-            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTermOrReference"
-        },
-        "id": {
-            "description": "incremental number of the record in Czech National Repository",
-            "type": "string",
-            "$comment":"nemělo by to být číslo místo stringu?"
-        },
-        "subtitle": {
-            "description": "Subtitle of the work. It is allowed to insert title in multiple languages.",
-            "type": "array",
-            "items": {
-                "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
-            }
-        },
-        "note": {
-            "description": "Free-form note for any comment that couldn't be inserted in any other field.",
-            "type": "array",
-            "items": {
-                "type": "string"
-            }
-        },
-        "accessibility": {
-            "description": "This field contains text information on accessibility of full-text or other attachments in partners' repositories. In Czech and English.",
-            "type": "array",
-            "items": {
-                "$ref": "../nusl-common-v1.0.0.json#/definitions/multilanguage"
-            }
-        },
-        "accessRights": {
-            "description": "Taxonomy driven list of possible access to the document - open, embargoed, restirected and metadata only access. Based on COAR vocabulary - http://vocabularies.coar-repositories.org/documentation/access_rights/",
-            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTermOrReference"
-        },
-        "provider": {
-            "description": "It takes over metadata on provider from Institutions taxonomy - i.e. name and url.",
-            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTermOrReference"
-        },
-        "defended": {
-            "description": "It indicates whether the thesis was defended successfully or not.",
-            "type": "boolean"
-        },
-        "studyField": {
-            "description": "Taxonomy driven study field under which the thesis was created. The taxonomy consists only unique values obtained at the input. Aliases (replacement of abbreviations) will be created on the input of data in specific cases.",
-            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTermOrReferenceArray"
-        },
-        "degreeGrantor": {
-            "description": "It takes over metadata on grantor, i.e. a university that assigned the degree, from Institutions taxonomy. Contains name of university, faculty and department.",
-            "$ref": "../taxonomy-v1.0.0.json#/definitions/TaxonomyTermOrReferenceArray"
-        }
-    },
-    "definitions": {
-        "valueType": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": [
-                "value"
-            ],
+        {
+            "id": "https://nusl.cz/schemas/invenio_nusl_theses/nusl-theses-v1.0.0.json",
             "properties": {
-                "value": {
+                "dateDefended": {
+                    "description": "Defence date of a thesis or desartion. Expected as YYYY-MM-DD.",
+                    "$comment": "pokud neosahuje samostatné pole dateIssued, tak se přebírá toto datum do pole dateIssued",
                     "type": "string"
                 },
-                "type": {
-                    "type": "string"
+                "defended": {
+                    "description": "It indicates whether the thesis was defended successfully or not.",
+                    "type": "boolean"
+                },
+                "degreeGrantor": {
+                    "description": "It takes over metadata on grantor, i.e. a university that assigned the degree, from Institutions taxonomy. Contains name of university, faculty and department.",
+                    "$ref": "../taxonomy-v2.0.0.json#/definitions/TermArray"
+                },
+                "studyField": {
+                    "description": "Taxonomy driven study field under which the thesis was created. The taxonomy consists only unique values obtained at the input. Aliases (replacement of abbreviations) will be created on the input of data in specific cases.",
+                    "$ref": "../taxonomy-v2.0.0.json#/definitions/TermArray"
                 }
-            }
-        },
-        "multilanguage": {
-            "type": "object",
-            "additionalProperties": false,
+            },
             "required": [
-                "name",
-                "lang"
-            ],
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "lang": {
-                    "type": "string"
-                }
-            }
+                "dateDefended",
+                "defended",
+                "degreeGrantor"
+            ]
         }
-    },
-    "required": [
-        "language",
-        "identifier",
-        "dateAccepted",
-        "title",
-        "creator",
-        "doctype",
-        "id",
-        "provider",
-        "degreeGrantor"
     ]
 }
-
