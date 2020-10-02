@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/Narodni-repozitar/invenio-nusl-theses.svg?branch=master)](https://travis-ci.org/Narodni-repozitar/invenio-nusl-theses)
 
+[![Coverage Status](https://coveralls.io/repos/github/Narodni-repozitar/invenio-nusl-theses/badge.svg?branch=master)](https://coveralls.io/github/Narodni-repozitar/invenio-nusl-theses?branch=master)
+
 
 Disclaimer: The library is part of the Czech National Repository, and therefore the README is written in Czech.
 General libraries extending [Invenio](https://github.com/inveniosoftware) are concentrated under the [Oarepo
