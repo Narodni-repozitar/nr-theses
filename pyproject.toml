@@ -1,7 +1,7 @@
 [tool]
 [tool.poetry]
 name = "invenio-nusl-theses"
-version = "2.1.7"
+version = "3.0.0a2"
 description = "NUSL theses data model."
 license = "MIT"
 keywords = ["nusl", "Invenio", "theses"]
