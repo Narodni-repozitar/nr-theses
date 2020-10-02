@@ -3,18 +3,16 @@
         "date_detection": false,
         "numeric_detection": false,
         "dynamic": false,
-        "oarepo:extends": [
-            "nusl-common-v1.0.0.json"
-        ],
         "properties": {
+            "oarepo:extends": "nusl-common-v1.0.0.json#/mappings/properties",
             "defended": {
                 "type": "boolean"
             },
             "studyField": {
-                "type": "studyField"
+                "type": "nusl-taxonomies-studyfield-v1.0.0.json#/studyField"
             },
             "degreeGrantor": {
-                "type": "Institution"
+                "type": "nusl-taxonomies-institution-v1.0.0.json#/Institution"
             }
         }
     }
