@@ -1,7 +1,6 @@
 # Invenio Nusl Theses
 
 [![Build Status](https://travis-ci.org/Narodni-repozitar/invenio-nusl-theses.svg?branch=master)](https://travis-ci.org/Narodni-repozitar/invenio-nusl-theses)
-
 [![Coverage Status](https://coveralls.io/repos/github/Narodni-repozitar/invenio-nusl-theses/badge.svg?branch=master)](https://coveralls.io/github/Narodni-repozitar/invenio-nusl-theses?branch=master)
 
 
