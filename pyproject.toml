@@ -7,7 +7,7 @@ license = "MIT"
 keywords = ["nusl", "Invenio", "theses"]
 classifiers = ["Environment :: Web Environment", "Intended Audience :: Developers", "License :: OSI Approved :: MIT License", "Operating System :: OS Independent", "Programming Language :: Python", "Topic :: Internet :: WWW/HTTP :: Dynamic Content", "Topic :: Software Development :: Libraries :: Python Modules", "Programming Language :: Python :: 3", "Programming Language :: Python :: 3.7", "Development Status :: 3 - Planning"]
 authors = ["Daniel Kopecký <Daniel.Kopecky@techlib.cz>"]
-readme = "README.rst"
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -41,6 +41,6 @@ docs = ["sphinx"]
 [tool.poetry.plugins.'invenio_search.mappings']
 'invenio_nusl_theses' = 'invenio_nusl_theses.mappings'
 
-[tool.poetry.plugins.'invenio_oarepo_mapping_includes']
-'invenio_nusl_theses' = 'invenio_nusl_theses.included_mappings'
+[tool.poetry.plugins.'oarepo_mapping_includes']
+'invenio_nusl_theses' = 'invenio_nusl_theses.mapping_includes'
 
