@@ -1,10 +1,10 @@
 {
     "allOf": [
         {
-            "$ref": "../nusl-common-v1.0.0.json"
+            "$ref": "../nr-common-v1.0.0.json"
         },
         {
-            "id": "https://nusl.cz/schemas/invenio_nusl_theses/nusl-theses-v1.0.0.json",
+            "id": "https://nusl.cz/schemas/nr_theses/nr-theses-v1.0.0.json",
             "properties": {
                 "dateDefended": {
                     "description": "Defence date of a thesis or desartion. Expected as YYYY-MM-DD.",

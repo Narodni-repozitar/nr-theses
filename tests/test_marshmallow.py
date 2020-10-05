@@ -1,7 +1,7 @@
 import pytest
 from marshmallow import ValidationError
 
-from invenio_nusl_theses.marshmallow import ThesisMetadataSchemaV2
+from nr_theses.marshmallow import ThesisMetadataSchemaV2
 
 
 def test_required_fields(app, db, taxonomy_tree, base_json, base_json_dereferenced):

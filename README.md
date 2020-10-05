@@ -1,7 +1,7 @@
-# Invenio Nusl Theses
+# NR-Theses
 
-[![Build Status](https://travis-ci.org/Narodni-repozitar/invenio-nusl-theses.svg?branch=master)](https://travis-ci.org/Narodni-repozitar/invenio-nusl-theses)
-[![Coverage Status](https://coveralls.io/repos/github/Narodni-repozitar/invenio-nusl-theses/badge.svg?branch=master)](https://coveralls.io/github/Narodni-repozitar/invenio-nusl-theses?branch=master)
+[![Build Status](https://travis-ci.org/Narodni-repozitar/nr-theses.svg?branch=master)](https://travis-ci.org/Narodni-repozitar/nr-theses)
+[![Coverage Status](https://coveralls.io/repos/github/Narodni-repozitar/nr-theses/badge.svg?branch=master)](https://coveralls.io/github/Narodni-repozitar/nr-theses?branch=master)
 
 
 Disclaimer: The library is part of the Czech National Repository, and therefore the README is written in Czech.
@@ -14,8 +14,8 @@ General libraries extending [Invenio](https://github.com/inveniosoftware) are co
  Knihovna se instaluje ze zdroje.
 
  ```bash
-git clone git@github.com:Narodni-repozitar/invenio-nusl-theses.git
-cd invenio-nusl-common
+git clone git@github.com:Narodni-repozitar/nr-theses.git
+cd nr-common
 pip install poetry
 poetry install
 ```
@@ -31,9 +31,9 @@ poetry install --extras tests
 
 ## Účel
 
-Knihovna rozšiřuje [obecný metadatový model](https://github.com/Narodni-repozitar/invenio-nusl-common)
+Knihovna rozšiřuje [obecný metadatový model](https://github.com/Narodni-repozitar/nr-common)
 o pole pro vysokoškolské závěrečné práce. Vysokoškolským pracím je přiřazen endpoint **/api/theses**. Knihovna
-poskytuje API pro CRUD operace pod proxy **nusl_these**.
+poskytuje API pro CRUD operace pod proxy **nr_these**.
 
 ## Použití
 

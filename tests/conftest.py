@@ -44,7 +44,7 @@ from oarepo_validate import MarshmallowValidatedRecordMixin
 from sqlalchemy_utils import database_exists, create_database, drop_database
 from werkzeug.routing import BuildError
 
-from invenio_nusl_theses import InvenioNUSLTheses
+from nr_theses import NRTheses
 from tests.helpers import set_identity
 
 
@@ -72,9 +72,9 @@ class TestRecord(MarshmallowValidatedRecordMixin,
 
 RECORDS_REST_ENDPOINTS = {
     'recid': dict(
-        pid_type='nusl',
-        pid_minter='nsul',
-        pid_fetcher='nusl',
+        pid_type='nr',
+        pid_minter='nr',
+        pid_fetcher='nr',
         default_endpoint_prefix=True,
         search_class=RecordsSearch,
         indexer_class=RecordIndexer,
@@ -91,7 +91,7 @@ RECORDS_REST_ENDPOINTS = {
         },
         record_class=TestRecord,
         list_route='/records/',
-        item_route='/records/<pid(nusl):pid_value>',
+        item_route='/records/<pid(nr):pid_value>',
         default_media_type='application/json',
         max_result_window=10000,
         error_handlers=dict()
@@ -147,7 +147,7 @@ def app():
     InvenioRecords(app)
     InvenioRecordsREST(app)
     InvenioCelery(app)
-    InvenioNUSLTheses(app)
+    NRTheses(app)
     InvenioPIDStore(app)
     RecordsDraft(app)
     app.url_map.converters['pid'] = PIDConverter

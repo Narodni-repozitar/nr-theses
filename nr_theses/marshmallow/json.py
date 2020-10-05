@@ -11,9 +11,9 @@ from invenio_records_rest.schemas.fields.datetime import DateString
 from marshmallow import fields, validates, ValidationError
 from oarepo_taxonomies.marshmallow import TaxonomyField
 
-from invenio_nusl_common.marshmallow.json import CommonMetadataSchemaV2
-from invenio_nusl_common.marshmallow.subschemas import TitledMixin, InstitutionsMixin
-from invenio_nusl_theses.marshmallow.subschemas import StudyFieldMixin
+from nr_common.marshmallow.json import CommonMetadataSchemaV2
+from nr_common.marshmallow.subschemas import TitledMixin, InstitutionsMixin
+from nr_theses.marshmallow.subschemas import StudyFieldMixin
 
 
 class ThesisMetadataSchemaV2(CommonMetadataSchemaV2):
