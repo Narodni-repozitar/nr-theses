@@ -28,6 +28,6 @@
 from flask import current_app
 from werkzeug.local import LocalProxy
 
-nusl_theses = LocalProxy(
+nr_theses = LocalProxy(
     lambda: current_app.extensions[
-        'invenio-nusl-theses'])  # type: invenio_nusl_theses.api.ThesisAPI
+        'nr-theses'])  # type: nr_theses.api.ThesisAPI

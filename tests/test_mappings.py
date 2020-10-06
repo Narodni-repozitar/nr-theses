@@ -5,7 +5,7 @@ from pprint import pprint
 
 def test_mapping_1(app, es, es_index, base_json_dereferenced):
     mappings = app.extensions["invenio-search"].mappings
-    mapping_path = mappings['invenio_nusl_theses-nusl-theses-v1.0.0']
+    mapping_path = mappings['nr_theses-nr-theses-v1.0.0']
     with open(mapping_path, "r") as f:
         body = json.load(f)
     index_name = "test_index"
