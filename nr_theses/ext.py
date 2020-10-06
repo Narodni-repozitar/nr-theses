@@ -11,13 +11,13 @@ from __future__ import absolute_import, print_function
 
 import logging
 
-from invenio_nusl_theses.api import ThesisAPI
+from nr_theses.api import ThesisAPI
 from . import config
 
-log = logging.getLogger('nusl-theses')
+log = logging.getLogger('nr-theses')
 
 
-class InvenioNUSLTheses(object):
+class NRTheses(object):
     """CIS theses repository extension."""
 
     def __init__(self, app=None):
@@ -28,7 +28,7 @@ class InvenioNUSLTheses(object):
     def init_app(self, app):
         """Flask application initialization."""
         self.init_config(app)
-        app.extensions['invenio-nusl-theses'] = ThesisAPI(app)
+        app.extensions['nr-theses'] = ThesisAPI(app)
 
     def init_config(self, app):
         """Initialize configuration.

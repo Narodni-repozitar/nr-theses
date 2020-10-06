@@ -9,7 +9,7 @@ from invenio_records import Record
 from invenio_search import RecordsSearch
 from sqlalchemy.orm.exc import NoResultFound
 
-from invenio_nusl_theses.record import PublishedThesisRecord
+from nr_theses.record import PublishedThesisRecord
 
 
 class ThesisSearch(RecordsSearch):
@@ -29,7 +29,7 @@ class ThesisAPI:
 
     def import_old_nusl_record(self, record):
         # validate json schema and save
-        existing_record = self.get_record_by_id("dnusl", record["control_number"])
+        existing_record = self.get_record_by_id("dnr", record["control_number"])
 
         if not existing_record:
             db_record = self.create_draft_record(record)
@@ -59,7 +59,7 @@ class ThesisAPI:
     @staticmethod
     def create_draft_record(record: dict, pid_type=None, pid_value=None):
         if not pid_type:
-            pid_type = "dnusl"
+            pid_type = "dnr"
         if not pid_value:
             pid_value = record["control_number"]
         id_ = uuid.uuid4()
@@ -95,22 +95,3 @@ class ThesisAPI:
             return
         return existing_record
 
-    # @staticmethod
-    # def get_new_pid():
-    #     max_number = RecordIdentifier.max()
-    #     new_recid = max_number + 1
-    #     recid = RecordIdentifier(recid=new_recid)
-    #     db.session.add(recid)
-    #     db.session.commit()
-    #     return new_recid
-    #
-    # def attach_id(self, transformed, pid_value=None):
-    #     if not pid_value:
-    #         pid_value = str(self.get_new_pid())
-    #     transformed["id"] = pid_value
-    #     transformed.setdefault("identifier", [])
-    #     transformed["identifier"].append({
-    #         "type": "nusl",
-    #         "value": pid_value
-    #     })
-    #     return transformed
