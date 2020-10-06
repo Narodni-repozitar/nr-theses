@@ -552,6 +552,23 @@ def base_json_dereferenced():
             'type': 'veřejná VŠ',
             'url': 'https://www.amu.cz'
         }],
+        'entities': [{
+            'address': 'Malostranské náměstí 259/12, 118 00 Praha 1',
+            'aliases': ['AMU'],
+            'ico': '61384984',
+            'is_ancestor': False,
+            'links': {
+                'self': 'http://127.0.0.1:5000/2.0/taxonomies/test_taxonomy/61384984'
+            },
+            'provider': True,
+            'related': {'rid': '51000'},
+            'title': {
+                'cs': 'Akademie múzických umění v Praze',
+                'en': 'Academy of Performing Arts in Prague'
+            },
+            'type': 'veřejná VŠ',
+            'url': 'https://www.amu.cz'
+        }],
         'keywords': [{'cs': '1', 'en': '1'},
                      {'cs': '2', 'en': '2'},
                      {'cs': '3', 'en': '3'}],
