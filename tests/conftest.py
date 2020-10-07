@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 from elasticsearch import Elasticsearch
-from flask import Flask, make_response, url_for, current_app
+from flask import Flask, make_response, url_for
 from flask_login import LoginManager, login_user
 from flask_principal import RoleNeed, Principal, Permission
 from flask_taxonomies.proxies import current_flask_taxonomies
@@ -42,7 +42,6 @@ from oarepo_taxonomies.cli import init_db
 from oarepo_taxonomies.ext import OarepoTaxonomies
 from oarepo_validate import MarshmallowValidatedRecordMixin
 from sqlalchemy_utils import database_exists, create_database, drop_database
-from werkzeug.routing import BuildError
 
 from nr_theses import NRTheses
 from tests.helpers import set_identity
@@ -99,7 +98,7 @@ RECORDS_REST_ENDPOINTS = {
 }
 
 
-@pytest.yield_fixture(scope="class")
+@pytest.yield_fixture(scope="module")
 def app():
     instance_path = tempfile.mkdtemp()
     app = Flask('testapp', instance_path=instance_path)
@@ -188,7 +187,7 @@ def app():
     shutil.rmtree(instance_path)
 
 
-@pytest.fixture(scope="class")
+@pytest.fixture(scope="module")
 def db(app):
     """Create database for the tests."""
     dir_path = os.path.dirname(__file__)
@@ -265,7 +264,7 @@ def tax_url(app):
     return url
 
 
-@pytest.fixture(scope="class")
+@pytest.fixture(scope="module")
 def taxonomy(app, db):
     taxonomy = current_flask_taxonomies.create_taxonomy("test_taxonomy", extra_data={
         "title":
@@ -278,7 +277,7 @@ def taxonomy(app, db):
     return taxonomy
 
 
-@pytest.fixture(scope="class")
+@pytest.fixture(scope="module")
 def taxonomy_tree(app, db, taxonomy):
     # accessRights
     id1 = TermIdentification(taxonomy=taxonomy, slug="c_abf2")
