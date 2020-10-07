@@ -44,3 +44,8 @@ docs = ["sphinx"]
 [tool.poetry.plugins.'oarepo_mapping_includes']
 'nr_theses' = 'nr_theses.mapping_includes'
 
+[tool.poetry.plugins."invenio_pidstore.minters"]
+'nr_theses' = 'nr_theses.minters:nr_theses_id_minter'
+
+[tool.poetry.plugins."invenio_pidstore.fetchers"]
+'nr_theses' = 'nr_theses.fetchers:nr_theses_id_fetcher'
