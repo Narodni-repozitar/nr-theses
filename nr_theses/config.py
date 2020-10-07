@@ -17,9 +17,9 @@ RECORDS_DRAFT_ENDPOINTS = {
     'theses': {
         'draft': 'draft-theses',
 
-        'pid_type': 'nr',
-        'pid_minter': 'nr',
-        'pid_fetcher': 'nr',
+        'pid_type': 'nrthe',
+        'pid_minter': 'nr_theses',
+        'pid_fetcher': 'nr_theses',
         'default_endpoint_prefix': True,
         'max_result_window': 500000,
 
@@ -33,12 +33,7 @@ RECORDS_DRAFT_ENDPOINTS = {
 
     },
     'draft-theses': {
-        'pid_type': 'dnr',
-        # 'record_class': 'restoration.objects.record.RestorationObjectDraftRecord',
-        # 'create_permission_factory_imp':
-        #     'restoration.objects.permissions.create_object_permission_impl',
-        # 'update_permission_factory_imp':
-        #     'restoration.objects.permissions.update_object_permission_impl'
+        'pid_type': 'dnrthe',
     }
 }
 
