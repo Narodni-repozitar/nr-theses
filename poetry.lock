@@ -1767,7 +1767,7 @@ description = "A Python utility / library to sort Python imports."
 name = "isort"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "5.5.4"
+version = "5.6.1"
 
 [package.extras]
 colors = ["colorama (>=0.4.3,<0.5.0)"]
@@ -2158,31 +2158,30 @@ version = "1.3.7"
 
 [[package]]
 category = "main"
-description = "NR common data types"
+description = ""
 name = "nr-common"
 optional = false
-python-versions = "*"
-version = "3.0.0a7"
+python-versions = "^3.8"
+version = "3.0.0a8"
 
 [package.dependencies]
-IDUtils = ">=1.1.8,<2.0.0"
-arrow = "*"
-isbnlib = ">=3.10.3,<4.0.0"
-oarepo-invenio-model = ">=2.0.0,<3.0.0"
-oarepo-mapping-includes = "1.2.0"
-oarepo-multilingual = ">=2.0.0,<3.0.0"
-oarepo-taxonomies = ">=2.5.0,<3.0.0"
-pycountry = ">=19.0.0"
-pytest-invenio = "1.3.4"
-python-stdnum = ">=1.14,<2.0"
+idutils = "^1.1.8"
+isbnlib = "^3.10.3"
+oarepo-invenio-model = "^2.0.0"
+oarepo-mapping-includes = "==1.2.0"
+oarepo-multilingual = "^2.0.0"
+oarepo-taxonomies = "^2.5.0"
+pycountry = "^19.0.0"
+pytest-invenio = "==1.3.4"
+pytest-runner = "^5.2"
+python-stdnum = "^1.14"
 
 [package.extras]
-all = ["Sphinx (>=1.5.1)", "Sphinx (>=1.5.1)", "oarepo", "oarepo", "pytest", "pytest", "pytest-cov", "pytest-cov"]
-docs = ["Sphinx (>=1.5.1)"]
-tests = ["oarepo", "pytest", "pytest-cov"]
+docs = ["sphinx (^1.5.1)"]
+tests = ["oarepo (^3.3)", "pytest (^5.0.0)", "pytest-cov (^2.10.1)"]
 
 [package.source]
-reference = "c4c401ee4bdb27cbd5f597f7f5d0db2abfa4d894"
+reference = "75b611262ed2bc842e1e56aa06af44f5722be601"
 type = "git"
 url = "https://github.com/Narodni-repozitar/nr-common.git"
 [[package]]
@@ -2428,7 +2427,7 @@ description = "Handling Draft and Production invenio records in one package"
 name = "oarepo-records-draft"
 optional = false
 python-versions = "*"
-version = "5.0.0a18"
+version = "5.0.0a19"
 
 [package.dependencies]
 deepmerge = "*"
@@ -2688,7 +2687,7 @@ description = "ISO country, subdivision, language, currency and script definitio
 name = "pycountry"
 optional = false
 python-versions = "*"
-version = "20.7.3"
+version = "19.8.18"
 
 [[package]]
 category = "main"
@@ -3975,8 +3974,8 @@ isbnlib = [
     {file = "isbnlib-3.10.3.tar.gz", hash = "sha256:2295c01465fe19776b1f9432fd99fd24e61230d146ded2752e0d980ef6f4101f"},
 ]
 isort = [
-    {file = "isort-5.5.4-py3-none-any.whl", hash = "sha256:36f0c6659b9000597e92618d05b72d4181104cf59472b1c6a039e3783f930c95"},
-    {file = "isort-5.5.4.tar.gz", hash = "sha256:ba040c24d20aa302f78f4747df549573ae1eaf8e1084269199154da9c483f07f"},
+    {file = "isort-5.6.1-py3-none-any.whl", hash = "sha256:dd3211f513f4a92ec1ec1876fc1dc3c686649c349d49523f5b5adbb0814e5960"},
+    {file = "isort-5.6.1.tar.gz", hash = "sha256:2f510f34ae18a8d0958c53eec51ef84fd099f07c4c639676525acbcd7b5bd3ff"},
 ]
 itsdangerous = [
     {file = "itsdangerous-1.1.0-py2.py3-none-any.whl", hash = "sha256:b12271b2047cb23eeb98c8b5622e2e5c5e9abd9784a153e9d8ef9cb4dd09d749"},
@@ -4206,8 +4205,8 @@ oarepo-multilingual = [
     {file = "oarepo_multilingual-2.4.0.tar.gz", hash = "sha256:8492b7b335a7189033424cd47df4f32ede31aa17dea81347ade0b3315f98c1e8"},
 ]
 oarepo-records-draft = [
-    {file = "oarepo-records-draft-5.0.0a18.tar.gz", hash = "sha256:84f5d28c68a9adbc9f16a6dfd5ce549ba388116d7d20fc112bed2b5b8f05ea98"},
-    {file = "oarepo_records_draft-5.0.0a18-py3-none-any.whl", hash = "sha256:dcc920c3b8196150132540645f1617236f8b4a5e3732bc64c825f67020fe6371"},
+    {file = "oarepo-records-draft-5.0.0a19.tar.gz", hash = "sha256:1f2da0cf59409af4ac1e664f3a5fe70a00a48ac9fbdca29f081dad94861e9e38"},
+    {file = "oarepo_records_draft-5.0.0a19-py3-none-any.whl", hash = "sha256:58d76c0ba16c064b99498f1e7359985817eaa0dc226b106462b409bfadc86a33"},
 ]
 oarepo-references = [
     {file = "oarepo-references-1.8.3.tar.gz", hash = "sha256:27baae3d26dfb590b1a5db41f124f5147a2409fde08bd0357f40ae6fb09f0605"},
@@ -4350,7 +4349,7 @@ py = [
     {file = "py-1.9.0.tar.gz", hash = "sha256:9ca6883ce56b4e8da7e79ac18787889fa5206c79dcc67fb065376cd2fe03f342"},
 ]
 pycountry = [
-    {file = "pycountry-20.7.3.tar.gz", hash = "sha256:81084a53d3454344c0292deebc20fcd0a1488c136d4900312cbd465cf552cb42"},
+    {file = "pycountry-19.8.18.tar.gz", hash = "sha256:3c57aa40adcf293d59bebaffbe60d8c39976fba78d846a018dc0c2ec9c6cb3cb"},
 ]
 pycparser = [
     {file = "pycparser-2.20-py2.py3-none-any.whl", hash = "sha256:7582ad22678f0fcd81102833f60ef8d0e57288b6b5fb00323d101be910e35705"},
