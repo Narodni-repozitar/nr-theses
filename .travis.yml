@@ -27,7 +27,7 @@ script:
 - "./run-tests.sh"
 after_success:
 - coveralls
-- "./push-schemas.sh"
+- test $TRAVIS_BRANCH = "master" && "./push-schemas.sh"
 env:
   global:
     secure: zC4eBX5A2tMeeO4QzRy3FPMCUGkAvS4B/iLKbi9tR0OAGunVA0deVIok9TbyRQPVQqOxWT3/EeeT6ojbBc+QYfIhKWKYmEqxg6qm8zHlr+tONe1fMOe2BaO1dvI1Q4q2skdxUQvH67E+g5dGlAlokyVzTfqfjm3QdK/Es5uhbY/miaNiJwAWFh9LZSNnlIK9QkCerNySAyqDXAH9qJG1vdcMdpcPKjxQeAER1lh5ApSGdkumQqW1zeVvlrAFiNvDflZikE51ON1samCBwv2F6q+VVCl4Jgw/imrMMN4HP+7eb6TAN/px7CSYxj2EuQaZzDDJkgf64SllYTBGekqAbCXIPMLq2TVpRQXDdAPn+zFdot2FLTOR4lIKVydFiZjjBv3EVQF3Ax83z2Xm80unMUt0h3Ib6Os6tVfU7M6OEClfTD/mHVj3AdgNfC0yfuEGgn+upmSIyOwmqtOBSGg97VNyiTIYUWZlhkX1xa09LtF5Dvwzv6hPMehygSS4ckuElhqi3y1rhlC6uA1z1qnJqyqhMM7Y0vfhmr2pp4nZzHLN7gTFVFHwGOsLWiP0KF7Xz/BWPhpv9X8U78b2KWby6I+iNKK+53kg29alG0tt0yKC87eY/3Yk5bYtt95i/w2qWeSxZRFesKW4p/28OPOm0Bxsr8PdBUfZdrAxH7xA8Cs=
