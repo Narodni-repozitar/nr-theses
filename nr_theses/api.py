@@ -27,35 +27,6 @@ class ThesisAPI:
         self.app = app
         self.indexer = RecordIndexer()
 
-    def import_old_nusl_record(self, record):
-        # validate json schema and save
-        existing_record = self.get_record_by_id("dnr", record["control_number"])
-
-        if not existing_record:
-            db_record = self.create_draft_record(record)
-        else:
-            # remove everything from the record except of id and pid - keep them
-            db_record = self.update_draft_record(existing_record, record)
-
-        db.session.commit()
-        self.index_draft_record(db_record)
-
-    def index_draft_record(self, db_record):
-        self.indexer.index(db_record)
-
-    @staticmethod
-    def update_draft_record(existing_record, record):
-        previous_id = existing_record['id']
-        previous_identifier = existing_record['identifier']
-        existing_record.clear()
-        existing_record['id'] = previous_id
-        existing_record['identifier'] = previous_identifier
-        for k, v in record.items():
-            existing_record[k] = v
-        existing_record.commit()
-        db_record = existing_record
-        return db_record
-
     @staticmethod
     def create_draft_record(record: dict, pid_type=None, pid_value=None):
         if not pid_type:
@@ -91,7 +62,6 @@ class ThesisAPI:
                 existing_record = existing_record.revert(-1)
         except PIDDoesNotExistError:
             return
-        except NoResultFound:
+        except NoResultFound:  # pragma: no cover
             return
         return existing_record
-

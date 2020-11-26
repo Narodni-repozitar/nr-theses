@@ -34,6 +34,7 @@ from invenio_records_rest.utils import PIDConverter
 from invenio_records_rest.views import create_blueprint_from_app
 from invenio_search import InvenioSearch, RecordsSearch
 from marshmallow import Schema
+from marshmallow.fields import Url, Boolean, Nested, List
 from oarepo_mapping_includes.ext import OARepoMappingIncludesExt
 from oarepo_records_draft.ext import RecordsDraft
 from oarepo_references import OARepoReferences
@@ -41,16 +42,27 @@ from oarepo_references.mixins import ReferenceEnabledRecordMixin
 from oarepo_taxonomies.cli import init_db
 from oarepo_taxonomies.ext import OarepoTaxonomies
 from oarepo_validate import MarshmallowValidatedRecordMixin
+from oarepo_validate.ext import OARepoValidate
 from sqlalchemy_utils import database_exists, create_database, drop_database
 
 from nr_theses import NRTheses
 from tests.helpers import set_identity
 
 
+class Links(Schema):
+    self = Url()
+
+
+class ResourceType(Schema):
+    is_ancestor = Boolean()
+    links = Nested(Links)
+
+
 class TestSchema(Schema):
     """Test record schema."""
     title = SanitizedUnicode()
     control_number = SanitizedUnicode()
+    resourceType = List(Nested(ResourceType))
 
 
 class TestRecord(MarshmallowValidatedRecordMixin,
@@ -148,6 +160,7 @@ def app():
     InvenioCelery(app)
     NRTheses(app)
     InvenioPIDStore(app)
+    OARepoValidate(app)
     RecordsDraft(app)
     app.url_map.converters['pid'] = PIDConverter
 

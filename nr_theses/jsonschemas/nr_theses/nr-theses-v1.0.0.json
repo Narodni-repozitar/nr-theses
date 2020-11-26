@@ -1,7 +1,7 @@
 {
     "allOf": [
         {
-            "$ref": "../nr-common-v1.0.0.json"
+            "$ref": "../nr_common/nr-common-v1.0.0.json"
         },
         {
             "id": "https://nusl.cz/schemas/nr_theses/nr-theses-v1.0.0.json",
