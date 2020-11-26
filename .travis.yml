@@ -20,6 +20,7 @@ before_install:
 - sudo chown -R elasticsearch:elasticsearch /etc/default/elasticsearch
 - sudo service elasticsearch restart
 install:
+- poetry add git+https://github.com/Narodni-repozitar/nr-common.git
 - travis_retry poetry install --extras tests
 - cat poetry.lock
 before_script:
