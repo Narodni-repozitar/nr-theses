@@ -24,6 +24,7 @@ install:
 before_script:
 - sleep 10
 script:
+- travis_retry pip list | grep nr-common
 - "./run-tests.sh"
 after_success:
 - coveralls
