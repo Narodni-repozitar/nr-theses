@@ -9,10 +9,10 @@
 import arrow
 from invenio_records_rest.schemas.fields.datetime import DateString
 from marshmallow import fields, validates, ValidationError
+from nr_common.marshmallow import CommonMetadataSchemaV2
+from nr_common.marshmallow.subschemas import TitledMixin, InstitutionsMixin
 from oarepo_taxonomies.marshmallow import TaxonomyField
 
-from nr_common.marshmallow.json import CommonMetadataSchemaV2
-from nr_common.marshmallow.subschemas import TitledMixin, InstitutionsMixin
 from nr_theses.marshmallow.subschemas import StudyFieldMixin
 
 

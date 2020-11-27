@@ -10,8 +10,6 @@
 
 from __future__ import absolute_import, print_function
 
-from invenio_pidstore.models import PIDStatus
-from nr_common.models import NRIdentifier
 from nr_common.providers import NRIdProvider
 
 
