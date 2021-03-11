@@ -8,6 +8,15 @@
     "dynamic": false,
     "properties": {
       "oarepo:extends": "nr-common-v1.0.0.json#/mappings/properties",
+      "dateDefended": {
+        "type": "keyword",
+        "fields": {
+          "date":{
+            "type": "date",
+            "ignore_malformed": true
+          }
+        }
+      },
       "defended": {
         "type": "boolean"
       },
