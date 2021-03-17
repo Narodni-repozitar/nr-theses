@@ -1,7 +1,7 @@
 [tool]
 [tool.poetry]
 name = "nr-theses"
-version = "3.0.0a10"
+version = "3.0.0a11"
 description = "Czech National Repository theses data model."
 license = "MIT"
 keywords = ["Czech", "Nation", "Repository", "Invenio", "theses"]
@@ -11,23 +11,21 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-oarepo-invenio-model = "^2.0.1"
-oarepo-multilingual = "^2.2.0"
-oarepo-records-draft = "^5.0.0a7"
-oarepo-references = "^1.9.0"
-oarepo-taxonomies = "^2.5.3"
-oarepo-validate = "^1.2.8"
-sphinx = { version = ">=1.5.1", optional = true }
 nr-common = { git = "https://github.com/Narodni-repozitar/nr-common.git", branch = "master" }
-pytest-runner = "^5.2"
 
 [tool.poetry.dev-dependencies]
+oarepo = "^3.3"
+oarepo-mapping-includes = "<=1.2.0"
+oarepo-invenio-model = "^2.0.1"
+oarepo-multilingual = "^2.2.0"
+oarepo-taxonomies = "^3.0.0a1"
+oarepo-records-draft = "^5.0.0a7"
+oarepo-references = "^1.9.0"
+oarepo-validate = "^1.2.8"
 pytest = "^5.0.0"
 pytest-cov = "^2.10.1"
-oarepo = "^3.3"
-
-[tool.poetry.extras]
-docs = ["sphinx"]
+pytest-runner = "^5.2"
+requests = "^2.25.1"
 
 [tool.poetry.plugins]
 [tool.poetry.plugins."invenio_base.apps"]

@@ -77,6 +77,7 @@ class TestDegreeGrantor:
             'aliases': ['AMU'],
             'ico': '61384984',
             'is_ancestor': False,
+            'level': 1,
             'links': {
                 'self':
                     'http://127.0.0.1:5000/2.0/taxonomies/test_taxonomy/61384984'
@@ -125,6 +126,7 @@ class TestStudyField:
         base_json_dereferenced[field] = [{
             'AKVO': '8203R082',
             'is_ancestor': False,
+            'level': 1,
             'links': {
                 'self':
                     'http://127.0.0.1:5000/2.0/taxonomies/test_taxonomy/o-herectvi-alternativniho'
