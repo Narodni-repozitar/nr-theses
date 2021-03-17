@@ -9,20 +9,20 @@
 
 from __future__ import absolute_import, print_function
 
-from elasticsearch_dsl import Q
-from invenio_records_rest.facets import terms_filter
 from invenio_records_rest.utils import allow_all
+
+from nr_theses.record import draft_index_name
 
 RECORDS_DRAFT_ENDPOINTS = {
     'theses': {
         'draft': 'draft-theses',
-
         'pid_type': 'nrthe',
         'pid_minter': 'nr_theses',
         'pid_fetcher': 'nr_theses',
         'default_endpoint_prefix': True,
         'max_result_window': 500000,
         'record_class': 'nr_theses.record:PublishedThesisRecord',
+        'list_route': '/theses/',
         'publish_permission_factory_imp': allow_all,  # TODO: change this !!!
         'unpublish_permission_factory_imp': allow_all,
         'edit_permission_factory_imp': allow_all,
@@ -32,9 +32,11 @@ RECORDS_DRAFT_ENDPOINTS = {
     },
     'draft-theses': {
         'pid_type': 'dnrthe',
+        'record_class': 'nr_theses.record:DraftThesisRecord',
+        'list_route': '/draft/theses/',
+        'search_index': draft_index_name
     }
 }
-
 
 # def degree_grantor_filter(field, path=None):
 #     def inner(values):
@@ -145,7 +147,8 @@ FILTERS = {
     # 'marshmallow.message': terms_filter(
     #     "invenio_draft_validation.errors.marshmallow.message.keyword"),
     # 'jsonschema.field': terms_filter("invenio_draft_validation.errors.jsonschema.field"),
-    # 'jsonschema.message': terms_filter("invenio_draft_validation.errors.jsonschema.message.keyword")
+    # 'jsonschema.message': terms_filter(
+    # "invenio_draft_validation.errors.jsonschema.message.keyword")
 }
 
 POST_FILTERS = {
