@@ -1,7 +1,7 @@
 [tool]
 [tool.poetry]
 name = "nr-theses"
-version = "3.0.0a11"
+version = "3.0.0a12"
 description = "Czech National Repository theses data model."
 license = "MIT"
 keywords = ["Czech", "Nation", "Repository", "Invenio", "theses"]

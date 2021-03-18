@@ -40,3 +40,8 @@ class PublishedThesisRecord(InvalidRecordAllowedMixin, ThesisBaseRecord):
 
 class DraftThesisRecord(DraftRecordMixin, ThesisBaseRecord):
     index_name = draft_index_name
+
+    @property
+    def canonical_url(self):
+        return url_for('invenio_records_rest.draft-theses_item',
+                       pid_value=self['control_number'], _external=True)
