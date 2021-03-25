@@ -10,10 +10,11 @@
       "oarepo:extends": "nr-common-v1.0.0.json#/mappings/properties",
       "dateDefended": {
         "type": "keyword",
+        "copy_to": "dateAll",
         "fields": {
-          "date":{
+          "date": {
             "type": "date",
-            "ignore_malformed": true
+            "format": "yyyy-MM-dd||yyyy-MM||yyyy"
           }
         }
       },
