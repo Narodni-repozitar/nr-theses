@@ -27,6 +27,7 @@ RECORDS_DRAFT_ENDPOINTS = {
         'unpublish_permission_factory_imp': allow_all,
         'edit_permission_factory_imp': allow_all,
         'default_media_type': 'application/json',
+        'links_factory_imp': 'oarepo_fsm.links:record_fsm_links_factory'
         # 'indexer_class': CommitingRecordIndexer,
 
     },
@@ -34,7 +35,8 @@ RECORDS_DRAFT_ENDPOINTS = {
         'pid_type': 'dnrthe',
         'record_class': 'nr_theses.record:DraftThesisRecord',
         'list_route': '/draft/theses/',
-        'search_index': draft_index_name
+        'search_index': draft_index_name,
+        'links_factory_imp': 'oarepo_fsm.links:record_fsm_links_factory'
     }
 }
 
