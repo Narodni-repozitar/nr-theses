@@ -33,7 +33,7 @@ from invenio_records_rest.views import create_blueprint_from_app
 from invenio_search import InvenioSearch, RecordsSearch
 from marshmallow import Schema
 from marshmallow.fields import Url, Boolean, Nested, List
-# from oarepo_communities.ext import OARepoCommunities
+from oarepo_communities.ext import OARepoCommunities
 from oarepo_mapping_includes.ext import OARepoMappingIncludesExt
 from oarepo_records_draft.ext import RecordsDraft
 from oarepo_references import OARepoReferences
@@ -140,7 +140,7 @@ def app():
                 }
             }
         },
-#        OAREPO_COMMUNITIES_ENDPOINTS=[]
+        OAREPO_COMMUNITIES_ENDPOINTS=[]
     )
 
     app.secret_key = 'changeme'
@@ -163,7 +163,7 @@ def app():
     InvenioPIDStore(app)
     OARepoValidate(app)
     RecordsDraft(app)
-#    OARepoCommunities(app)
+    OARepoCommunities(app)
     app.url_map.converters['pid'] = PIDConverter
 
     # Celery
@@ -461,6 +461,7 @@ def get_pid():
 @pytest.fixture()
 def base_json():
     return {
+        "_primary_community": "nr",
         "accessRights": [{
             "is_ancestor": False,
             "links": {
@@ -530,6 +531,7 @@ def base_json():
 @pytest.fixture()
 def base_json_dereferenced():
     return {
+        "_primary_community": "nr",
         'accessRights': [{
             'is_ancestor': False,
             'level': 1,
