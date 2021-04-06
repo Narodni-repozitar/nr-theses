@@ -13,7 +13,7 @@ packages = [{include='nr_theses'}]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-nr-common = { git = "https://github.com/Narodni-repozitar/nr-common.git", branch = "devel" }
+techlib-nr-common = "^3.0.0a38"
 
 [tool.poetry.dev-dependencies]
 oarepo = "^3.3"
@@ -29,6 +29,7 @@ pytest-cov = "^2.10.1"
 pytest-runner = "^5.2"
 requests = "^2.25.1"
 oarepo-fsm = "^1.5.0"
+oarepo-communities = "^1.4.0"
 
 [tool.poetry.plugins]
 [tool.poetry.plugins."invenio_base.apps"]
