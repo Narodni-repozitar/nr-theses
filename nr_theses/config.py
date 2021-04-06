@@ -9,13 +9,13 @@
 
 from __future__ import absolute_import, print_function
 
-from invenio_records_rest.facets import terms_filter
 from invenio_records_rest.utils import allow_all
 from oarepo_records_draft import DRAFT_IMPORTANT_FILTERS
 from oarepo_records_draft.rest import DRAFT_IMPORTANT_FACETS
 
 from nr_common.config import FACETS, CURATOR_FACETS, CURATOR_FILTERS, FILTERS
 from nr_theses.record import draft_index_name
+from oarepo_multilingual import language_aware_text_term_facet, language_aware_text_terms_filter
 from oarepo_ui.facets import translate_facets, term_facet
 from oarepo_ui.filters import boolean_filter
 
@@ -49,7 +49,9 @@ RECORDS_DRAFT_ENDPOINTS = {
 }
 
 THESES_FILTERS = {
-    _('defended'): boolean_filter('defended')
+    _('defended'): boolean_filter('defended'),
+    _('studyField'): language_aware_text_terms_filter('studyField.title', suffix=".keyword"),
+    _('degreeGrantor'): language_aware_text_terms_filter('degreeGrantor.title', suffix=".keyword"),
 #     _('person'): terms_filter('person.keyword'),
 #     _('accessRights'): group_by_terms_filter('accessRights.title.en.raw', {
 #         "true": "open access",
@@ -80,7 +82,8 @@ THESES_FILTERS = {
 #
 THESES_FACETS = {
     'defended': term_facet('defended'),
-    'creator': term_facet()
+    'studyField': language_aware_text_term_facet('studyField.title', suffix=".keyword"),
+    'degreeGrantor': language_aware_text_term_facet('degreeGrantor.title', suffix=".keyword"),
     # 'person': term_facet('person.keyword'),
     # 'accessRights': term_facet('accessRights.title.en.raw'),
     # 'resourceType': language_aware_text_term_facet('resourceType.title'),
