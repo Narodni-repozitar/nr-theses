@@ -1,14 +1,12 @@
 from __future__ import absolute_import, print_function
 
 import os
+import pytest
 import shutil
 import subprocess
 import sys
 import tempfile
 import uuid
-from pathlib import Path
-
-import pytest
 from elasticsearch import Elasticsearch
 from flask import Flask, make_response, url_for
 from flask_login import LoginManager, login_user
@@ -35,6 +33,7 @@ from invenio_records_rest.views import create_blueprint_from_app
 from invenio_search import InvenioSearch, RecordsSearch
 from marshmallow import Schema
 from marshmallow.fields import Url, Boolean, Nested, List
+from oarepo_communities.ext import OARepoCommunities
 from oarepo_mapping_includes.ext import OARepoMappingIncludesExt
 from oarepo_records_draft.ext import RecordsDraft
 from oarepo_references import OARepoReferences
@@ -43,6 +42,7 @@ from oarepo_taxonomies.cli import init_db
 from oarepo_taxonomies.ext import OarepoTaxonomies
 from oarepo_validate import MarshmallowValidatedRecordMixin
 from oarepo_validate.ext import OARepoValidate
+from pathlib import Path
 from sqlalchemy_utils import database_exists, create_database, drop_database
 
 from nr_theses import NRTheses
@@ -163,6 +163,7 @@ def app():
     InvenioPIDStore(app)
     OARepoValidate(app)
     RecordsDraft(app)
+    OARepoCommunities(app)
     app.url_map.converters['pid'] = PIDConverter
 
     # Celery
