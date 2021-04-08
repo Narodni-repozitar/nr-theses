@@ -37,7 +37,7 @@ read_draft_object_permission_impl = require_any(
     read_object_permission_impl
 )
 delete_draft_object_permission_impl = delete_object_permission_impl
-list_draft_object_permission_impl = deny_all
+list_draft_object_permission_impl = allow_all
 
 # DRAFT dataset file manipulation
 put_draft_file_permission_impl = require_any(

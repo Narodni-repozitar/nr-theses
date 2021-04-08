@@ -14,7 +14,8 @@ class ThesisRecordsSearch(CommunitySearch):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._source = [
-            'id', 'oarepo:validity.valid', 'oarepo:draft', 'titles', 'created',
+            'control_number', 'oarepo:validity.valid', 'oarepo:draft',
+            'title', 'created',
             'abstract', 'state',
             '_administration.primaryCommunity',
             '_administration.communities',
@@ -30,7 +31,7 @@ class ThesisRecordsSearch(CommunitySearch):
 
         @staticmethod
         def default_filter_factory(search=None, **kwargs):
-            if not AUTHENTICATED_PERMISSION.can() or not COMMUNITY_MEMBER_PERMISSION(None).can():
+            if not AUTHENTICATED_PERMISSION.can() or not (COMMUNITY_MEMBER_PERMISSION(None).can() or COMMUNITY_CURATOR_PERMISSION(None).can()):
                 # Anonymous or non-community members sees published community records only
                 return Bool(must=[
                     ThesisRecordsSearch.Meta.default_anonymous_filter,
