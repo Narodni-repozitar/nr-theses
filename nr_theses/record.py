@@ -2,6 +2,8 @@ import os
 
 from flask import url_for
 from invenio_records.api import Record
+from oarepo_communities.converters import CommunityPIDValue
+from oarepo_communities.proxies import current_oarepo_communities
 from oarepo_communities.record import CommunityRecordMixin
 from oarepo_fsm.mixins import FSMMixin
 from oarepo_records_draft.record import InvalidRecordAllowedMixin, DraftRecordMixin
@@ -38,7 +40,10 @@ class PublishedThesisRecord(InvalidRecordAllowedMixin, ThesisBaseRecord):
     @property
     def canonical_url(self):
         return url_for('invenio_records_rest.theses_item',
-                       pid_value=self['control_number'], _external=True)
+                       pid_value=CommunityPIDValue(
+                           self['control_number'],
+                           current_oarepo_communities.get_primary_community_field(self)),
+                       _external=True)
 
 
 class DraftThesisRecord(DraftRecordMixin, ThesisBaseRecord):
@@ -47,4 +52,7 @@ class DraftThesisRecord(DraftRecordMixin, ThesisBaseRecord):
     @property
     def canonical_url(self):
         return url_for('invenio_records_rest.draft-theses_item',
-                       pid_value=self['control_number'], _external=True)
+                       pid_value=CommunityPIDValue(
+                           self['control_number'],
+                           current_oarepo_communities.get_primary_community_field(self)),
+                       _external=True)

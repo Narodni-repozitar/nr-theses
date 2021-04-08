@@ -28,6 +28,8 @@ To see more about providers see :mod:`invenio_pidstore.providers`.
 from __future__ import absolute_import, print_function
 
 from invenio_pidstore.fetchers import FetchedPID
+from oarepo_communities.converters import CommunityPIDValue
+from oarepo_communities.proxies import current_oarepo_communities
 
 from .providers import NRThesesIdProvider
 
@@ -40,8 +42,10 @@ def nr_theses_id_fetcher(record_uuid, data):
     :returns: A :data:`invenio_pidstore.fetchers.FetchedPID` instance.
     """
     id_field = "control_number"
-    return FetchedPID( # FetchedPID je obyčejný namedtuple
+    return FetchedPID(  # FetchedPID je obyčejný namedtuple
         provider=NRThesesIdProvider,
         pid_type=NRThesesIdProvider.pid_type,
-        pid_value=str(data[id_field]),
+        pid_value=CommunityPIDValue(
+            str(data[id_field]),
+            current_oarepo_communities.get_primary_community_field(data))
     )
