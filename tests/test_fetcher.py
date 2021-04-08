@@ -11,4 +11,4 @@ def test_nr_id_fetcher(app, db):
     record = TestRecord.create(data=data)
     fetched_id = nr_theses_id_fetcher(record_uuid=record.id, data=data)
     assert fetched_id.pid_type == "nrthe"
-    assert fetched_id.pid_value == data[id_field]
+    assert str(fetched_id.pid_value) == str(data[id_field])

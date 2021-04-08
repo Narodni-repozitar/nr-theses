@@ -13,7 +13,7 @@ packages = [{include='nr_theses'}]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-techlib-nr-common = "^3.0.0a39"
+techlib-nr-common = "^3.0.0a40"
 oarepo = "^3.3.59"
 
 [tool.poetry.dev-dependencies]
@@ -29,7 +29,7 @@ pytest = "^5.0.0"
 pytest-cov = "^2.10.1"
 pytest-runner = "^5.2"
 oarepo-fsm = "^1.5.0"
-oarepo-communities = "^1.4.0"
+oarepo-communities = "^2.0"
 
 [tool.poetry.plugins]
 [tool.poetry.plugins."invenio_base.apps"]
