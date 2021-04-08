@@ -13,9 +13,9 @@ from .permissions import (
 class ThesisRecordsSearch(CommunitySearch):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self._source = [
-            'id', 'oarepo:validity.valid', 'oarepo:draft', 'titles', 'created',
-            'abstract', 'state',
+        self._source = self._source = [
+            'control_number', 'oarepo:validity.valid', 'oarepo:draft', 'title', 'dateIssued',
+            'creator', 'resourceType', 'contributor', 'keywords', 'subject', 'abstract', 'state',
             '_administration.primaryCommunity',
             '_administration.communities',
         ]
