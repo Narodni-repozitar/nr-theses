@@ -2517,7 +2517,7 @@ tests = ["invenio", "pytest", "pytest-cov", "pytest-pep8", "requests-mock"]
 
 [[package]]
 name = "oarepo-micro-api"
-version = "3.3.59"
+version = "3.3.60"
 description = "OARepo REST API microservice"
 category = "dev"
 optional = false
@@ -2529,6 +2529,7 @@ oarepo-heartbeat = "*"
 uwsgi = ">=2.0"
 uwsgi-tools = ">=1.1.1"
 uwsgitop = ">=0.11"
+wrapt = ">=1.12.1,<2.0.0"
 
 [package.extras]
 tests = ["webtest", "oarepo[tests] (>=3.3.59,<3.4.0)"]
@@ -3469,7 +3470,7 @@ timezone = ["python-dateutil"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "b907b7a69190838b3dea2c4ed5f1804af702f031c20892d67fad24670734d09f"
+content-hash = "3ccb34ff76d8174d6717a66da9aa9e8b51ac77b28f216cbf3087c0e6d03d4536"
 
 [metadata.files]
 alembic = [
@@ -4290,8 +4291,8 @@ oarepo-mapping-includes = [
     {file = "oarepo_mapping_includes-1.2.0-py3-none-any.whl", hash = "sha256:05fd0f561e63db1ada9619e84752ebebe6e0e8cfe9b16362e349045c4d6aebc8"},
 ]
 oarepo-micro-api = [
-    {file = "oarepo-micro-api-3.3.59.tar.gz", hash = "sha256:a0661b9ce513ced858e7f82f413a333b68a7bb21590a9628f612c0be29849763"},
-    {file = "oarepo_micro_api-3.3.59-py2.py3-none-any.whl", hash = "sha256:7fe3441e1827fa3cd909fa790900708cf6abb87cb5beb6ccc51072cfb50e183d"},
+    {file = "oarepo-micro-api-3.3.60.tar.gz", hash = "sha256:e3079f002632e8382040d7188621f01cc6c24c11134a838ac0713a403a99e54a"},
+    {file = "oarepo_micro_api-3.3.60-py2.py3-none-any.whl", hash = "sha256:7a7eb2b414eec1355bceee9c1eca2a81d41e0bcfffe2f576bf07c9f00c6b7930"},
 ]
 oarepo-multilingual = [
     {file = "oarepo_multilingual-2.5.0-py3-none-any.whl", hash = "sha256:7d37893ec8dbf8ad157c029a02cf15fffa507adb745de1bc0a6fe903a9729a2e"},
