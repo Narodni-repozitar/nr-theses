@@ -1,7 +1,7 @@
 [tool]
 [tool.poetry]
 name = "techlib-nr-theses"
-version = "1.0.0a5"
+version = "1.0.0a6"
 description = "Czech National Repository theses data model."
 license = "MIT"
 keywords = ["Czech", "Nation", "Repository", "Invenio", "theses"]
@@ -13,7 +13,7 @@ packages = [{include='nr_theses'}]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-techlib-nr-common = "^3.0.0a44"
+techlib-nr-common = "^3.0.0a45"
 oarepo = "^3.3.59"
 
 [tool.poetry.dev-dependencies]
