@@ -3,7 +3,7 @@ from elasticsearch_dsl.query import Bool
 from oarepo_communities.constants import STATE_PUBLISHED, STATE_APPROVED
 from oarepo_communities.search import CommunitySearch
 
-from .permissions import (
+from nr_common.permissions import (
     AUTHENTICATED_PERMISSION,
     COMMUNITY_MEMBER_PERMISSION,
     COMMUNITY_CURATOR_PERMISSION

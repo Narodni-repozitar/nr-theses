@@ -12,6 +12,8 @@ from __future__ import absolute_import, print_function
 
 from nr_common.minters import nr_id_minter
 
+from nr_theses.providers import NRThesesIdProvider
+
 
 def nr_theses_id_minter(record_uuid, data):
-    return nr_id_minter(record_uuid, data)
+    return nr_id_minter(record_uuid, data, nr_id_provider=NRThesesIdProvider)

@@ -14,7 +14,7 @@ from oarepo_communities.links import community_record_links_factory
 from oarepo_records_draft import DRAFT_IMPORTANT_FILTERS
 from oarepo_records_draft.rest import DRAFT_IMPORTANT_FACETS
 
-from nr_common.config import FACETS, CURATOR_FACETS, CURATOR_FILTERS, FILTERS
+from nr_generic.config import FACETS, CURATOR_FACETS, CURATOR_FILTERS, FILTERS
 from nr_theses.record import draft_index_name
 from oarepo_multilingual import language_aware_text_term_facet, language_aware_text_terms_filter
 from oarepo_ui.facets import translate_facets, term_facet
@@ -36,9 +36,9 @@ RECORDS_DRAFT_ENDPOINTS = {
         'list_route': '/<community_id>/theses/',
         'item_route': f'/<commpid(nrthe,model="theses",record_class="nr_theses.record:PublishedThesisRecord"):pid_value>',
 
-        'publish_permission_factory_imp': 'nr_theses.permissions.publish_draft_object_permission_impl',
-        'unpublish_permission_factory_imp': 'nr_theses.permissions.unpublish_draft_object_permission_impl',
-        'edit_permission_factory_imp': 'nr_theses.permissions.update_object_permission_impl',
+        'publish_permission_factory_imp': 'nr_common.permissions.publish_draft_object_permission_impl',
+        'unpublish_permission_factory_imp': 'nr_common.permissions.unpublish_draft_object_permission_impl',
+        'edit_permission_factory_imp': 'nr_common.permissions.update_object_permission_impl',
         'list_permission_factory_imp': allow_all,
         'read_permission_factory_imp': allow_all,
         'create_permission_factory_imp': deny_all,
@@ -73,19 +73,19 @@ RECORDS_DRAFT_ENDPOINTS = {
             'application/json': 'oarepo_validate:json_response',
         },
 
-        'create_permission_factory_imp': 'nr_theses.permissions.create_draft_object_permission_impl',
-        'update_permission_factory_imp': 'nr_theses.permissions.update_draft_object_permission_impl',
-        'read_permission_factory_imp': 'nr_theses.permissions.read_draft_object_permission_impl',
-        'delete_permission_factory_imp': 'nr_theses.permissions.delete_draft_object_permission_impl',
-        'list_permission_factory_imp': 'nr_theses.permissions.list_draft_object_permission_impl',
+        'create_permission_factory_imp': 'nr_common.permissions.create_draft_object_permission_impl',
+        'update_permission_factory_imp': 'nr_common.permissions.update_draft_object_permission_impl',
+        'read_permission_factory_imp': 'nr_common.permissions.read_draft_object_permission_impl',
+        'delete_permission_factory_imp': 'nr_common.permissions.delete_draft_object_permission_impl',
+        'list_permission_factory_imp': 'nr_common.permissions.list_draft_object_permission_impl',
         'record_loaders': {
             'application/json': 'oarepo_validate.json_files_loader',
             'application/json-patch+json': 'oarepo_validate.json_loader'
         },
         'files': dict(
-            put_file_factory='nr_theses.permissions.put_draft_file_permission_impl',
-            get_file_factory='nr_theses.permissions.get_draft_file_permission_impl',
-            delete_file_factory='nr_theses.permissions.delete_draft_file_permission_impl'
+            put_file_factory='nr_common.permissions.put_draft_file_permission_impl',
+            get_file_factory='nr_common.permissions.get_draft_file_permission_impl',
+            delete_file_factory='nr_common.permissions.delete_draft_file_permission_impl'
         )
     }
 }
