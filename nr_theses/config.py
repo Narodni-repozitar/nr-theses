@@ -11,7 +11,6 @@ from __future__ import absolute_import, print_function
 
 from invenio_records_rest.utils import allow_all, deny_all
 from nr_common.search import community_search_factory
-from nr_generic.search import GenericRecordsSearch
 from oarepo_communities.links import community_record_links_factory
 from oarepo_records_draft import DRAFT_IMPORTANT_FILTERS
 from oarepo_records_draft.rest import DRAFT_IMPORTANT_FACETS
@@ -33,8 +32,8 @@ RECORDS_DRAFT_ENDPOINTS = {
     'theses-community': {
         'draft': 'draft-theses-community',
         'pid_type': PUBLISHED_THESIS_PID_TYPE,
-        'pid_minter': 'nr_generic',
-        'pid_fetcher': 'nr_generic',
+        'pid_minter': 'nr_theses',
+        'pid_fetcher': 'nr_theses',
         'default_endpoint_prefix': True,
         'max_result_window': 500000,
         'record_class': PUBLISHED_THESIS_RECORD,
@@ -42,7 +41,7 @@ RECORDS_DRAFT_ENDPOINTS = {
         'search_factory_imp': community_search_factory,
 
         'list_route': '/<community_id>/theses/',
-        'item_route': f'/<commpid(nrthe,model="theses",record_class="nr_generic.record:PublishedThesisRecord"):pid_value>',
+        'item_route': f'/<commpid(nrthe,model="theses",record_class="nr_theses.record:PublishedThesisRecord"):pid_value>',
 
         'publish_permission_factory_imp': 'nr_common.permissions.publish_draft_object_permission_impl',
         'unpublish_permission_factory_imp': 'nr_common.permissions.unpublish_draft_object_permission_impl',
@@ -54,7 +53,7 @@ RECORDS_DRAFT_ENDPOINTS = {
         'delete_permission_factory_imp': deny_all,
         'default_media_type': 'application/json',
         'links_factory_imp': community_record_links_factory,
-        'search_class': GenericRecordsSearch,
+        'search_class': ThesisRecordSearch,
         # 'indexer_class': CommitingRecordIndexer,
         'files': dict(
             # Who can upload attachments to a draft dataset record
@@ -71,11 +70,11 @@ RECORDS_DRAFT_ENDPOINTS = {
         'record_class': DRAFT_THESIS_RECORD,
 
         'list_route': '/<community_id>/theses/draft/',
-        'item_route': f'/<commpid(nrthe,model="theses/draft",record_class="nr_generic.record:DraftThesisRecord"):pid_value>',
+        'item_route': f'/<commpid(nrthe,model="theses/draft",record_class="nr_theses.record:DraftThesisRecord"):pid_value>',
         'search_index': draft_index_name,
         'links_factory_imp': community_record_links_factory,
         'search_factory_imp': community_search_factory,
-        'search_class': GenericRecordsSearch,
+        'search_class': ThesisRecordSearch,
         'search_serializers': {
             'application/json': 'oarepo_validate:json_search',
         },
@@ -102,8 +101,8 @@ RECORDS_DRAFT_ENDPOINTS = {
     'theses': {
         'draft': 'draft-theses',
         'pid_type': PUBLISHED_THESIS_PID_TYPE + '-theses',
-        'pid_minter': 'nr_generic',
-        'pid_fetcher': 'nr_generic',
+        'pid_minter': 'nr_theses',
+        'pid_fetcher': 'nr_theses',
         'default_endpoint_prefix': True,
         'max_result_window': 500000,
         'record_class': ALL_THESES_RECORD_CLASS,
@@ -121,7 +120,7 @@ RECORDS_DRAFT_ENDPOINTS = {
         'delete_permission_factory_imp': deny_all,
         'default_media_type': 'application/json',
         'links_factory_imp': community_record_links_factory,
-        'search_class': GenericRecordsSearch,
+        'search_class': ThesisRecordSearch,
         # 'indexer_class': CommitingRecordIndexer,
         'files': dict(
             # Who can upload attachments to a draft dataset record
@@ -140,7 +139,7 @@ RECORDS_DRAFT_ENDPOINTS = {
         'item_route': f'/not-really-used',
         'search_index': draft_index_name,
         'links_factory_imp': community_record_links_factory,
-        'search_class': GenericRecordsSearch,
+        'search_class': ThesisRecordSearch,
         'search_serializers': {
             'application/json': 'oarepo_validate:json_search',
         },
@@ -169,7 +168,7 @@ RECORDS_REST_ENDPOINTS = {
         pid_fetcher='nr_all',
         default_endpoint_prefix=True,
         record_class=ALL_THESES_RECORD_CLASS,
-        search_class=GenericRecordsSearch,
+        search_class=ThesisRecordSearch,
         search_index=all_theses_index_name,
         search_serializers={
             'application/json': 'oarepo_validate:json_search',
@@ -197,7 +196,7 @@ RECORDS_REST_ENDPOINTS = {
         pid_fetcher='nr_all',
         default_endpoint_prefix=True,
         record_class=ALL_THESES_RECORD_CLASS,
-        search_class=GenericRecordsSearch,
+        search_class=ThesisRecordSearch,
         search_index=all_theses_index_name,
         search_factory_imp=community_search_factory,
         search_serializers={
