@@ -13,7 +13,7 @@ packages = [{include='nr_theses'}]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-techlib-nr-common = "^3.0.0a44"
+techlib-nr-common = "^3.0.0a45"
 oarepo = "^3.3.59"
 
 [tool.poetry.dev-dependencies]
