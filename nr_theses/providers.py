@@ -14,7 +14,4 @@ from nr_common.providers import NRIdProvider
 
 
 class NRThesesIdProvider(NRIdProvider):
-    """Thesss identifier provider."""
-
     pid_type = 'nrthe'
-    """Type of persistent identifier."""
