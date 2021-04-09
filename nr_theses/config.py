@@ -10,31 +10,39 @@
 from __future__ import absolute_import, print_function
 
 from invenio_records_rest.utils import allow_all, deny_all
+from nr_common.search import community_search_factory
+from nr_generic.search import GenericRecordsSearch
 from oarepo_communities.links import community_record_links_factory
 from oarepo_records_draft import DRAFT_IMPORTANT_FILTERS
 from oarepo_records_draft.rest import DRAFT_IMPORTANT_FACETS
 
 from nr_generic.config import FACETS, CURATOR_FACETS, CURATOR_FILTERS, FILTERS
+
+from nr_theses.constants import PUBLISHED_THESIS_PID_TYPE, PUBLISHED_THESIS_RECORD, published_index_name, \
+    DRAFT_THESIS_PID_TYPE, DRAFT_THESIS_RECORD, ALL_THESES_RECORD_CLASS, ALL_THESES_PID_TYPE, all_theses_index_name
 from nr_theses.record import draft_index_name
 from oarepo_multilingual import language_aware_text_term_facet, language_aware_text_terms_filter
 from oarepo_ui.facets import translate_facets, term_facet
 from oarepo_ui.filters import boolean_filter
 
-from nr_theses.search import ThesisRecordsSearch
+from nr_theses.search import ThesisRecordSearch
 
 _ = lambda x: x
 
 RECORDS_DRAFT_ENDPOINTS = {
-    'theses': {
-        'draft': 'draft-theses',
-        'pid_type': 'nrthe',
-        'pid_minter': 'nr_theses',
-        'pid_fetcher': 'nr_theses',
+    'theses-community': {
+        'draft': 'draft-theses-community',
+        'pid_type': PUBLISHED_THESIS_PID_TYPE,
+        'pid_minter': 'nr_generic',
+        'pid_fetcher': 'nr_generic',
         'default_endpoint_prefix': True,
         'max_result_window': 500000,
-        'record_class': 'nr_theses.record:PublishedThesisRecord',
+        'record_class': PUBLISHED_THESIS_RECORD,
+        'search_index': published_index_name,
+        'search_factory_imp': community_search_factory,
+
         'list_route': '/<community_id>/theses/',
-        'item_route': f'/<commpid(nrthe,model="theses",record_class="nr_theses.record:PublishedThesisRecord"):pid_value>',
+        'item_route': f'/<commpid(nrthe,model="theses",record_class="nr_generic.record:PublishedThesisRecord"):pid_value>',
 
         'publish_permission_factory_imp': 'nr_common.permissions.publish_draft_object_permission_impl',
         'unpublish_permission_factory_imp': 'nr_common.permissions.unpublish_draft_object_permission_impl',
@@ -46,7 +54,7 @@ RECORDS_DRAFT_ENDPOINTS = {
         'delete_permission_factory_imp': deny_all,
         'default_media_type': 'application/json',
         'links_factory_imp': community_record_links_factory,
-        'search_class': ThesisRecordsSearch,
+        'search_class': GenericRecordsSearch,
         # 'indexer_class': CommitingRecordIndexer,
         'files': dict(
             # Who can upload attachments to a draft dataset record
@@ -58,15 +66,17 @@ RECORDS_DRAFT_ENDPOINTS = {
         )
 
     },
-    'draft-theses': {
-        'pid_type': 'dnrthe',
-        'record_class': 'nr_theses.record:DraftThesisRecord',
+    'draft-theses-community': {
+        'pid_type': DRAFT_THESIS_PID_TYPE,
+        'record_class': DRAFT_THESIS_RECORD,
+
         'list_route': '/<community_id>/theses/draft/',
-        'item_route': f'/<commpid(nrthe,model="theses/draft",record_class="nr_theses.record:DraftThesisRecord"):pid_value>',
+        'item_route': f'/<commpid(nrthe,model="theses/draft",record_class="nr_generic.record:DraftThesisRecord"):pid_value>',
         'search_index': draft_index_name,
         'links_factory_imp': community_record_links_factory,
-        'search_class': ThesisRecordsSearch,
-'search_serializers': {
+        'search_factory_imp': community_search_factory,
+        'search_class': GenericRecordsSearch,
+        'search_serializers': {
             'application/json': 'oarepo_validate:json_search',
         },
         'record_serializers': {
@@ -87,8 +97,131 @@ RECORDS_DRAFT_ENDPOINTS = {
             get_file_factory='nr_common.permissions.get_draft_file_permission_impl',
             delete_file_factory='nr_common.permissions.delete_draft_file_permission_impl'
         )
+
+    },
+    'theses': {
+        'draft': 'draft-theses',
+        'pid_type': PUBLISHED_THESIS_PID_TYPE + '-theses',
+        'pid_minter': 'nr_generic',
+        'pid_fetcher': 'nr_generic',
+        'default_endpoint_prefix': True,
+        'max_result_window': 500000,
+        'record_class': ALL_THESES_RECORD_CLASS,
+        'search_index': published_index_name,
+
+        'list_route': '/theses/',
+        'item_route': f'/not-really-used',
+        'publish_permission_factory_imp': deny_all,
+        'unpublish_permission_factory_imp': deny_all,
+        'edit_permission_factory_imp': deny_all,
+        'list_permission_factory_imp': allow_all,
+        'read_permission_factory_imp': allow_all,
+        'create_permission_factory_imp': deny_all,
+        'update_permission_factory_imp': deny_all,
+        'delete_permission_factory_imp': deny_all,
+        'default_media_type': 'application/json',
+        'links_factory_imp': community_record_links_factory,
+        'search_class': GenericRecordsSearch,
+        # 'indexer_class': CommitingRecordIndexer,
+        'files': dict(
+            # Who can upload attachments to a draft dataset record
+            put_file_factory=deny_all,
+            # Who can download attachments from a draft dataset record
+            get_file_factory=allow_all,
+            # Who can delete attachments from a draft dataset record
+            delete_file_factory=deny_all
+        )
+    },
+    'draft-theses': {
+        'pid_type': DRAFT_THESIS_PID_TYPE + '-draft-theses',
+        'record_class': ALL_THESES_RECORD_CLASS,
+
+        'list_route': '/theses/draft/',
+        'item_route': f'/not-really-used',
+        'search_index': draft_index_name,
+        'links_factory_imp': community_record_links_factory,
+        'search_class': GenericRecordsSearch,
+        'search_serializers': {
+            'application/json': 'oarepo_validate:json_search',
+        },
+        'record_serializers': {
+            'application/json': 'oarepo_validate:json_response',
+        },
+
+        'create_permission_factory_imp': deny_all,
+        'update_permission_factory_imp': deny_all,
+        'read_permission_factory_imp': 'nr_common.permissions.read_draft_object_permission_impl',
+        'delete_permission_factory_imp': deny_all,
+        'list_permission_factory_imp': 'nr_common.permissions.list_draft_object_permission_impl',
+        'files': dict(
+            put_file_factory=deny_all,
+            get_file_factory='nr_common.permissions.get_draft_file_permission_impl',
+            delete_file_factory=deny_all
+        )
     }
 }
+
+
+RECORDS_REST_ENDPOINTS = {
+    'all-theses': dict(
+        pid_type=ALL_THESES_PID_TYPE,
+        pid_minter='nr_all',
+        pid_fetcher='nr_all',
+        default_endpoint_prefix=True,
+        record_class=ALL_THESES_RECORD_CLASS,
+        search_class=GenericRecordsSearch,
+        search_index=all_theses_index_name,
+        search_serializers={
+            'application/json': 'oarepo_validate:json_search',
+        },
+        list_route='/theses/all/',
+        links_factory_imp=community_record_links_factory,
+        default_media_type='application/json',
+        max_result_window=10000,
+        # not used really
+        item_route=f'/theses/'
+                   f'/not-used-but-must-be-present',
+        list_permission_factory_imp='nr_common.permissions.list_all_object_permission_impl',
+        create_permission_factory_imp=deny_all,
+        delete_permission_factory_imp=deny_all,
+        update_permission_factory_imp=deny_all,
+        read_permission_factory_imp=deny_all,
+        record_serializers={
+            'application/json': 'oarepo_validate:json_response',
+        },
+        use_options_view=False
+    ),
+    'community-theses': dict(
+        pid_type=ALL_THESES_PID_TYPE + '-community-all',
+        pid_minter='nr_all',
+        pid_fetcher='nr_all',
+        default_endpoint_prefix=True,
+        record_class=ALL_THESES_RECORD_CLASS,
+        search_class=GenericRecordsSearch,
+        search_index=all_theses_index_name,
+        search_factory_imp=community_search_factory,
+        search_serializers={
+            'application/json': 'oarepo_validate:json_search',
+        },
+        list_route='/<community_id>/theses/all/',
+        links_factory_imp=community_record_links_factory,
+        default_media_type='application/json',
+        max_result_window=10000,
+        # not used really
+        item_route=f'/thesis/'
+                   f'/not-used-but-must-be-present',
+        list_permission_factory_imp='nr_common.permissions.list_all_object_permission_impl',
+        create_permission_factory_imp=deny_all,
+        delete_permission_factory_imp=deny_all,
+        update_permission_factory_imp=deny_all,
+        read_permission_factory_imp=deny_all,
+        record_serializers={
+            'application/json': 'oarepo_validate:json_response',
+        },
+        use_options_view=False
+    )
+}
+
 
 THESES_FILTERS = {
     _('defended'): boolean_filter('defended'),
