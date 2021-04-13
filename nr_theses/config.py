@@ -44,7 +44,7 @@ RECORDS_DRAFT_ENDPOINTS = {
         'search_factory_imp': community_search_factory,
 
         'list_route': '/<community_id>/theses/',
-        'item_route': f'/<commpid(nrthe,model="theses",record_class="nr_theses.record:PublishedThesisRecord"):pid_value>',
+        'item_route': f'/<commpid({PUBLISHED_THESIS_PID_TYPE},model="theses",record_class="{PUBLISHED_THESIS_RECORD}"):pid_value>',
 
         'publish_permission_factory_imp': 'nr_common.permissions.publish_draft_object_permission_impl',
         'unpublish_permission_factory_imp': 'nr_common.permissions.unpublish_draft_object_permission_impl',
@@ -73,7 +73,7 @@ RECORDS_DRAFT_ENDPOINTS = {
         'record_class': DRAFT_THESIS_RECORD,
 
         'list_route': '/<community_id>/theses/draft/',
-        'item_route': f'/<commpid(nrthe,model="theses/draft",record_class="nr_theses.record:DraftThesisRecord"):pid_value>',
+        'item_route': f'/<commpid({DRAFT_THESIS_PID_TYPE},model="theses/draft",record_class="{DRAFT_THESIS_RECORD}"):pid_value>',
         'search_index': draft_index_name,
         'links_factory_imp': partial(community_record_links_factory, original_links_factory=nr_links_factory),
         'search_factory_imp': community_search_factory,
