@@ -18,6 +18,8 @@ from oarepo_records_draft import DRAFT_IMPORTANT_FILTERS
 from oarepo_records_draft.rest import DRAFT_IMPORTANT_FACETS
 
 from nr_generic.config import FACETS, CURATOR_FACETS, CURATOR_FILTERS, FILTERS
+from oarepo_taxonomies.facets import taxonomy_term_facet
+from oarepo_taxonomies.serializers import taxonomy_enabled_search
 
 from nr_theses.constants import PUBLISHED_THESIS_PID_TYPE, PUBLISHED_THESIS_RECORD, published_index_name, \
     DRAFT_THESIS_PID_TYPE, DRAFT_THESIS_RECORD, ALL_THESES_RECORD_CLASS, ALL_THESES_PID_TYPE, all_theses_index_name
@@ -41,7 +43,8 @@ RECORDS_DRAFT_ENDPOINTS = {
         'max_result_window': 500000,
         'record_class': PUBLISHED_THESIS_RECORD,
         'search_index': published_index_name,
-        'search_factory_imp': community_search_factory,
+        'search_factory_imp': taxonomy_enabled_search(community_search_factory, taxonomy_aggs=["degreeGrantor"],
+                                                        fallback_language="cs"),
 
         'list_route': '/<community_id>/theses/',
         'item_route': f'/<commpid({PUBLISHED_THESIS_PID_TYPE},model="theses",record_class="{PUBLISHED_THESIS_RECORD}"):pid_value>',
@@ -260,7 +263,7 @@ THESES_FILTERS = {
 THESES_FACETS = {
     'defended': term_facet('defended'),
     'studyField': language_aware_text_term_facet('studyField.title', suffix=".keyword"),
-    'degreeGrantor': language_aware_text_term_facet('degreeGrantor.title', suffix=".keyword"),
+    'degreeGrantor': taxonomy_term_facet('degreeGrantor'),
     # 'person': term_facet('person.keyword'),
     # 'accessRights': term_facet('accessRights.title.en.raw'),
     # 'resourceType': language_aware_text_term_facet('resourceType.title'),
