@@ -289,6 +289,12 @@ RECORDS_REST_FACETS = {
                                  value='{value_key}'),
         "filters": {**THESES_FILTERS, **FILTERS, **CURATOR_FILTERS, **DRAFT_IMPORTANT_FILTERS}
     },
+    all_theses_index_name: {
+        "aggs": translate_facets({**THESES_FACETS, **FACETS, **CURATOR_FACETS, **DRAFT_IMPORTANT_FACETS},
+                                 label='{facet_key}',
+                                 value='{value_key}'),
+        "filters": {**THESES_FILTERS, **FILTERS, **CURATOR_FILTERS, **DRAFT_IMPORTANT_FILTERS}
+    },
 }
 
 RECORDS_REST_SORT_OPTIONS = {

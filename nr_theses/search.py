@@ -5,7 +5,8 @@ class ThesisRecordSearch(NRRecordsSearch):
     LIST_SOURCE_FIELDS = [
         'control_number', 'oarepo:validity.valid', 'oarepo:draft',
         'title', 'dateIssued', 'creator', 'resourceType',
-        'contributor', 'keywords', 'subject', 'abstract', 'state',
+        'contributor', 'keywords', 'subject', 'abstract', 'state', 'accessRights',
+        'language',
         '_administration.primaryCommunity',
         '_administration.communities',
         '$schema'
