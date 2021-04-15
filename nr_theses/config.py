@@ -21,12 +21,14 @@ from nr_generic.config import FACETS, CURATOR_FACETS, CURATOR_FILTERS, FILTERS
 from oarepo_taxonomies.facets import taxonomy_term_facet
 from oarepo_taxonomies.serializers import taxonomy_enabled_search
 
-from nr_theses.constants import PUBLISHED_THESIS_PID_TYPE, PUBLISHED_THESIS_RECORD, published_index_name, \
-    DRAFT_THESIS_PID_TYPE, DRAFT_THESIS_RECORD, ALL_THESES_RECORD_CLASS, ALL_THESES_PID_TYPE, all_theses_index_name
+from nr_theses.constants import PUBLISHED_THESIS_PID_TYPE, PUBLISHED_THESIS_RECORD, \
+    published_index_name, \
+    DRAFT_THESIS_PID_TYPE, DRAFT_THESIS_RECORD, ALL_THESES_RECORD_CLASS, ALL_THESES_PID_TYPE, \
+    all_theses_index_name
 from nr_theses.record import draft_index_name
 from oarepo_multilingual import language_aware_text_term_facet, language_aware_text_terms_filter
-from oarepo_ui.facets import translate_facets, term_facet
-from oarepo_ui.filters import boolean_filter
+from oarepo_ui.facets import translate_facets, term_facet, nested_facet
+from oarepo_ui.filters import boolean_filter, nested_filter
 from nr_common.links import nr_links_factory
 
 from nr_theses.search import ThesisRecordSearch
@@ -43,14 +45,18 @@ RECORDS_DRAFT_ENDPOINTS = {
         'max_result_window': 500000,
         'record_class': PUBLISHED_THESIS_RECORD,
         'search_index': published_index_name,
-        'search_factory_imp': taxonomy_enabled_search(community_search_factory, taxonomy_aggs=["degreeGrantor"],
-                                                        fallback_language="cs"),
+        'search_factory_imp': taxonomy_enabled_search(community_search_factory,
+                                                      taxonomy_aggs=["degreeGrantor"],
+                                                      fallback_language="cs"),
 
         'list_route': '/<community_id>/theses/',
-        'item_route': f'/<commpid({PUBLISHED_THESIS_PID_TYPE},model="theses",record_class="{PUBLISHED_THESIS_RECORD}"):pid_value>',
+        'item_route': f'/<commpid({PUBLISHED_THESIS_PID_TYPE},model="theses",record_class="'
+                      f'{PUBLISHED_THESIS_RECORD}"):pid_value>',
 
-        'publish_permission_factory_imp': 'nr_common.permissions.publish_draft_object_permission_impl',
-        'unpublish_permission_factory_imp': 'nr_common.permissions.unpublish_draft_object_permission_impl',
+        'publish_permission_factory_imp':
+            'nr_common.permissions.publish_draft_object_permission_impl',
+        'unpublish_permission_factory_imp':
+            'nr_common.permissions.unpublish_draft_object_permission_impl',
         'edit_permission_factory_imp': 'nr_common.permissions.update_object_permission_impl',
         'list_permission_factory_imp': allow_all,
         'read_permission_factory_imp': allow_all,
@@ -58,7 +64,8 @@ RECORDS_DRAFT_ENDPOINTS = {
         'update_permission_factory_imp': deny_all,
         'delete_permission_factory_imp': deny_all,
         'default_media_type': 'application/json',
-        'links_factory_imp': partial(community_record_links_factory, original_links_factory=nr_links_factory),
+        'links_factory_imp': partial(community_record_links_factory,
+                                     original_links_factory=nr_links_factory),
         'search_class': ThesisRecordSearch,
         # 'indexer_class': CommitingRecordIndexer,
         'files': dict(
@@ -76,9 +83,11 @@ RECORDS_DRAFT_ENDPOINTS = {
         'record_class': DRAFT_THESIS_RECORD,
 
         'list_route': '/<community_id>/theses/draft/',
-        'item_route': f'/<commpid({DRAFT_THESIS_PID_TYPE},model="theses/draft",record_class="{DRAFT_THESIS_RECORD}"):pid_value>',
+        'item_route': f'/<commpid({DRAFT_THESIS_PID_TYPE},model="theses/draft",record_cla'
+                      f'ss="{DRAFT_THESIS_RECORD}"):pid_value>',
         'search_index': draft_index_name,
-        'links_factory_imp': partial(community_record_links_factory, original_links_factory=nr_links_factory),
+        'links_factory_imp': partial(community_record_links_factory,
+                                     original_links_factory=nr_links_factory),
         'search_factory_imp': community_search_factory,
         'search_class': ThesisRecordSearch,
         'search_serializers': {
@@ -88,10 +97,13 @@ RECORDS_DRAFT_ENDPOINTS = {
             'application/json': 'oarepo_validate:json_response',
         },
 
-        'create_permission_factory_imp': 'nr_common.permissions.create_draft_object_permission_impl',
-        'update_permission_factory_imp': 'nr_common.permissions.update_draft_object_permission_impl',
+        'create_permission_factory_imp':
+            'nr_common.permissions.create_draft_object_permission_impl',
+        'update_permission_factory_imp':
+            'nr_common.permissions.update_draft_object_permission_impl',
         'read_permission_factory_imp': 'nr_common.permissions.read_draft_object_permission_impl',
-        'delete_permission_factory_imp': 'nr_common.permissions.delete_draft_object_permission_impl',
+        'delete_permission_factory_imp':
+            'nr_common.permissions.delete_draft_object_permission_impl',
         'list_permission_factory_imp': 'nr_common.permissions.list_draft_object_permission_impl',
         'record_loaders': {
             'application/json': 'oarepo_validate.json_files_loader',
@@ -125,7 +137,8 @@ RECORDS_DRAFT_ENDPOINTS = {
         'update_permission_factory_imp': deny_all,
         'delete_permission_factory_imp': deny_all,
         'default_media_type': 'application/json',
-        'links_factory_imp': partial(community_record_links_factory, original_links_factory=nr_links_factory),
+        'links_factory_imp': partial(community_record_links_factory,
+                                     original_links_factory=nr_links_factory),
         'search_class': ThesisRecordSearch,
         # 'indexer_class': CommitingRecordIndexer,
         'files': dict(
@@ -144,7 +157,8 @@ RECORDS_DRAFT_ENDPOINTS = {
         'list_route': '/theses/draft/',
         'item_route': f'/not-really-used',
         'search_index': draft_index_name,
-        'links_factory_imp': partial(community_record_links_factory, original_links_factory=nr_links_factory),
+        'links_factory_imp': partial(community_record_links_factory,
+                                     original_links_factory=nr_links_factory),
         'search_class': ThesisRecordSearch,
         'search_serializers': {
             'application/json': 'oarepo_validate:json_search',
@@ -166,7 +180,6 @@ RECORDS_DRAFT_ENDPOINTS = {
     }
 }
 
-
 RECORDS_REST_ENDPOINTS = {
     'all-theses': dict(
         pid_type=ALL_THESES_PID_TYPE,
@@ -180,7 +193,8 @@ RECORDS_REST_ENDPOINTS = {
             'application/json': 'oarepo_validate:json_search',
         },
         list_route='/theses/all/',
-        links_factory_imp=partial(community_record_links_factory, original_links_factory=nr_links_factory),
+        links_factory_imp=partial(community_record_links_factory,
+                                  original_links_factory=nr_links_factory),
         default_media_type='application/json',
         max_result_window=10000,
         # not used really
@@ -209,7 +223,8 @@ RECORDS_REST_ENDPOINTS = {
             'application/json': 'oarepo_validate:json_search',
         },
         list_route='/<community_id>/theses/all/',
-        links_factory_imp=partial(community_record_links_factory, original_links_factory=nr_links_factory),
+        links_factory_imp=partial(community_record_links_factory,
+                                  original_links_factory=nr_links_factory),
         default_media_type='application/json',
         max_result_window=10000,
         # not used really
@@ -227,72 +242,33 @@ RECORDS_REST_ENDPOINTS = {
     )
 }
 
-
 THESES_FILTERS = {
     _('defended'): boolean_filter('defended'),
-    _('studyField'): language_aware_text_terms_filter('studyField.title', suffix=".keyword"),
-    _('degreeGrantor'): language_aware_text_terms_filter('degreeGrantor.title', suffix=".keyword"),
-    #     _('person'): terms_filter('person.keyword'),
-    #     _('accessRights'): group_by_terms_filter('accessRights.title.en.raw', {
-    #         "true": "open access",
-    #         1: "open access",
-    #         True: "open access",
-    #         "1": "open access",
-    #         False: ["embargoed access", "restricted access", "metadata only access"],
-    #         0: ["embargoed access", "restricted access", "metadata only access"],
-    #         "false": ["embargoed access", "restricted access", "metadata only access"],
-    #         "0": ["embargoed access", "restricted access", "metadata only access"],
-    #     }),
-    #     _('resourceType'): language_aware_text_terms_filter('resourceType.title'),
-    #     _('keywords'): language_aware_text_terms_filter('keywords'),
-    #     _('subject'): language_aware_text_terms_filter('subjectAll'),
-    #     _('language'): language_aware_text_terms_filter('language.title'),
-    #     _('date'): range_filter('dateAll.date'),
-    #     _('dateIssued'): range_filter('dateIssued.date'),
-    #     _('dateDefended'): range_filter('dateDefended.date'),
-    #     _('dateModified'): range_filter('dateModified.date'),
-    #
+    _('studyField'): nested_filter('studyField',
+                                   language_aware_text_terms_filter('studyField.title')),
+    _('degreeGrantor'): nested_filter('degreeGrantor',
+                                      language_aware_text_terms_filter('degreeGrantor.title')),
 }
-#
-# CURATOR_FILTERS = {
-#     _('rights'): language_aware_text_terms_filter('rights.title'),
-#     _('provider'): language_aware_text_terms_filter('provider.title'),
-#     _('isGL'): boolean_filter('isGL')
-# }
-#
+
 THESES_FACETS = {
     'defended': term_facet('defended'),
-    'studyField': language_aware_text_term_facet('studyField.title', suffix=".keyword"),
+    'studyField': nested_facet('studyField', language_aware_text_term_facet('studyField.title')),
     'degreeGrantor': taxonomy_term_facet('degreeGrantor'),
-    # 'person': term_facet('person.keyword'),
-    # 'accessRights': term_facet('accessRights.title.en.raw'),
-    # 'resourceType': language_aware_text_term_facet('resourceType.title'),
-    # 'keywords': language_aware_text_term_facet('keywords'),
-    # 'subject': language_aware_text_term_facet('subjectAll'),
-    # 'language': language_aware_text_term_facet('language.title'),
-    # 'date': date_histogram_facet('dateAll.date'),
 }
-#
-# CURATOR_FACETS = {
-#     'rights': language_aware_text_term_facet('rights.title'),
-#     'provider': language_aware_text_term_facet('provider.title'),
-#     'dateIssued': date_histogram_facet('dateIssued.date'),
-#     'dateDefended': date_histogram_facet('dateDefended.date'),
-#     'dateModified': date_histogram_facet('dateModified.date'),
-#     'isGL': term_facet('isGL'),
-# }
 
 RECORDS_REST_FACETS = {
     draft_index_name: {
-        "aggs": translate_facets({**THESES_FACETS, **FACETS, **CURATOR_FACETS, **DRAFT_IMPORTANT_FACETS},
-                                 label='{facet_key}',
-                                 value='{value_key}'),
+        "aggs": translate_facets(
+            {**THESES_FACETS, **FACETS, **CURATOR_FACETS, **DRAFT_IMPORTANT_FACETS},
+            label='{facet_key}',
+            value='{value_key}'),
         "filters": {**THESES_FILTERS, **FILTERS, **CURATOR_FILTERS, **DRAFT_IMPORTANT_FILTERS}
     },
     all_theses_index_name: {
-        "aggs": translate_facets({**THESES_FACETS, **FACETS, **CURATOR_FACETS, **DRAFT_IMPORTANT_FACETS},
-                                 label='{facet_key}',
-                                 value='{value_key}'),
+        "aggs": translate_facets(
+            {**THESES_FACETS, **FACETS, **CURATOR_FACETS, **DRAFT_IMPORTANT_FACETS},
+            label='{facet_key}',
+            value='{value_key}'),
         "filters": {**THESES_FILTERS, **FILTERS, **CURATOR_FILTERS, **DRAFT_IMPORTANT_FILTERS}
     },
 }
