@@ -1,19 +1,20 @@
 [tool]
 [tool.poetry]
 name = "techlib-nr-theses"
-version = "1.0.0a10"
+version = "1.0.0a11"
 description = "Czech National Repository theses data model."
 license = "MIT"
 keywords = ["Czech", "Nation", "Repository", "Invenio", "theses"]
 classifiers = ["Environment :: Web Environment", "Intended Audience :: Developers", "License :: OSI Approved :: MIT License", "Operating System :: OS Independent", "Programming Language :: Python", "Topic :: Internet :: WWW/HTTP :: Dynamic Content", "Topic :: Software Development :: Libraries :: Python Modules", "Programming Language :: Python :: 3", "Programming Language :: Python :: 3.7", "Development Status :: 3 - Alpha"]
-authors = ["Daniel Kopecký <Daniel.Kopecky@techlib.cz>"]
+authors = ["Daniel Kopecký <Daniel.Kopecky@techlib.cz>", "Denys Chaplyhin <chaplyhd@vscht.cz>"]
 readme = "README.md"
 packages = [{include='nr_theses'}]
 
 
 [tool.poetry.dependencies]
 python = "^3.8"
-techlib-nr-common = "^3.0.0a45"
+techlib-nr-common = "^3.0.0a48"
+techlib-nr-theses-metadata  = "^1.0.0a13"
 oarepo = "^3.3.59"
 
 [tool.poetry.dev-dependencies]
@@ -31,7 +32,6 @@ pytest-runner = "^5.2"
 oarepo-fsm = "^1.5.0"
 oarepo-communities = "^2.0"
 techlib-nr-generic = "^1.0.0-alpha.1"
-techlib-nr-common = "^3.0.0-alpha.44"
 
 [tool.poetry.plugins]
 [tool.poetry.plugins."invenio_base.apps"]
